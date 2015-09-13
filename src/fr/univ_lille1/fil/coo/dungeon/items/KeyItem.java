@@ -17,14 +17,6 @@ public class KeyItem extends Item {
 		id = keyIncrementIdentifier++;
 	}
 	
-	/**
-	 * Créer un double de la clé passé en paramètre
-	 * @param duplicate la clé à dupliquer
-	 */
-	public KeyItem(KeyItem duplicate) {
-		id = duplicate.id;
-	}
-	
 	
 	
 

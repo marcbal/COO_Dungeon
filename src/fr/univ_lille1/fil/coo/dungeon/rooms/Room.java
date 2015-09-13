@@ -5,13 +5,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import fr.univ_lille1.fil.coo.dungeon.player.Inventory;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExit;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitPosition;
 import fr.univ_lille1.fil.coo.dungeon.util.EnumUtil;
 
 public class Room {
+	public final String name;
+	
 	private Map<RoomExitPosition, List<RoomExit>> nextRooms = new HashMap<RoomExitPosition, List<RoomExit>>();
 	
+	private Inventory chestContent = null; // par défaut, pas de coffre
+	
+	
+	
+	public Room(String n) {
+		if (n == null) n = "";
+		name = n;
+	}
 	
 	
 	
@@ -19,6 +30,17 @@ public class Room {
 		if (!nextRooms.containsKey(pos))
 			nextRooms.put(pos, new ArrayList<RoomExit>());
 		nextRooms.get(pos).add(exit);// pas oublier : on peut avoir plusieurs sorties par position (genre 2 à l'ouest)
+	}
+	
+	
+	
+	
+	public void setChestContent(Inventory i) {
+		chestContent = i;
+	}
+	
+	public Inventory getChestContent() {
+		return chestContent;
 	}
 	
 	

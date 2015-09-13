@@ -11,6 +11,10 @@ import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitPosition;
 public class LoosingRoom extends Room {
 	
 	
+	public LoosingRoom(String n) {
+		super(n);
+	}
+
 	/**
 	 * Vous ne pouvez pas définir de next room sur une salle LoosingRoom, car vous mourrez systématiquement
 	 * dans cette salle, il n'est pas logique de pouvoir en sortir.

@@ -7,6 +7,10 @@ public class WinningRoom extends Room {
 	
 	
 	
+	public WinningRoom(String n) {
+		super(n);
+	}
+
 	/**
 	 * Vous ne pouvez pas définir de next room sur une salle WinningRoom, car le jeu vous
 	 * téléporte directement dans le prochain donjon quand vous arrivez dans cette salle.

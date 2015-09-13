@@ -6,9 +6,13 @@ import java.util.List;
 import java.util.Scanner;
 
 import fr.univ_lille1.fil.coo.dungeon.dungeons.Dungeon;
+import fr.univ_lille1.fil.coo.dungeon.items.KeyItem;
+import fr.univ_lille1.fil.coo.dungeon.player.Inventory;
+import fr.univ_lille1.fil.coo.dungeon.player.ItemStack;
 import fr.univ_lille1.fil.coo.dungeon.player.Player;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitNormal;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitPosition;
+import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitWithKey;
 import fr.univ_lille1.fil.coo.dungeon.rooms.Room;
 import fr.univ_lille1.fil.coo.dungeon.rooms.LoosingRoom;
 import fr.univ_lille1.fil.coo.dungeon.rooms.WinningRoom;
@@ -59,14 +63,8 @@ public class Game {
 	public void mainLoop() {
 		do {
 			
-			// TODO Affichage des infos et instructions
-			
-			
 			String command = input.nextLine();
 			interpreteCommand(command);
-			
-			
-			
 			
 			
 		} while (getWinningStatus() == null);
@@ -115,23 +113,33 @@ public class Game {
 	
 	private void constructDungeons() {
 		
-		// construction du donjon du TD (pour l'exemple)
 		
 		// création des salles
-		Room entry = new Room();
-		Room intersection = new Room();
-		Room exit = new WinningRoom();
-		Room trap = new LoosingRoom();
+		Room entry = new Room("Entrée");
+		Room intersection = new Room("Salle intermédiaire");
+		Room exit = new WinningRoom("Sortie");
+		Room trap = new LoosingRoom("Trappe");
+		Room roomWithKey = new Room("Salle du coffre");
+		
+		// on crée une clé pour l'accès à la salle Sortie
+		KeyItem key = new KeyItem();
+		
+		// on défini un coffre dans la salle du coffre, avec un exemplaire de cette clé.
+		roomWithKey.setChestContent(new Inventory(new ItemStack(key, 1)));
+		
 		
 		// définition des passages entre les salles
 		entry.addNewNextRoom(RoomExitPosition.NORTH, new RoomExitNormal(intersection));
-		intersection.addNewNextRoom(RoomExitPosition.NORTH, new RoomExitNormal(exit));
+		entry.addNewNextRoom(RoomExitPosition.UNDER_CARPET, new RoomExitNormal(roomWithKey));
+		// accès à la salle Sortie est bloquée si  on a pas la clé de sortie
+		intersection.addNewNextRoom(RoomExitPosition.NORTH, new RoomExitWithKey(exit, key));
 		intersection.addNewNextRoom(RoomExitPosition.WEST, new RoomExitNormal(trap));
 		
-		// définition du donjon
-		Dungeon dExample = new Dungeon(entry);
+		
+		// définition du donjon : on passe en paramètre la première salle
+		Dungeon d = new Dungeon(entry);
 		// on l'ajoute dans la liste des donjons
-		dungeons.add(dExample);
+		dungeons.add(d);
 		
 		
 		
