@@ -36,4 +36,12 @@ public class ItemStack {
 	public void take(int i) {
 		number -= i;
 	}
+	
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o == null) return false;
+		if (!(o instanceof ItemStack)) return false;
+		return (item.equals(((ItemStack)o).item));
+	}
 }

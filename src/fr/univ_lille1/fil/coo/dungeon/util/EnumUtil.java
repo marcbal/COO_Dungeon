@@ -22,5 +22,20 @@ public class EnumUtil {
 		}
 		return out;
 	}
+	
+	/**
+	 * Permet de rechercher l'existance d'un élément dans un enum, de façon insensible à la casse
+	 * @param enumType la classe correpondant à l'enum à lister
+	 * @param search l'élément à rechercher, insensible à la casse
+	 * @return l'élément de l'énumarétion, si elle a été trouvée, null sinon
+	 */
+	public static <T extends Enum<T>> T searchEnum(Class<T> enumType, String search) {
+		T[] elements = enumType.getEnumConstants();
+		
+	    for (T el : elements)
+	        if (el.name().equalsIgnoreCase(search))
+	            return el;
+	    return null;
+	}
 
 }

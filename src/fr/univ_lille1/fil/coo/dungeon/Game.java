@@ -7,11 +7,10 @@ import java.util.Scanner;
 
 import fr.univ_lille1.fil.coo.dungeon.dungeons.Dungeon;
 import fr.univ_lille1.fil.coo.dungeon.player.Player;
-import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExit;
+import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitNormal;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitPosition;
-import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitTypeNormal;
 import fr.univ_lille1.fil.coo.dungeon.rooms.Room;
-import fr.univ_lille1.fil.coo.dungeon.rooms.TrapRoom;
+import fr.univ_lille1.fil.coo.dungeon.rooms.LoosingRoom;
 import fr.univ_lille1.fil.coo.dungeon.rooms.WinningRoom;
 
 public class Game {
@@ -44,9 +43,9 @@ public class Game {
 
 
 	private void nextDungeon() {
+		if (currentDungeonIndex == dungeons.size()-1)
+			return;	// on est au dernier donjon
 		currentDungeonIndex++;
-		if (currentDungeonIndex >= dungeons.size())
-			currentDungeonIndex = 0;
 		currentDungeon = dungeons.get(currentDungeonIndex);
 		currentRoom = currentDungeon.getSpawningRoom();
 	}
@@ -78,6 +77,15 @@ public class Game {
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	private void interpreteCommand(String cmd) {
 		String[] args = cmd.split(cmd, -1);
 		if (args.length == 0)
@@ -87,6 +95,8 @@ public class Game {
 			Room newRoom = currentRoom.interpretGoCommand(Arrays.copyOfRange(args, 1, args.length));
 			if (newRoom != null) {
 				currentRoom = newRoom;
+				if (currentRoom instanceof WinningRoom)
+					nextDungeon(); // on tente de passer dans le donjon suivant, si on n'est pas dans le dernier
 			}
 			return;
 		}
@@ -111,12 +121,12 @@ public class Game {
 		Room entry = new Room();
 		Room intersection = new Room();
 		Room exit = new WinningRoom();
-		Room trap = new TrapRoom();
+		Room trap = new LoosingRoom();
 		
 		// définition des passages entre les salles
-		entry.addNewNextRoom(RoomExitPosition.NORTH, new RoomExit(intersection, new RoomExitTypeNormal()));
-		intersection.addNewNextRoom(RoomExitPosition.NORTH, new RoomExit(exit, new RoomExitTypeNormal()));
-		intersection.addNewNextRoom(RoomExitPosition.WEST, new RoomExit(trap, new RoomExitTypeNormal()));
+		entry.addNewNextRoom(RoomExitPosition.NORTH, new RoomExitNormal(intersection));
+		intersection.addNewNextRoom(RoomExitPosition.NORTH, new RoomExitNormal(exit));
+		intersection.addNewNextRoom(RoomExitPosition.WEST, new RoomExitNormal(trap));
 		
 		// définition du donjon
 		Dungeon dExample = new Dungeon(entry);
@@ -137,7 +147,7 @@ public class Game {
 	private Boolean getWinningStatus() {
 		if ((currentRoom instanceof WinningRoom) && currentDungeonIndex == dungeons.size()-1)
 			return true;
-		if (currentRoom instanceof TrapRoom)
+		if (currentRoom instanceof LoosingRoom)
 			return false;
 		return null;
 	}

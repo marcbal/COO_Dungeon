@@ -27,16 +27,68 @@ public class Room {
 	
 	
 	/**
-	 * Interprète la commande de changement de salle ("go")
+	 * Interprète la commande de changement de salle ("go")<br/>
+	 * <ul>
+	 * <li>Le premier paramètre args[0] est la direction à prendre.
+	 * Les valeurs possibles sont les noms des élélements de l'énumarétion RoomExitPosition.<br/>
+	 * Si la valeur est invalide, ou si cette sale ne fourni aucune sortie dans la direction indiquée,
+	 * il n'y aura aucun changement de salle
+	 * </li>
+	 * <li>
+	 * Le deuxièmre argument args[1] est l'index du numéro de sortie, par rapport à la direction.
+	 * Par exemple, si il y a 2 sorties au nord, alors les arguments possibles sont "1" ou "2".<br/>
+	 * Si il n'y a qu'une seule salle, ce paramètre n'est pas pris en compte. Si il y en a plusieurs, ce paramètre est obligatoire.
+	 * </li>
+	 * </ul>
+	 * 
+	 * 
 	 * @return une nouvelle salle si le joueur change de salle
 	 */
 	public Room interpretGoCommand(String[] args) {
 		
-		if (args.length == 0)
+		if (args.length == 0) {
 			System.out.println("Vous devez spécifier au moins un argument à 'go'");
-		if (RoomExitPosition.valueOf(args[0]) == null)
+			return null;
+		}
+		
+		RoomExitPosition requestedDirection = EnumUtil.searchEnum(RoomExitPosition.class, args[0]);
+		
+		if (requestedDirection == null) {
 			// la direction n'est pas une direction valide
-			System.out.println("Vous devez spécifier une direction valide : "+EnumUtil.enumList(RoomExitPosition.class));
+			System.out.println("Vous devez spécifier une direction valide parmis "+EnumUtil.enumList(RoomExitPosition.class));
+			return null;
+		}
+		
+		if (!nextRooms.containsKey(requestedDirection)) {
+			System.out.println("Cette direction ne contient aucune sortie");
+			return null;
+		}
+		
+		if (nextRooms.get(requestedDirection).size() == 1) {
+			if (nextRooms.get(requestedDirection).get(0).canPlayerPass())
+				return nextRooms.get(requestedDirection).get(0).room;
+			else {
+				System.out.println("Cette sortie n'est pas accessible");
+				return null;
+			}
+		}
+		else {
+			if (args.length < 2) {
+				System.out.println("Cette direction a plusieurs sorties : veuillez préciser entre 1 et "+nextRooms.get(requestedDirection).size());
+				return null;
+			}
+			int index = -1;
+			try {
+				index = Integer.parseInt(args[1]) - 1;
+				if (index < 0 || index >= nextRooms.get(requestedDirection).size())
+					throw new NumberFormatException();
+			} catch(NumberFormatException e) {
+				System.out.println("Veuillez indiquer un nombre entre 1 et "+nextRooms.get(requestedDirection).size());
+				return null;
+			}
+			
+			
+		}
 		
 		return null;
 	}

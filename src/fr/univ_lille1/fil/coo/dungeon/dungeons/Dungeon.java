@@ -1,7 +1,5 @@
 package fr.univ_lille1.fil.coo.dungeon.dungeons;
 
-import java.util.HashMap;
-
 import fr.univ_lille1.fil.coo.dungeon.rooms.Room;
 
 public class Dungeon {
