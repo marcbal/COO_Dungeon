@@ -7,7 +7,7 @@ public class RoomExit {
 	public final RoomExitType type;
 	
 	public RoomExit(Room next, RoomExitType t) {
-		if (t == null || next == null) throw new IllegalArgumentException("next and t cant be null");
+		if (t == null || next == null) throw new IllegalArgumentException("next and t can't be null");
 		
 		nextRoom = next;
 		type = t;
