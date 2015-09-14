@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import fr.univ_lille1.fil.coo.dungeon.items.Item;
+
 /**
  * Représente un inventaire
  * Que ça soit celui d'un joueur, ou celui d'un coffre d'une salle.
@@ -50,6 +52,15 @@ public class Inventory {
 			for(ItemStack it : i)
 				if (it != null)
 					addItem(it);
+	}
+	
+	
+	public int howMany(Item i) {
+		ItemStack temp = new ItemStack(i, 1);
+		if (inventoryContent.contains(temp)) {
+			return inventoryContent.get(inventoryContent.indexOf(temp)).getNumber();
+		}
+		return 0;
 	}
 
 

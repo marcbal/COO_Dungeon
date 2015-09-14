@@ -1,6 +1,7 @@
 package fr.univ_lille1.fil.coo.dungeon.roomexit;
 
 import fr.univ_lille1.fil.coo.dungeon.items.KeyItem;
+import fr.univ_lille1.fil.coo.dungeon.player.Player;
 import fr.univ_lille1.fil.coo.dungeon.rooms.Room;
 
 public class RoomExitWithKey extends RoomExit {
@@ -18,15 +19,32 @@ public class RoomExitWithKey extends RoomExit {
 	
 	
 	
-	public void tryToOpen(KeyItem key) {
-		if (keyToHave.equals(key))
+	public boolean tryToOpen(Player p) {
+		if (unlocked == false && p.getInventory().howMany(keyToHave) > 0) {
 			unlocked = true;
+			return true;
+		}
+		return false;
 	}
 	
 
 	@Override
 	public boolean canPlayerPass() {
 		return unlocked;
+	}
+
+
+
+	@Override
+	public boolean isVisible() {
+		return true;
+	}
+
+
+
+	@Override
+	public String getStatus() {
+		return (canPlayerPass())?"dévérouillée":"vérouillée par "+keyToHave+" : >>key";
 	}
 	
 }

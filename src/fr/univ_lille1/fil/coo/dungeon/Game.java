@@ -63,13 +63,22 @@ public class Game {
 	public void mainLoop() {
 		do {
 			
+			System.out.println("Vous êtes dans la salle "+currentRoom.name);
+			for(String s : currentRoom.listNextRooms()) {
+				System.out.println(s);
+			}
 			String command = input.nextLine();
 			interpreteCommand(command);
 			
 			
 		} while (getWinningStatus() == null);
 		
-		// TODO affichage des message gagné ou perdu
+		if (getWinningStatus() == true) {
+			System.out.println("Vous avez gagné");
+		}
+		else {
+			System.out.println("Vous avez perdu");
+		}
 		
 	}
 	
@@ -85,10 +94,11 @@ public class Game {
 	
 	
 	private void interpreteCommand(String cmd) {
-		String[] args = cmd.split(cmd, -1);
+		String[] args = cmd.split(" ", -1);
 		if (args.length == 0)
 			return;
 		
+		// commande déplacement
 		if (args[0].equalsIgnoreCase("go")) {
 			Room newRoom = currentRoom.interpretGoCommand(Arrays.copyOfRange(args, 1, args.length));
 			if (newRoom != null) {
@@ -97,6 +107,11 @@ public class Game {
 					nextDungeon(); // on tente de passer dans le donjon suivant, si on n'est pas dans le dernier
 			}
 			return;
+		}
+		
+		// commande d'ouverture des portes avec clé
+		if (args[0].equalsIgnoreCase("key")) {
+			currentRoom.interpreteKeyCommand(player);
 		}
 		
 		// TODO traitement des autres type de commandes (plus tard)
@@ -129,8 +144,8 @@ public class Game {
 		
 		
 		// définition des passages entre les salles
-		entry.addNewNextRoom(RoomExitPosition.NORTH, new RoomExitNormal(intersection));
-		entry.addNewNextRoom(RoomExitPosition.UNDER_CARPET, new RoomExitNormal(roomWithKey));
+		entry.addNewNextRoom(RoomExitPosition.NORTH, new RoomExitNormal(intersection), true);
+		entry.addNewNextRoom(RoomExitPosition.EAST, new RoomExitNormal(roomWithKey), true);
 		// accès à la salle Sortie est bloquée si  on a pas la clé de sortie
 		intersection.addNewNextRoom(RoomExitPosition.NORTH, new RoomExitWithKey(exit, key));
 		intersection.addNewNextRoom(RoomExitPosition.WEST, new RoomExitNormal(trap));

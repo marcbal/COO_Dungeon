@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import fr.univ_lille1.fil.coo.dungeon.player.Inventory;
+import fr.univ_lille1.fil.coo.dungeon.player.Player;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExit;
+import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitNormal;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitPosition;
+import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitWithKey;
 import fr.univ_lille1.fil.coo.dungeon.util.EnumUtil;
 
 public class Room {
@@ -25,7 +28,28 @@ public class Room {
 	}
 	
 	
+	/**
+	 * Créer une sortie vers une autre salle
+	 * @param pos la position de la sortie dans la salle
+	 * @param exit la salle vers lequel même cette sortie
+	 * @param canGoBack si défini à true, créer aussi une sortie depuis la salle cible, qui permet de revenir à la salle courante.
+	 * <br/> la position inverse du paramètre <code>pos</code> est utilisé et la sortie généré est de type <code>RoomExitNormal</code>. Si vous voulez utiliser un type différent pour le retour, ommettez ce paramètre, et définissez le manuellement.
+	 */
+	public void addNewNextRoom(RoomExitPosition pos, RoomExit exit, boolean canGoBack) {
+		addNewNextRoom(pos, exit);
+		if (canGoBack) {
+			if (pos.getInvert() != null)
+				exit.room.addNewNextRoom(pos.getInvert(), new RoomExitNormal(this));
+			else
+				throw new IllegalArgumentException("can't create inverted RoomExit because there is no invert for "+pos.name());
+		}
+	}
 	
+	/**
+	 * Créer une sortie vers une autre salle
+	 * @param pos la position de la sortie dans la salle
+	 * @param exit la salle vers lequel même cette sortie
+	 */
 	public void addNewNextRoom(RoomExitPosition pos, RoomExit exit) {
 		if (!nextRooms.containsKey(pos))
 			nextRooms.put(pos, new ArrayList<RoomExit>());
@@ -113,6 +137,56 @@ public class Room {
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Prends en charge l'ouverture éventuelle des portes vérouillés avec des clés
+	 * @param p le joueur qui est censé avoir des clé sur soi
+	 */
+	public void interpreteKeyCommand(Player p) {
+		for(RoomExitPosition exitPos : nextRooms.keySet()) {
+			List<RoomExit> exits = nextRooms.get(exitPos);
+			
+			for (int i = 0; i<exits.size(); i++) {
+				if (exits.get(i) instanceof RoomExitWithKey) {
+					if (((RoomExitWithKey)exits.get(i)).tryToOpen(p)) {
+						System.out.println("Une sortie "+exitPos.name+" a été ouverte");
+					}
+				}
+			}
+		}
+	}
+	
+	
+	
+	public List<String> listNextRooms() {
+		List<String> ret = new ArrayList<String>();
+		for(RoomExitPosition exitPos : nextRooms.keySet()) {
+			List<RoomExit> exits = nextRooms.get(exitPos);
+			
+			if (exits.size() == 1) {
+				if (exits.get(0).isVisible())
+					ret.add(printOneExit(exitPos, exits.get(0), null));
+			}
+			else {
+				for (int i = 0; i<exits.size(); i++) {
+					if (exits.get(i).isVisible())
+						ret.add(printOneExit(exitPos, exits.get(i), i+1));
+				}
+			}
+		}
+		return ret;
+	}
+	
+	private String printOneExit(RoomExitPosition pos, RoomExit exit, Integer index) {
+		return "Sortie "+
+				pos.name+
+				", "+
+				exit.getStatus()+
+				((exit.canPlayerPass()) ?
+						" : >>go "+pos+((index != null)?" "+index:""):
+						""
+				);
 	}
 	
 }

@@ -13,7 +13,10 @@ public abstract class RoomExit {
 	
 	
 	
-	
+
 	public abstract boolean canPlayerPass();
+	public abstract boolean isVisible();
+	
+	public abstract String getStatus();
 	
 }

@@ -13,4 +13,15 @@ public class RoomExitNormal extends RoomExit {
 		return true;
 	}
 
+	@Override
+	public boolean isVisible() {
+		return true;
+	}
+	
+	
+	@Override
+	public String getStatus() {
+		return "ouverte";
+	}
+
 }

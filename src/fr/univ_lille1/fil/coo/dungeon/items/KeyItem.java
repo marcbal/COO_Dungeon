@@ -27,5 +27,11 @@ public class KeyItem extends Item {
 		if (!(o instanceof KeyItem)) return false;
 		return (id == ((KeyItem)o).id);
 	}
+	
+	
+	@Override
+	public String toString() {
+		return "Clé "+id;
+	}
 
 }
