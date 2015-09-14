@@ -1,9 +1,7 @@
 package fr.univ_lille1.fil.coo.dungeon;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 import fr.univ_lille1.fil.coo.dungeon.dungeons.Dungeon;
 import fr.univ_lille1.fil.coo.dungeon.items.KeyItem;
@@ -20,13 +18,10 @@ import fr.univ_lille1.fil.coo.dungeon.rooms.WinningRoom;
 public class Game {
 	
 	private List<Dungeon> dungeons = new ArrayList<Dungeon>();
-	private Dungeon currentDungeon;
 	private int currentDungeonIndex = -1;
 	private Player player;
 	
 	private Room currentRoom;
-	
-	private Scanner input = new Scanner(System.in);
 	
 	
 	
@@ -41,17 +36,29 @@ public class Game {
 		nextDungeon();
 	}
 	
+	public Player getPlayer() {
+		return player;
+	}
+	public Dungeon getCurrentDungeon() {
+		return dungeons.get(currentDungeonIndex);
+	}
+	public Room getCurrentRoom() {
+		return currentRoom;
+	}
+	
+	
+	
 
 
 
 
 
-	private void nextDungeon() {
+	private boolean nextDungeon() {
 		if (currentDungeonIndex == dungeons.size()-1)
-			return;	// on est au dernier donjon
+			return false;	// on est au dernier donjon
 		currentDungeonIndex++;
-		currentDungeon = dungeons.get(currentDungeonIndex);
-		currentRoom = currentDungeon.getSpawningRoom();
+		currentRoom = getCurrentDungeon().getSpawningRoom();
+		return true;
 	}
 	
 	
@@ -60,30 +67,20 @@ public class Game {
 	
 	
 	
-	public void mainLoop() {
-		do {
 
-			System.out.println("Votre inventaire :");
-			for(String s : player.getInventory().getInventoryString()) {
-				System.out.println(s);
-			}
-			System.out.println("Vous êtes dans la salle "+currentRoom.name);
-			for(String s : currentRoom.listNextRooms()) {
-				System.out.println(s);
-			}
-			String command = input.nextLine();
-			interpreteCommand(command);
-			
-			
-		} while (getWinningStatus() == null);
-		
-		if (getWinningStatus() == true) {
-			System.out.println("Vous avez gagné");
-		}
-		else {
-			System.out.println("Vous avez perdu");
-		}
-		
+	
+	/**
+	 * Donne l'état actuel du jeu
+	 * @return null si le jeu est toujours en cours, false si le joueur a perdu et
+	 * true si le joueur a gagné le jeu
+	 * 
+	 */
+	public Boolean getWinningStatus() {
+		if ((currentRoom instanceof WinningRoom) && currentDungeonIndex == dungeons.size()-1)
+			return true;
+		if (currentRoom instanceof LoosingRoom)
+			return false;
+		return null;
 	}
 	
 	
@@ -95,46 +92,30 @@ public class Game {
 	
 	
 	
+
 	
 	
-	private void interpreteCommand(String cmd) {
-		String[] args = cmd.split(" ", -1);
-		if (args.length == 0)
-			return;
-		
-		// commande déplacement
-		if (args[0].equalsIgnoreCase("go")) {
-			Room newRoom = currentRoom.interpretGoCommand(Arrays.copyOfRange(args, 1, args.length));
-			if (newRoom != null) {
-				currentRoom = newRoom;
-				if (currentRoom instanceof WinningRoom)
-					nextDungeon(); // on tente de passer dans le donjon suivant, si on n'est pas dans le dernier
-			}
-			return;
+	
+	public void sendCommandGo(String[] args) {
+		Room newRoom = currentRoom.interpretGoCommand(args);
+		if (newRoom != null) {
+			currentRoom = newRoom;
+			if (currentRoom instanceof WinningRoom)
+				nextDungeon(); // on tente de passer dans le donjon suivant, si on n'est pas dans le dernier
 		}
-		
-		// commande d'ouverture des portes avec clé
-		if (args[0].equalsIgnoreCase("key")) {
-			currentRoom.interpreteKeyCommand(player);
-		}
-		
-		// récupération des items dans le coffre de la salle courante
-		if (args[0].equalsIgnoreCase("chest")) {
-			currentRoom.interpreteChestCommand(player);
-		}
-		
-		// TODO traitement des autres type de commandes (plus tard)
 	}
-
-
-	
-	
-	
-
 	
 	
 	
 	
+	
+	
+	
+	/**
+	 * <b>Méthode de construction des donjons</b><br/>
+	 * Le code de cette méthode construit les donjons, leurs salles et leurs propriétés
+	 * tel que les items dans les coffres, par exemple.
+	 */
 	private void constructDungeons() {
 		
 		
@@ -169,40 +150,6 @@ public class Game {
 		
 		// TODO d'autres donjons ici
 	}
-	
-	/**
-	 * Donne l'état actuel du jeu
-	 * @return null si le jeu est toujours en cours, false si le joueur a perdu et
-	 * true si le joueur a gagné le jeu
-	 * 
-	 */
-	private Boolean getWinningStatus() {
-		if ((currentRoom instanceof WinningRoom) && currentDungeonIndex == dungeons.size()-1)
-			return true;
-		if (currentRoom instanceof LoosingRoom)
-			return false;
-		return null;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }

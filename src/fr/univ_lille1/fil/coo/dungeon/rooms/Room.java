@@ -143,7 +143,7 @@ public class Room {
 	 * Prends en charge l'ouverture éventuelle des portes vérouillés avec des clés
 	 * @param p le joueur qui est censé avoir des clé sur soi
 	 */
-	public void interpreteKeyCommand(Player p) {
+	public void tryToOpenLockedExit(Player p) {
 		for(RoomExitPosition exitPos : nextRooms.keySet()) {
 			List<RoomExit> exits = nextRooms.get(exitPos);
 			
@@ -163,7 +163,7 @@ public class Room {
 	 * Prends en charge la récupération du stuff dans le coffre de la salle
 	 * @param player le joueur qui effectue la commande
 	 */
-	public void interpreteChestCommand(Player player) {
+	public void sendChestContentToPlayer(Player player) {
 		Inventory chest = getChestContent();
 		
 		if (chest == null) {
