@@ -157,6 +157,24 @@ public class Room {
 		}
 	}
 	
+
+
+	/**
+	 * Prends en charge la récupération du stuff dans le coffre de la salle
+	 * @param player le joueur qui effectue la commande
+	 */
+	public void interpreteChestCommand(Player player) {
+		Inventory chest = getChestContent();
+		
+		if (chest == null) {
+			System.out.println("Il n'y a pas de coffre dans cette salle");
+			return;
+		}
+		
+		chest.transfertIn(player.getInventory());
+		System.out.println("Vous avez de nouveaux items dans votre inventaire");
+	}
+	
 	
 	
 	public List<String> listNextRooms() {

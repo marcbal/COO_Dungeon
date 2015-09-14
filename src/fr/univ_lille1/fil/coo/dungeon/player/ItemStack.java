@@ -11,11 +11,12 @@ import fr.univ_lille1.fil.coo.dungeon.items.Item;
  */
 public class ItemStack {
 	private final Item item;
-	private int number;
+	private int number = 0;
 	
 	public ItemStack(Item i, int n) {
 		if (i == null) throw new IllegalArgumentException("Item can't be null");
 		item = i;
+		put(n);
 	}
 
 	public Item getItem() {
@@ -27,13 +28,19 @@ public class ItemStack {
 	}
 	
 	public void put(int i) {
-		number += i;
-		if (number < 0) {
-			
+		if (i < 0) {
+			throw new IllegalArgumentException("You can't put a negative or null amount of elements in ItemStack. Prefer to use take(int) method");
 		}
+		number += i;
 	}
 	
 	public void take(int i) {
+		if (i < 0) {
+			throw new IllegalArgumentException("You can't take a negative or null amount of elements in ItemStack. Prefer to use put(int) method");
+		}
+		if (number-i <= 0) {
+			throw new IllegalArgumentException("You can't take more elements that there are in ItemStack");
+		}
 		number -= i;
 	}
 	

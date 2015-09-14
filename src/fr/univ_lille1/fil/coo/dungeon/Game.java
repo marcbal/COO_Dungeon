@@ -62,7 +62,11 @@ public class Game {
 	
 	public void mainLoop() {
 		do {
-			
+
+			System.out.println("Votre inventaire :");
+			for(String s : player.getInventory().getInventoryString()) {
+				System.out.println(s);
+			}
 			System.out.println("Vous êtes dans la salle "+currentRoom.name);
 			for(String s : currentRoom.listNextRooms()) {
 				System.out.println(s);
@@ -112,6 +116,11 @@ public class Game {
 		// commande d'ouverture des portes avec clé
 		if (args[0].equalsIgnoreCase("key")) {
 			currentRoom.interpreteKeyCommand(player);
+		}
+		
+		// récupération des items dans le coffre de la salle courante
+		if (args[0].equalsIgnoreCase("chest")) {
+			currentRoom.interpreteChestCommand(player);
 		}
 		
 		// TODO traitement des autres type de commandes (plus tard)

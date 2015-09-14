@@ -31,7 +31,7 @@ public class Inventory {
 
 
 
-	public List<ItemStack> getInventoryCels() {
+	public List<ItemStack> getInventoryContent() {
 		return Collections.unmodifiableList(inventoryContent);
 	}
 	
@@ -54,6 +54,12 @@ public class Inventory {
 					addItem(it);
 	}
 	
+	public void addItems(List<ItemStack> i) {
+		addItems(i.toArray(new ItemStack[i.size()]));
+	}
+	
+	
+	
 	
 	public int howMany(Item i) {
 		ItemStack temp = new ItemStack(i, 1);
@@ -61,6 +67,25 @@ public class Inventory {
 			return inventoryContent.get(inventoryContent.indexOf(temp)).getNumber();
 		}
 		return 0;
+	}
+	
+	public void clear() {
+		inventoryContent = new ArrayList<ItemStack>();
+	}
+	
+	
+	public void transfertIn(Inventory targetInventory) {
+		targetInventory.addItems(getInventoryContent());
+		clear();
+	}
+	
+	
+	public List<String> getInventoryString() {
+		List<String> ret = new ArrayList<String>();
+		for (ItemStack stack : inventoryContent) {
+			ret.add(stack.getNumber()+" "+stack.getItem());
+		}
+		return ret;
 	}
 
 
