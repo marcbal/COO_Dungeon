@@ -22,12 +22,15 @@ public class UserInterface {
 	
 	public void mainLoop() {
 		do {
-
-			System.out.println("Votre inventaire :");
-			for(String s : game.getPlayer().getInventory().getInventoryString()) {
-				System.out.println(s);
+			if (!game.getPlayer().getInventory().isEmpty()) {
+				System.out.println("----- Votre inventaire :");
+				for(String s : game.getPlayer().getInventory().getInventoryString()) {
+					System.out.println(s);
+				}
 			}
-			System.out.println("Vous êtes dans la salle "+game.getCurrentRoom().name);
+			System.out.println("----- Vous êtes dans la salle "+game.getCurrentRoom().name);
+			if (game.getCurrentRoom().getChestContent() != null && !game.getCurrentRoom().getChestContent().isEmpty())
+				System.out.println("Cette salle contient un coffre : >>chest");
 			for(String s : game.getCurrentRoom().listNextRooms()) {
 				System.out.println(s);
 			}
@@ -72,7 +75,7 @@ public class UserInterface {
 			game.getCurrentRoom().tryToOpenLockedExit(game.getPlayer());
 		}
 		else {
-			System.out.println("Commande invalide : 'go', 'chest', 'key'");
+			System.out.println("Commande invalide. Commandes existantes : 'go', 'chest', 'key'");
 		}
 		
 	}

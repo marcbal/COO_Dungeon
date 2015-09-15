@@ -74,6 +74,11 @@ public class Inventory {
 	}
 	
 	
+	public boolean isEmpty() {
+		return inventoryContent.size() == 0;
+	}
+	
+	
 	public void transfertIn(Inventory targetInventory) {
 		targetInventory.addItems(getInventoryContent());
 		clear();
