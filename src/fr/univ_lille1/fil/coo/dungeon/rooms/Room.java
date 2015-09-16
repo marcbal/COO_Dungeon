@@ -11,6 +11,7 @@ import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExit;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitNormal;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitPosition;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitWithKey;
+import fr.univ_lille1.fil.coo.dungeon.ui.Display;
 import fr.univ_lille1.fil.coo.dungeon.util.EnumUtil;
 
 public class Room {
@@ -93,7 +94,7 @@ public class Room {
 	public Room interpretGoCommand(String[] args) {
 		
 		if (args.length == 0) {
-			System.out.println("Vous devez spécifier au moins un argument à 'go'");
+			Display.sendMessage("Vous devez spécifier au moins un argument à 'go'");
 			return null;
 		}
 		
@@ -101,12 +102,12 @@ public class Room {
 		
 		if (requestedDirection == null) {
 			// la direction n'est pas une direction valide
-			System.out.println("Vous devez spécifier une direction valide parmis "+EnumUtil.enumList(RoomExitPosition.class));
+			Display.sendMessage("Vous devez spécifier une direction valide parmis "+EnumUtil.enumList(RoomExitPosition.class));
 			return null;
 		}
 		
 		if (!nextRooms.containsKey(requestedDirection)) {
-			System.out.println("Cette direction ne contient aucune sortie");
+			Display.sendMessage("Cette direction ne contient aucune sortie");
 			return null;
 		}
 		
@@ -114,13 +115,13 @@ public class Room {
 			if (nextRooms.get(requestedDirection).get(0).canPlayerPass())
 				return nextRooms.get(requestedDirection).get(0).room;
 			else {
-				System.out.println("Cette sortie n'est pas accessible");
+				Display.sendMessage("Cette sortie n'est pas accessible");
 				return null;
 			}
 		}
 		else {
 			if (args.length < 2) {
-				System.out.println("Cette direction a plusieurs sorties : veuillez préciser entre 1 et "+nextRooms.get(requestedDirection).size());
+				Display.sendMessage("Cette direction a plusieurs sorties : veuillez préciser entre 1 et "+nextRooms.get(requestedDirection).size());
 				return null;
 			}
 			int index = -1;
@@ -129,7 +130,7 @@ public class Room {
 				if (index < 0 || index >= nextRooms.get(requestedDirection).size())
 					throw new NumberFormatException();
 			} catch(NumberFormatException e) {
-				System.out.println("Veuillez indiquer un nombre entre 1 et "+nextRooms.get(requestedDirection).size());
+				Display.sendMessage("Veuillez indiquer un nombre entre 1 et "+nextRooms.get(requestedDirection).size());
 				return null;
 			}
 			
@@ -150,7 +151,7 @@ public class Room {
 			for (int i = 0; i<exits.size(); i++) {
 				if (exits.get(i) instanceof RoomExitWithKey) {
 					if (((RoomExitWithKey)exits.get(i)).tryToOpen(p)) {
-						System.out.println("Une sortie "+exitPos.name+" a été ouverte");
+						Display.sendMessage("Une sortie "+exitPos.name+" a été ouverte");
 					}
 				}
 			}
@@ -167,12 +168,12 @@ public class Room {
 		Inventory chest = getChestContent();
 		
 		if (chest == null) {
-			System.out.println("Il n'y a pas de coffre dans cette salle");
+			Display.sendMessage("Il n'y a pas de coffre dans cette salle");
 			return;
 		}
 		
 		chest.transfertIn(player.getInventory());
-		System.out.println("Vous avez de nouveaux items dans votre inventaire");
+		Display.sendMessage("Vous avez de nouveaux items dans votre inventaire");
 	}
 	
 	
