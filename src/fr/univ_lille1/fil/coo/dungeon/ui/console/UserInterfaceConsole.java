@@ -59,6 +59,7 @@ public class UserInterfaceConsole {
 		
 		// on affiche le message de fin
 		displayFinish();
+		System.out.print("--");
 		
 	}
 	
@@ -94,7 +95,7 @@ public class UserInterfaceConsole {
 	public void displayFinish() {
 		System.out.print("\n\n\n\n\n");
 		ConsoleWindow message = new ConsoleWindow(25, 3, 50, 5);
-		message.setBorderType(BorderType.HEAVY);
+		message.setBorderType(BorderType.SHADOW_LIKE);
 		if (game.getWinningStatus() == true) {
 			message.setContent("\n               Vous avez gagné :D");
 		}
@@ -126,7 +127,7 @@ public class UserInterfaceConsole {
 			game.getCurrentRoom().tryToOpenLockedExit(game.getPlayer());
 		}
 		else {
-			System.out.println("Commande invalide. Commandes existantes : 'go', 'chest', 'key'");
+			Display.sendMessage("Commande invalide. Commandes existantes : 'go', 'chest', 'key'");
 		}
 		
 	}

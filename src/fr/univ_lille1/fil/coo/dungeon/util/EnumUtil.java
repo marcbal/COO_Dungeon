@@ -15,8 +15,8 @@ public class EnumUtil {
 		for (T el : elements) {
 			if (!first) {
 				out += ", ";
-				first = false;
 			}
+			first = false;
 			out += el.name();
 			
 		}

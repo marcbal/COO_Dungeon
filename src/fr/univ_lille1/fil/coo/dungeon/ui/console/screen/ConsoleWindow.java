@@ -72,10 +72,12 @@ public class ConsoleWindow {
 			chars[outerWidth-1][0] = border.topRight;
 			chars[outerWidth-1][outerHeight-1] = border.bottomRight;
 			for (int i=0; i<innerWidth; i++) {
-				chars[i+1][0] = chars[i+1][outerHeight-1] = border.horizontal;
+				chars[i+1][0] = border.top;
+				chars[i+1][outerHeight-1] = border.bottom;
 			}
 			for (int i=0; i<innerHeight; i++) {
-				chars[0][i+1] = chars[outerWidth-1][i+1] = border.vertical;
+				chars[0][i+1] = border.left;
+				chars[outerWidth-1][i+1] = border.right;
 			}
 		}
 		
@@ -101,20 +103,24 @@ public class ConsoleWindow {
 	 */
 	public static enum BorderType {
 		NONE(),
-		LIGHT('│', '─', '┌', '┐', '└', '┘'),
-		LIGHT_BORDER_RADIUS('│', '─', '╭', '╮', '╰', '╯'),
-		HEAVY('┃', '━', '┏', '┓', '┗', '┛');
+		LIGHT('│', '│', '─', '─', '┌', '┐', '└', '┘'),
+		LIGHT_BORDER_RADIUS('│', '│', '─', '─', '╭', '╮', '╰', '╯'),
+		HEAVY('┃', '┃', '━', '━', '┏', '┓', '┗', '┛'),
+		SHADOW_LIKE('│', '┃', '─', '━', '┌', '┒', '┕', '┛'),
+		DOUBLE('║', '║', '═', '═', '╔', '╗', '╚', '╝');
 		
 		
 		public final int width;
-		public final char vertical, horizontal, topLeft, topRight, bottomLeft, bottomRight;
+		public final char left, right, top, bottom, topLeft, topRight, bottomLeft, bottomRight;
 		
 		
-		private BorderType(char v, char h, char tl, char tr, char bl, char br) {
+		private BorderType(char l, char r, char t, char b, char tl, char tr, char bl, char br) {
 			width = 1;
 			
-			vertical = v;
-			horizontal = h;
+			left = l;
+			right = r;
+			top = t;
+			bottom = b;
 			topLeft = tl;
 			topRight = tr;
 			bottomLeft = bl;
@@ -124,7 +130,7 @@ public class ConsoleWindow {
 		
 		private BorderType() {
 			width = 0;
-			vertical = horizontal = topLeft = topRight = bottomLeft = bottomRight = ' ';
+			left = right = top = bottom = topLeft = topRight = bottomLeft = bottomRight = ' ';
 		}
 		
 		
