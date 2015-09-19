@@ -38,7 +38,7 @@ public class ItemStack {
 		if (i < 0) {
 			throw new IllegalArgumentException("You can't take a negative or null amount of elements in ItemStack. Prefer to use put(int) method");
 		}
-		if (number-i <= 0) {
+		if (number-i < 0) {
 			throw new IllegalArgumentException("You can't take more elements that there are in ItemStack");
 		}
 		number -= i;

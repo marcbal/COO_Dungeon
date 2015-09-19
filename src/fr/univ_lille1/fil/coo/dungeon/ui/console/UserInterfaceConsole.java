@@ -77,8 +77,9 @@ public class UserInterfaceConsole {
 		
 		List<String> roomDisplay = new ArrayList<String>();
 		roomDisplay.add("----- Vous êtes dans la salle "+game.getCurrentRoom().name);
+		roomDisplay.add("Vie : " + game.getPlayer().getHealth());
 		if (game.getCurrentRoom().getChestContent() != null && !game.getCurrentRoom().getChestContent().isEmpty())
-			roomDisplay.add("Cette salle contient un coffre : >>chest");
+			roomDisplay.add("Cette salle contient un coffre : >> chest");
 		roomDisplay.addAll(game.getCurrentRoom().listNextRooms());
 		roomWindow.setContent(roomDisplay);
 		screen.drawWindow(roomWindow);
@@ -108,7 +109,10 @@ public class UserInterfaceConsole {
 	
 	
 	
-	
+	/**
+	 * Fonction gérant les commandes envoyant, en les dirigeant vers leurs traitements respectifs
+	 * @param commandLine
+	 */
 	public void dispatchCommand(String commandLine) {
 		String[] split = commandLine.split(" ", -1);
 		if (split.length == 0)
@@ -117,17 +121,20 @@ public class UserInterfaceConsole {
 		String[] args = Arrays.copyOfRange(split, 1, split.length);
 		
 		
-		if (command.equals("go")) {
+		if (command.equals("go")) { //Direction
 			game.sendCommandGo(args);
 		}
-		else if (command.equals("chest")) {
+		else if (command.equals("chest")) { //Coffre
 			game.getCurrentRoom().sendChestContentToPlayer(game.getPlayer());
 		}
-		else if (command.equals("key")) {
+		else if (command.equals("key")) { //Clés
 			game.getCurrentRoom().tryToOpenLockedExit(game.getPlayer());
 		}
+		else if(command.equals(("heal"))) { //Potions
+			game.getPlayer().getHealth().tryToHeal(((args != null && args.length>0)?Integer.parseInt((args[0].length()>0)?args[0]:"-1"):-1), game.getPlayer());
+		}
 		else {
-			Display.sendMessage("Commande invalide. Commandes existantes : 'go', 'chest', 'key'");
+			Display.sendMessage("Commande invalide. Commandes existantes : 'go', 'chest', 'key, heal");
 		}
 		
 	}

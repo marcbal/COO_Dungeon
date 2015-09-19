@@ -203,7 +203,7 @@ public class Room {
 				", "+
 				exit.getStatus()+
 				((exit.canPlayerPass()) ?
-						" : >>go "+pos+((index != null)?" "+index:""):
+						" : >> go "+pos+((index != null)?" "+index:""):
 						""
 				);
 	}

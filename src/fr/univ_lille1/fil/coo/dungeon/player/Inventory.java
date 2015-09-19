@@ -69,6 +69,31 @@ public class Inventory {
 		return 0;
 	}
 	
+	/**
+	 * Retourne le stock d'item recherché
+	 * @param L'item recherché
+	 * @return le stock d'item si trouvé, sinon la valeur null est renvoyée
+	 */
+	public ItemStack getItemStack(Item i) {
+		ItemStack temp = new ItemStack(i, 1);
+		if(inventoryContent.contains(temp)) {
+			return inventoryContent.get(inventoryContent.indexOf(temp));
+		}
+		return null;
+	}
+	
+	/**
+	 * Supprime un stock de l'inventaire
+	 * @param i Le stock à supprimer
+	 * @return vrai si le stock a bien été supprimé, faux sinon
+	 */
+	public void removeItemStack(Item i) {
+		if(getItemStack(i) != null)
+			inventoryContent.remove(new ItemStack(i,1));
+		else
+			throw new IllegalArgumentException("You can't delete a stack which doesn't exist");
+	}
+	
 	public void clear() {
 		inventoryContent = new ArrayList<ItemStack>();
 	}
