@@ -87,9 +87,14 @@ public class Inventory {
 	 * @param i Le stock à supprimer
 	 * @return vrai si le stock a bien été supprimé, faux sinon
 	 */
-	public void removeItemStack(Item i) {
-		if(getItemStack(i) != null)
-			inventoryContent.remove(new ItemStack(i,1));
+	public void removeItemStack(ItemStack i) {
+		if(inventoryContent.contains(i)) {
+			try {
+			inventoryContent.get(inventoryContent.indexOf(i)).take(i.getNumber());
+			} catch(IllegalArgumentException e) {
+				inventoryContent.remove(i);
+			}
+		}
 		else
 			throw new IllegalArgumentException("You can't delete a stack which doesn't exist");
 	}

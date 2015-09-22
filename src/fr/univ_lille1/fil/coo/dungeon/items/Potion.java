@@ -1,14 +1,13 @@
 package fr.univ_lille1.fil.coo.dungeon.items;
 
-import fr.univ_lille1.fil.coo.dungeon.player.Health;
-
 public abstract class Potion extends Item {
 	
 	protected int id; //Chaque type de potion a un identifiant unique
 	protected int value;
 	
-	public void heal(Health health) {
-		health.heal(this);
+	public Potion(int i, int v) {
+		id = i;
+		value = v;
 	}
 	
 	public int getValue() {

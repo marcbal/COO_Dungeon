@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import fr.univ_lille1.fil.coo.dungeon.Game;
+import fr.univ_lille1.fil.coo.dungeon.items.Potion;
+import fr.univ_lille1.fil.coo.dungeon.player.ItemStack;
 import fr.univ_lille1.fil.coo.dungeon.ui.Display;
 import fr.univ_lille1.fil.coo.dungeon.ui.console.screen.ConsoleScreen;
 import fr.univ_lille1.fil.coo.dungeon.ui.console.screen.ConsoleWindow;
@@ -131,7 +133,19 @@ public class UserInterfaceConsole {
 			game.getCurrentRoom().tryToOpenLockedExit(game.getPlayer());
 		}
 		else if(command.equals(("heal"))) { //Potions
-			game.getPlayer().getHealth().tryToHeal(((args != null && args.length>0)?Integer.parseInt((args[0].length()>0)?args[0]:"-1"):-1), game.getPlayer());
+			
+			// ligne à changer
+			int idPotion = ((args != null && args.length>0)?Integer.parseInt((args[0].length()>0)?args[0]:"-1"):-1);
+			
+			Potion temp = new Potion(idPotion, 0) {};
+			ItemStack potionStack = game.getPlayer().getInventory().getItemStack(temp);
+			if (potionStack == null) {
+				Display.sendMessage("La potion n'existe pas dans votre inventaire");
+			}
+			
+			Potion p = (Potion) potionStack.getItem();
+			
+			game.getPlayer().getHealth().tryToHeal(p);
 		}
 		else {
 			Display.sendMessage("Commande invalide. Commandes existantes : 'go', 'chest', 'key, heal");
