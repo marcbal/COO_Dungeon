@@ -90,9 +90,11 @@ public class Inventory {
 	public void removeItemStack(ItemStack i) {
 		if(inventoryContent.contains(i)) {
 			try {
-			inventoryContent.get(inventoryContent.indexOf(i)).take(i.getNumber());
+				if (inventoryContent.get(inventoryContent.indexOf(i)).take(i.getNumber()) == 0)
+					inventoryContent.remove(i);	// si l'itemStack a été vidé
 			} catch(IllegalArgumentException e) {
 				inventoryContent.remove(i);
+				
 			}
 		}
 		else

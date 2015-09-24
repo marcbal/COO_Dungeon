@@ -9,6 +9,7 @@ import fr.univ_lille1.fil.coo.dungeon.util.StringUtil;
 public class ConsoleWindow {
 	
 	private BorderType border;
+	private String title;
 	private List<String> content = new ArrayList<String>();
 	public int posX, posY;
 	private int outerWidth, outerHeight;
@@ -60,6 +61,11 @@ public class ConsoleWindow {
 		}
 		else
 			contentDisplayed = content;
+		
+		// ajout du titre avec le contenu si la fenêtre n'a pas de bordure
+		if (title != null && border.width == 0)
+			contentDisplayed.add(0, "-"+title+"-");
+		
 		// tableau dans lequel on dessine la fenêtre 
 		char[][] chars = new char[outerWidth][outerHeight];
 		for (char[] l : chars) {
@@ -79,6 +85,12 @@ public class ConsoleWindow {
 				chars[0][i+1] = border.left;
 				chars[outerWidth-1][i+1] = border.right;
 			}
+			// le titre, si il existe
+			if (title != null) {
+				char[] line = title.toCharArray();
+				for (int i=0; i<line.length && i+2<outerWidth-2; i++)
+					chars[i+2][0] = line[i];
+			}
 		}
 		
 		// le contenu
@@ -93,9 +105,18 @@ public class ConsoleWindow {
 	
 	
 	
-	
-	
-	
+
+
+
+	public void setTitle(String t) {
+		title = t;
+	}
+
+
+
+
+
+
 	/**
 	 * Représente une bordure d'une fenêtre console
 	 * @author Marc

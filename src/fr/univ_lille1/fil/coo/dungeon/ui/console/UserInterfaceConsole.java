@@ -19,12 +19,14 @@ public class UserInterfaceConsole {
 	
 	
 	// affichage
-	public static final int SCREEN_WIDTH = 100;
-	public static final int SCREEN_HEIGHT = 12;
+	public static final int SCREEN_WIDTH = 110;
+	public static final int SCREEN_HEIGHT = 17;
 	private ConsoleScreen screen = new ConsoleScreen(SCREEN_WIDTH, SCREEN_HEIGHT-1);
-	private ConsoleWindow roomWindow = new ConsoleWindow(0, 0, 65, 8);
-	private ConsoleWindow inventoryWindow = new ConsoleWindow(65, 0, 35, 11);
-	private ConsoleWindow messagesWindow = new ConsoleWindow(0, 8, 65, 3);
+	private ConsoleWindow titleWindow = new ConsoleWindow(0, 0, SCREEN_WIDTH, 3);
+	private ConsoleWindow playerDataWindow = new ConsoleWindow(0, 3, 75, 3);
+	private ConsoleWindow roomWindow = new ConsoleWindow(0, 6, 75, 8);
+	private ConsoleWindow inventoryWindow = new ConsoleWindow(75, 3, 35, 11);
+	private ConsoleWindow messagesWindow = new ConsoleWindow(0, 14, 110, 2);
 	
 	
 	// clavier
@@ -43,8 +45,17 @@ public class UserInterfaceConsole {
 	
 	public UserInterfaceConsole(Game g) {
 		game = g;
+		
+		// initialisation de l'affichage
+		titleWindow.setBorderType(BorderType.HEAVY);
+		titleWindow.setContent("Lille 1 Info COO                             Mini-jeux Donjon          Par M. Maroine, M. Baloup, V. Oudjail");
+		
 		inventoryWindow.setBorderType(BorderType.LIGHT_BORDER_RADIUS);
-
+		inventoryWindow.setTitle("Inventaire");
+		playerDataWindow.setBorderType(BorderType.LIGHT_BORDER_RADIUS);
+		playerDataWindow.setTitle("Infos joueur");
+		roomWindow.setBorderType(BorderType.LIGHT_BORDER_RADIUS);
+		
 		
 		// adding commands into commandsManager
 		commandsManager.addCommand(new CommandGo());
@@ -86,14 +97,20 @@ public class UserInterfaceConsole {
 		System.out.print("\n\n\n\n\n");
 		
 		// on prépare l'affichage dans la console
+		screen.drawWindow(titleWindow);
+		
+
+		List<String> playerData = new ArrayList<String>();
+		playerData.add("Vie : " + game.getPlayer().getHealth());
+		playerDataWindow.setContent(playerData);
+		screen.drawWindow(playerDataWindow);
+		
 		List<String> invDisplay = game.getPlayer().getInventory().getInventoryString();
-		invDisplay.add(0, "---------- Inventaire -----------");
 		inventoryWindow.setContent(invDisplay);
 		screen.drawWindow(inventoryWindow);
 		
 		List<String> roomDisplay = new ArrayList<String>();
-		roomDisplay.add("----- Vous êtes dans la salle "+game.getCurrentRoom().name);
-		roomDisplay.add("Vie : " + game.getPlayer().getHealth());
+		roomWindow.setTitle("Salle : "+game.getCurrentRoom().name);
 		if (game.getCurrentRoom().getChestContent() != null && !game.getCurrentRoom().getChestContent().isEmpty())
 			roomDisplay.add("Cette salle contient un coffre : >> chest");
 		roomDisplay.addAll(game.getCurrentRoom().listNextRooms());

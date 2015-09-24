@@ -34,7 +34,16 @@ public class ItemStack {
 		number += i;
 	}
 	
-	public void take(int i) {
+	
+	/**
+	 * 
+	 * @param i le nombre d'élément à retirer du stacktrace
+	 * @return le nombre d'élément restant dans l'itemstack
+	 * @throws IllegalArgumentException si i est négatif ou si le nombre
+	 * d'élément résultant deviendrait négatif : c'est à dire si on essaye de
+	 * retirer plus d'élément qu'il y en a dans l'ItemStack.
+	 */
+	public int take(int i) {
 		if (i < 0) {
 			throw new IllegalArgumentException("You can't take a negative or null amount of elements in ItemStack. Prefer to use put(int) method");
 		}
@@ -42,6 +51,7 @@ public class ItemStack {
 			throw new IllegalArgumentException("You can't take more elements that there are in ItemStack");
 		}
 		number -= i;
+		return number;
 	}
 	
 	

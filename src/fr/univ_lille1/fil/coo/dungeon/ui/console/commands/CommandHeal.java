@@ -3,7 +3,6 @@ package fr.univ_lille1.fil.coo.dungeon.ui.console.commands;
 import fr.univ_lille1.fil.coo.dungeon.Game;
 import fr.univ_lille1.fil.coo.dungeon.items.Potion;
 import fr.univ_lille1.fil.coo.dungeon.player.ItemStack;
-import fr.univ_lille1.fil.coo.dungeon.ui.Display;
 
 public class CommandHeal extends Command {
 
@@ -20,10 +19,8 @@ public class CommandHeal extends Command {
 		
 		Potion temp = new Potion(idPotion, 0) {};
 		ItemStack potionStack = game.getPlayer().getInventory().getItemStack(temp);
-		if (potionStack == null) {
-			Display.sendMessage("La potion n'existe pas dans votre inventaire");
-			return;
-		}
+		if (potionStack == null)
+			throw new CommandException("La potion n'existe pas dans votre inventaire");
 		
 		Potion p = (Potion) potionStack.getItem();
 		
