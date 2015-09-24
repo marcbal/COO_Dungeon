@@ -136,11 +136,13 @@ public class UserInterfaceConsole {
 			
 			// ligne à changer
 			int idPotion = ((args != null && args.length>0)?Integer.parseInt((args[0].length()>0)?args[0]:"-1"):-1);
+			// ---------------
 			
 			Potion temp = new Potion(idPotion, 0) {};
 			ItemStack potionStack = game.getPlayer().getInventory().getItemStack(temp);
 			if (potionStack == null) {
 				Display.sendMessage("La potion n'existe pas dans votre inventaire");
+				return;
 			}
 			
 			Potion p = (Potion) potionStack.getItem();
