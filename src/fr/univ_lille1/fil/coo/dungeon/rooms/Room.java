@@ -11,6 +11,7 @@ import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExit;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitNormal;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitPosition;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitWithKey;
+import fr.univ_lille1.fil.coo.dungeon.ui.console.commands.Command.CommandException;
 import fr.univ_lille1.fil.coo.dungeon.ui.Display;
 import fr.univ_lille1.fil.coo.dungeon.util.EnumUtil;
 
@@ -90,59 +91,50 @@ public class Room {
 	 * 
 	 * 
 	 * @return une nouvelle salle si le joueur change de salle
+	 * @throws CommandException si la commande est invalide, ou si le joueur ne peut pas changer de salle
+	 * en suivant les paramètres de la commande. Le message de l'exception précise la raison.
 	 */
 	public Room interpretGoCommand(String[] args) {
 		
-		if (args.length == 0) {
-			Display.sendMessage("Vous devez spécifier au moins un argument à 'go'");
-			return null;
-		}
+		if (args.length == 0)
+			throw new CommandException("Vous devez spécifier au moins 1 paramètre");
 		
 		RoomExitPosition requestedDirection = EnumUtil.searchEnum(RoomExitPosition.class, args[0]);
 		
-		if (requestedDirection == null) {
-			// la direction n'est pas une direction valide
-			Display.sendMessage("Vous devez spécifier une direction valide parmis "+EnumUtil.enumList(RoomExitPosition.class));
-			return null;
-		}
+		if (requestedDirection == null)
+			throw new CommandException("Vous devez spécifier une direction valide parmis "+EnumUtil.enumList(RoomExitPosition.class));
 		
-		if (!nextRooms.containsKey(requestedDirection)) {
-			Display.sendMessage("Cette direction ne contient aucune sortie");
-			return null;
-		}
+		if (!nextRooms.containsKey(requestedDirection))
+			throw new CommandException("Cette direction ne contient aucune sortie");
 		
 		if (nextRooms.get(requestedDirection).size() == 1) {
 			if (nextRooms.get(requestedDirection).get(0).canPlayerPass())
 				return nextRooms.get(requestedDirection).get(0).room;
-			else {
-				Display.sendMessage("Cette sortie n'est pas accessible");
-				return null;
-			}
+			else
+				throw new CommandException("Cette sortie n'est pas accessible");
 		}
 		else {
-			if (args.length < 2) {
-				Display.sendMessage("Cette direction a plusieurs sorties : veuillez préciser entre 1 et "+nextRooms.get(requestedDirection).size());
-				return null;
-			}
+			if (args.length < 2)
+				throw new CommandException("Cette direction a plusieurs sorties : veuillez préciser entre 1 et "+nextRooms.get(requestedDirection).size());
+			
 			int index = -1;
 			try {
-				index = Integer.parseInt(args[1]) - 1;
+				index = Integer.parseInt(args[1]) - 1; // throws NumberFormatException
 				if (index < 0 || index >= nextRooms.get(requestedDirection).size())
-					throw new NumberFormatException();
-			} catch(NumberFormatException e) {
-				Display.sendMessage("Veuillez indiquer un nombre entre 1 et "+nextRooms.get(requestedDirection).size());
-				return null;
+					throw new IndexOutOfBoundsException();
+			} catch(IndexOutOfBoundsException|NumberFormatException e) {
+				throw new CommandException("Veuillez indiquer un nombre entre 1 et "+nextRooms.get(requestedDirection).size());
 			}
 			
-			
+			return nextRooms.get(requestedDirection).get(index).room;
 		}
-		
-		return null;
 	}
+	
+	
 	
 	/**
 	 * Prends en charge l'ouverture éventuelle des portes vérouillés avec des clés
-	 * @param p le joueur qui est censé avoir des clé sur soi
+	 * @param p le joueur qui est censé avoir des clés sur lui
 	 */
 	public void tryToOpenLockedExit(Player p) {
 		for(RoomExitPosition exitPos : nextRooms.keySet()) {
@@ -158,23 +150,6 @@ public class Room {
 		}
 	}
 	
-
-
-	/**
-	 * Prends en charge la récupération du stuff dans le coffre de la salle
-	 * @param player le joueur qui effectue la commande
-	 */
-	public void sendChestContentToPlayer(Player player) {
-		Inventory chest = getChestContent();
-		
-		if (chest == null) {
-			Display.sendMessage("Il n'y a pas de coffre dans cette salle");
-			return;
-		}
-		
-		chest.transfertIn(player.getInventory());
-		Display.sendMessage("Vous avez de nouveaux items dans votre inventaire");
-	}
 	
 	
 	

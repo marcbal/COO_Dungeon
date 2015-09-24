@@ -7,6 +7,6 @@ public class ClassicPotion extends Potion {
 	}
 	
 	public String toString() {
-		return "Potion classique" + "'" + id + "'";
+		return "Potion classique '" + id + "'";
 	}
 }

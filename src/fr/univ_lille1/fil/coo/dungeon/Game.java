@@ -41,6 +41,17 @@ public class Game {
 		return currentRoom;
 	}
 	
+	/**
+	 * Défini la salle courante. Si cette nouvelle salle est de type WinningRoom,
+	 * on passe directement au donjon suivant.<br/>
+	 * <b>Il est alors possible que getCurrentRoom() ne retourne pas la salle défini via setCurrentRoom() juste avant.</b>
+	 * @param
+	 */
+	public void setCurrentRoom(Room room) {
+		currentRoom = room;
+		if (currentRoom instanceof WinningRoom)
+			nextDungeon();
+	}
 	
 	
 
@@ -78,27 +89,6 @@ public class Game {
 		return null;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	public void sendCommandGo(String[] args) {
-		Room newRoom = currentRoom.interpretGoCommand(args);
-		if (newRoom != null) {
-			currentRoom = newRoom;
-			if (currentRoom instanceof WinningRoom)
-				nextDungeon(); // on tente de passer dans le donjon suivant, si on n'est pas dans le dernier
-		}
-	}
 	
 	
 	

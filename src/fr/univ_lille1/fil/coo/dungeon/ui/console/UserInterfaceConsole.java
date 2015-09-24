@@ -1,14 +1,16 @@
 package fr.univ_lille1.fil.coo.dungeon.ui.console;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 import fr.univ_lille1.fil.coo.dungeon.Game;
-import fr.univ_lille1.fil.coo.dungeon.items.Potion;
-import fr.univ_lille1.fil.coo.dungeon.player.ItemStack;
 import fr.univ_lille1.fil.coo.dungeon.ui.Display;
+import fr.univ_lille1.fil.coo.dungeon.ui.console.commands.CommandChest;
+import fr.univ_lille1.fil.coo.dungeon.ui.console.commands.CommandGo;
+import fr.univ_lille1.fil.coo.dungeon.ui.console.commands.CommandHeal;
+import fr.univ_lille1.fil.coo.dungeon.ui.console.commands.CommandKey;
+import fr.univ_lille1.fil.coo.dungeon.ui.console.commands.CommandsManager;
 import fr.univ_lille1.fil.coo.dungeon.ui.console.screen.ConsoleScreen;
 import fr.univ_lille1.fil.coo.dungeon.ui.console.screen.ConsoleWindow;
 import fr.univ_lille1.fil.coo.dungeon.ui.console.screen.ConsoleWindow.BorderType;
@@ -34,9 +36,21 @@ public class UserInterfaceConsole {
 	
 	
 	
+	// gestionnaire des commandes
+	private CommandsManager commandsManager = new CommandsManager();
+	
+	
+	
 	public UserInterfaceConsole(Game g) {
 		game = g;
 		inventoryWindow.setBorderType(BorderType.LIGHT_BORDER_RADIUS);
+
+		
+		// adding commands into commandsManager
+		commandsManager.addCommand(new CommandGo());
+		commandsManager.addCommand(new CommandChest());
+		commandsManager.addCommand(new CommandKey());
+		commandsManager.addCommand(new CommandHeal());
 	}
 	
 	
@@ -53,8 +67,8 @@ public class UserInterfaceConsole {
 			System.out.print(">>");
 			String command = keyboard.nextLine();
 			
-			// traitement
-			dispatchCommand(command);
+			// traitement de la commande
+			commandsManager.dispatchCommand(game, command);
 			
 			
 		} while (game.getWinningStatus() == null);
@@ -110,49 +124,5 @@ public class UserInterfaceConsole {
 	}
 	
 	
-	
-	/**
-	 * Fonction gérant les commandes envoyant, en les dirigeant vers leurs traitements respectifs
-	 * @param commandLine
-	 */
-	public void dispatchCommand(String commandLine) {
-		String[] split = commandLine.split(" ", -1);
-		if (split.length == 0)
-			return;
-		String command = split[0].toLowerCase();
-		String[] args = Arrays.copyOfRange(split, 1, split.length);
-		
-		
-		if (command.equals("go")) { //Direction
-			game.sendCommandGo(args);
-		}
-		else if (command.equals("chest")) { //Coffre
-			game.getCurrentRoom().sendChestContentToPlayer(game.getPlayer());
-		}
-		else if (command.equals("key")) { //Clés
-			game.getCurrentRoom().tryToOpenLockedExit(game.getPlayer());
-		}
-		else if(command.equals(("heal"))) { //Potions
-			
-			// ligne à changer
-			int idPotion = ((args != null && args.length>0)?Integer.parseInt((args[0].length()>0)?args[0]:"-1"):-1);
-			// ---------------
-			
-			Potion temp = new Potion(idPotion, 0) {};
-			ItemStack potionStack = game.getPlayer().getInventory().getItemStack(temp);
-			if (potionStack == null) {
-				Display.sendMessage("La potion n'existe pas dans votre inventaire");
-				return;
-			}
-			
-			Potion p = (Potion) potionStack.getItem();
-			
-			game.getPlayer().getHealth().tryToHeal(p);
-		}
-		else {
-			Display.sendMessage("Commande invalide. Commandes existantes : 'go', 'chest', 'key, heal");
-		}
-		
-	}
 	
 }
