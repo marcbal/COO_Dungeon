@@ -23,10 +23,11 @@ public class CommandsManager {
 		Command cmdExecutor = commands.get(command);
 		if (cmdExecutor == null) {
 			Display.sendMessage("Commande invalide. Commandes existantes : "+listCommands());
+			return;
 		}
 		
 		try {
-		cmdExecutor.execute(game, args);
+			cmdExecutor.execute(game, args);
 		} catch (CommandException e) {
 			e.printStackTrace();
 			Display.sendMessage("Erreur d'exécution de la commande : "+e.getMessage());
