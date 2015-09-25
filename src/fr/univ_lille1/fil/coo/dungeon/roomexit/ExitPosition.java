@@ -15,10 +15,11 @@ public enum ExitPosition {
 	
 	
 	private String invert = null;
-	public final String name;
+	
+	private String name;
 	
 	/**
-	 * Define a exit position width a display name and the opposite position
+	 * Define an exit position with a display name and the opposite position
 	 * @param n display name for this position
 	 * @param i enum name for the opposite position
 	 */
@@ -39,6 +40,6 @@ public enum ExitPosition {
 	
 	@Override
 	public String toString() {
-		return name().toLowerCase();
+		return name;
 	}
 }

@@ -9,9 +9,9 @@ import fr.univ_lille1.fil.coo.dungeon.player.ItemStack;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitNormal;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.ExitPosition;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitWithKey;
-import fr.univ_lille1.fil.coo.dungeon.rooms.LoosingRoom;
+import fr.univ_lille1.fil.coo.dungeon.rooms.RoomLoosing;
 import fr.univ_lille1.fil.coo.dungeon.rooms.Room;
-import fr.univ_lille1.fil.coo.dungeon.rooms.WinningRoom;
+import fr.univ_lille1.fil.coo.dungeon.rooms.RoomWinning;
 
 /**
  * Classic Dungeon.<br/>
@@ -25,8 +25,8 @@ public class FactoryDungeonDemo implements FactoryDungeon {
 		// création des salles
 		Room entry = new Room("Entrée");
 		Room intersection = new Room("Salle intermédiaire");
-		Room exit = new WinningRoom("Sortie");
-		Room trap = new LoosingRoom("Trappe");
+		Room exit = new RoomWinning();
+		Room trap = new RoomLoosing();
 		Room roomWithKey = new Room("Salle du coffre");
 		Room roomWithPotion = new Room("Salle de soin");
 		

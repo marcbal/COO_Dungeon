@@ -29,11 +29,11 @@ Le chiffre entre parenthèse représente la note estimée actuellement.
 - *(-)* Il n'y a pas 2 méthodes presque identiques
 - *(-)* Il n'y a pas 2 bouts de codes presque identiques
 - *(2)* Il y a une classe Room
-- *(-)* La classe Room est commentée
+- *(2)* La classe Room est commentée
 - *(2)* Il y a une hiérarchie de Room (des sous-classes)
 - *(-)* Chaque type de Room est testée
 - *(2)* Il existe une classe Exit qui fait le lien entre 2 Rooms (RoomExit pour nous)
-- *(-)* La classe Exit est commentée
+- *(2)* La classe Exit est commentée
 - *(2)* Il existe une hiérarchie d'Exit (des sous-classes)
 - *(-)* Chaque type d'Exit est testée
 - *(3 vu tout ce qu'on a fait, Factory, Interface console)* Il existe plusieurs type d'objet
@@ -44,7 +44,7 @@ Le chiffre entre parenthèse représente la note estimée actuellement.
 - *(-)* 100% de la logique globale du jeu est testée (interpréteur de commande, fin de partie, changement de donjon)
 - *(-)* Commentaires abondants et en anglais
 
-Total temporaire estimée : 25/46 -> -/20
+Total temporaire estimée : 29/46 => 12.6/20
 
 
 

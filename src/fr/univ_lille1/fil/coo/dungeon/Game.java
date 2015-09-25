@@ -7,8 +7,8 @@ import fr.univ_lille1.fil.coo.dungeon.dungeons.Dungeon;
 import fr.univ_lille1.fil.coo.dungeon.factories.FactoryDungeonDemo;
 import fr.univ_lille1.fil.coo.dungeon.player.Player;
 import fr.univ_lille1.fil.coo.dungeon.rooms.Room;
-import fr.univ_lille1.fil.coo.dungeon.rooms.LoosingRoom;
-import fr.univ_lille1.fil.coo.dungeon.rooms.WinningRoom;
+import fr.univ_lille1.fil.coo.dungeon.rooms.RoomLoosing;
+import fr.univ_lille1.fil.coo.dungeon.rooms.RoomWinning;
 
 public class Game {
 	
@@ -21,7 +21,7 @@ public class Game {
 	
 	
 	public Game() {
-		player = new Player("Joueur");
+		player = new Player();
 		
 		
 		
@@ -49,7 +49,7 @@ public class Game {
 	 */
 	public void setCurrentRoom(Room room) {
 		currentRoom = room;
-		if (currentRoom instanceof WinningRoom)
+		if (currentRoom instanceof RoomWinning)
 			nextDungeon();
 	}
 	
@@ -82,9 +82,9 @@ public class Game {
 	 * 
 	 */
 	public Boolean getWinningStatus() {
-		if ((currentRoom instanceof WinningRoom) && currentDungeonIndex == dungeons.size()-1)
+		if ((currentRoom instanceof RoomWinning) && currentDungeonIndex == dungeons.size()-1)
 			return true;
-		if (currentRoom instanceof LoosingRoom)
+		if (currentRoom instanceof RoomLoosing)
 			return false;
 		if (player.getHealth().getLife() <= 0)
 			return false;

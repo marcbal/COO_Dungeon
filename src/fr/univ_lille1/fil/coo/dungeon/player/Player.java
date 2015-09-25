@@ -1,27 +1,29 @@
 package fr.univ_lille1.fil.coo.dungeon.player;
 
+/**
+ * Represent the player with an {@link Inventory}, a {@link Health}
+ */
 public class Player {
-	private String name;
 	private Inventory inventory = new Inventory();
 	private Health health = new Health(500);
-
-	public Player(String n) {
-		name = n;
-	}
 	
+	/**
+	 * Construct a new Player
+	 */
+	public Player() {}
 	
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	/**
+	 * Get the player's {@link Inventory}
+	 * @return the player's {@link Inventory}
+	 */
 	public Inventory getInventory() {
 		return inventory;
 	}
 	
+	/**
+	 * Get the player's {@link Health}
+	 * @return the player's {@link Health}
+	 */
 	public Health getHealth() {
 		return health;
 	}

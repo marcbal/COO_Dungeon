@@ -4,7 +4,6 @@ import fr.univ_lille1.fil.coo.dungeon.rooms.Room;
 
 /**
  * Represent a exit from a room to a target room
- *
  */
 public abstract class RoomExit {
 	
@@ -16,6 +15,7 @@ public abstract class RoomExit {
 	/**
 	 * Create a room exit with the target room as parameter
 	 * @param next target room
+	 * @throws IllegalArgumentException if <code>next</code> is null
 	 */
 	public RoomExit(Room next) {
 		if (next == null) throw new IllegalArgumentException("next can't be null");
@@ -25,20 +25,20 @@ public abstract class RoomExit {
 	
 	
 	/**
-	 * 
+	 * Indicates wether the player can actually pass this exit or not.
 	 * @return true if the player can actually pass this exit. 
 	 */
 	public abstract boolean canPlayerPass();
 	
 	/**
-	 * 
-	 * @return true if the player can see this exit
+	 * Indicates wether the player can see this exit or not.
+	 * @return true if the player can see this exit.
 	 */
 	public abstract boolean isVisible();
 	
 	/**
-	 * 
-	 * @return a string representation of the state of the Room. For exemple "opened" or "locked"
+	 * Get a string representation of the state of the Room. For exemple "opened" or "locked".
+	 * @return a string representation of the state of the Room.
 	 */
 	public abstract String getStatus();
 	

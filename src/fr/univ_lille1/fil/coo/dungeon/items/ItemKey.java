@@ -32,7 +32,7 @@ public class ItemKey extends Item {
 	
 	
 	@Override
-	public String toString() {
+	public String getName() {
 		return "Clé '"+id+"'";
 	}
 

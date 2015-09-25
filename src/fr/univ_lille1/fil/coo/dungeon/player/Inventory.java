@@ -7,8 +7,10 @@ import java.util.List;
 import fr.univ_lille1.fil.coo.dungeon.items.Item;
 
 /**
- * Represent an inventory
- * It may be for a player, or for a chest in a room
+ * Represent an inventory. It may be for a player, or for a chest in a room.<br/>
+ * <br/>
+ * An Inventory contains a list of {@link ItemStack}. All ItemStack contains different {@link Item} :
+ * an Inventory can't contains 2 or more ItemStack with the same Item.
  */
 public class Inventory {
 	
@@ -20,7 +22,7 @@ public class Inventory {
 
 	
 	/**
-	 * Create an empty inventory
+	 * Create an empty Inventory
 	 */
 	public Inventory() {}
 	
@@ -35,8 +37,8 @@ public class Inventory {
 
 	/**
 	 * Returns an unmodifiable view of the the content of the inventory.
-	 * You have to use <code>{@link #addItems(ItemStack[])}</code>, <code>{@link #addItems(List)}</code>, 
-	 * <code>{@link #addItem(ItemStack)}</code> and <code>{@link #removeItem(ItemStack)}</code> methods
+	 * You have to use {@link #addItems(ItemStack[])}, {@link #addItems(List)}, 
+	 * {@link #addItem(ItemStack)} and {@link #removeItem(ItemStack)} methods
 	 * to edit this list
 	 * @return an unmodifiable List containing all ItemStack of this inventory.
 	 * @see java.util.Collections#unmodifiableList(List)
@@ -55,7 +57,7 @@ public class Inventory {
 	 * In other words : <code>invItemStack.put(iStack.getNumber());</code> where
 	 * <code>invItemStack</code> is the ItemStack in the Inventory, and <code>iStack</code>
 	 * is the parameter of this method.</li>
-	 * 	<li>If not, <code>iStack</code> is just added to the inventory.</li>
+	 * 	<li>If not, and if the specified ItemStack is not empty (if <code>iStack.getNumber() > 0</code>), <code>iStack</code> is just added into the inventory.</li>
 	 * </ul>
 	 * @param iStack the stack to add into the inventory
 	 */
@@ -63,7 +65,7 @@ public class Inventory {
 		if (inventoryContent.contains(iStack)) {
 			inventoryContent.get(inventoryContent.indexOf(iStack)).put(iStack.getNumber());
 		}
-		else {
+		else if(iStack.getNumber() > 0) { // avoid to add empty ItemStack
 			inventoryContent.add(iStack);
 		}
 		
@@ -114,13 +116,13 @@ public class Inventory {
 	}
 	
 	/**
-	 * An mount of specified Item from Inventory.<br/>
-	 * <b>iStack</b> contain an {@link Item} and an amount.
-	 * If an ItemStack is found in the Inventory, wich contain the same Item,
+	 * Remove an mount of specified Item from Inventory.<br/>
+	 * If an ItemStack is found in the Inventory, wich contain the same Item as the specified ItemStack,
 	 * the amount of the specified ItemStack will be substracted to the ItemStack in inventory.<br/>
-	 * I other words : <code>invItemStack.take</code>
-	 * @param iStack The ItemStack to remove
+	 * In other words : <code>invItemStack.take(iStack.getNumber())</code><br/>
+	 * @param iStack The ItemStack to remove, containing an {@link Item} and an amount.
 	 * @return true if the items was remove, false otherwise
+	 * @throws IllegalArgumentException if the ItemStack is not found in the Inventory.
 	 */
 	public void removeItem(ItemStack iStack) {
 		if(inventoryContent.contains(iStack)) {
@@ -135,26 +137,41 @@ public class Inventory {
 			throw new IllegalArgumentException("You can't delete a stack which doesn't exist");
 	}
 	
+	/**
+	 * Empty the inventory
+	 */
 	public void clear() {
 		inventoryContent = new ArrayList<ItemStack>();
 	}
 	
-	
+	/**
+	 * Check if the inventory is empty
+	 * @return true if the inventory is empty, false otherwise
+	 */
 	public boolean isEmpty() {
 		return inventoryContent.size() == 0;
 	}
 	
-	
+	/**
+	 * Store all item in the current Inventory into the specified Inventory.
+	 * This method use {@link #addItems(List)} on the specified inventory.
+	 * The current inventory will be cleared.
+	 * @param targetInventory the inventory to fill with the {@link ItemStack}s of the current inventory
+	 */
 	public void transfertIn(Inventory targetInventory) {
 		targetInventory.addItems(getInventoryContent());
 		clear();
 	}
 	
-	
+	/**
+	 * Get all String representation of all ItemStack in this inventory.
+	 * @return a {@link List} of {@link String} describing all items in the inventory.
+	 * One String use this format : <code>"&lt;amount&gt; &lt;Item name&gt;"</code>
+	 */
 	public List<String> getInventoryString() {
 		List<String> ret = new ArrayList<String>();
 		for (ItemStack stack : inventoryContent) {
-			ret.add(stack.getNumber()+" "+stack.getItem());
+			ret.add(stack.toString());
 		}
 		return ret;
 	}

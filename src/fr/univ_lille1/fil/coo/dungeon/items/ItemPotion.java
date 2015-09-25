@@ -33,8 +33,9 @@ public abstract class ItemPotion extends Item {
 		return (id == ((ItemPotion)o).id);
 	}
 	
-
-	public String toString() {
+	
+	@Override
+	public String getName() {
 		return name+" >> heal " + id;
 	}
 }

@@ -15,6 +15,11 @@ import fr.univ_lille1.fil.coo.dungeon.ui.console.commands.Command.CommandExcepti
 import fr.univ_lille1.fil.coo.dungeon.ui.Display;
 import fr.univ_lille1.fil.coo.dungeon.util.EnumUtil;
 
+/**
+ * Represent a room in a dungeon.<br/>
+ * A room contains all access to adgacent rooms ({@link RoomExit}) in different {@link ExitPosition}.
+ * A room can contain an chest, which its content is represented by an {@link Inventory} instance.
+ */
 public class Room {
 	public final String name;
 	
@@ -23,7 +28,11 @@ public class Room {
 	private Inventory chestContent = null; // par défaut, pas de coffre
 	
 	
-	
+	/**
+	 * Create a new normal Room, with a specified name.<br/>
+	 * A chest can be defined with the method {@link #setChestContent(Inventory)}.
+	 * @param n a display name for this room.
+	 */
 	public Room(String n) {
 		if (n == null) n = "";
 		name = n;
@@ -31,11 +40,16 @@ public class Room {
 	
 	
 	/**
-	 * Créer une sortie vers une autre salle
-	 * @param pos la position de la sortie dans la salle
-	 * @param exit la salle vers lequel même cette sortie
-	 * @param canGoBack si défini à true, créer aussi une sortie depuis la salle cible, qui permet de revenir à la salle courante.
-	 * <br/> la position inverse du paramètre <code>pos</code> est utilisé et la sortie généré est de type <code>RoomExitNormal</code>. Si vous voulez utiliser un type différent pour le retour, ommettez ce paramètre, et définissez le manuellement.
+	 * Add a {@link RoomExit} in this Room, toward the {@link ExitPosition} specified.<br/>
+	 * You can add multiple RoomExit toward the same ExitPosition.<br/>
+	 * When <code>canGoBack</code> is set to true, this method create a RoomExit in the target room, that
+	 * even toward to the current room, using the opposite ExitPosition to that specified.
+	 * The type of the opposite RoomExit is a {@link RoomExitNormal}.
+	 * @param pos the postition of the added RoomExit
+	 * @param exit the RoomExit to add in the current Room
+	 * @param canGoBack set to true if you want the opposite RoomExit to be created in the target Room. Setting this parameter to false
+	 * is the same as using the method {@link #addNewNextRoom(ExitPosition, RoomExit)}.
+	 * @throws IllegalArgumentException if <code>canGoBack</code> is set to true and <code>pos</code> doesn't have any opposite position (pos.getInvert() return null)
 	 */
 	public void addNewNextRoom(ExitPosition pos, RoomExit exit, boolean canGoBack) {
 		addNewNextRoom(pos, exit);
@@ -48,14 +62,15 @@ public class Room {
 	}
 	
 	/**
-	 * Créer une sortie vers une autre salle
-	 * @param pos la position de la sortie dans la salle
-	 * @param exit la salle vers lequel même cette sortie
+	 * Add a {@link RoomExit} in this Room, toward the {@link ExitPosition} specified.<br/>
+	 * You can add multiple RoomExit toward the same ExitPosition.
+	 * @param pos the postition of the added RoomExit
+	 * @param exit the RoomExit to add in the current Room
 	 */
 	public void addNewNextRoom(ExitPosition pos, RoomExit exit) {
 		if (!nextRooms.containsKey(pos))
 			nextRooms.put(pos, new ArrayList<RoomExit>());
-		nextRooms.get(pos).add(exit);// pas oublier : on peut avoir plusieurs sorties par position (genre 2 à l'ouest)
+		nextRooms.get(pos).add(exit);
 	}
 	
 	
@@ -143,7 +158,7 @@ public class Room {
 			for (int i = 0; i<exits.size(); i++) {
 				if (exits.get(i) instanceof RoomExitWithKey) {
 					if (((RoomExitWithKey)exits.get(i)).tryToOpen(p)) {
-						Display.sendMessage("Une sortie "+exitPos.name+" a été ouverte");
+						Display.sendMessage("Une sortie "+exitPos+" a été ouverte");
 					}
 				}
 			}
@@ -174,7 +189,7 @@ public class Room {
 	
 	private String printOneExit(ExitPosition pos, RoomExit exit, Integer index) {
 		return "Sortie "+
-				pos.name+
+				pos+
 				", "+
 				exit.getStatus()+
 				((exit.canPlayerPass()) ?
