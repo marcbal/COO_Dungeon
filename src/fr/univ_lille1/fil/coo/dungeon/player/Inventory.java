@@ -7,8 +7,8 @@ import java.util.List;
 import fr.univ_lille1.fil.coo.dungeon.items.Item;
 
 /**
- * Représente un inventaire
- * Que ça soit celui d'un joueur, ou celui d'un coffre d'une salle.
+ * Represent an inventory
+ * It may be for a player, or for a chest in a room
  */
 public class Inventory {
 	
@@ -20,40 +20,71 @@ public class Inventory {
 
 	
 	/**
-	 * Créer un inventaire vide
+	 * Create an empty inventory
 	 */
 	public Inventory() {}
 	
-	
+	/**
+	 * Create an inventory with some ItemStack inside
+	 * @param itemStacks the itemStack wich will added into this inventory
+	 */
 	public Inventory(ItemStack... itemStacks) {
 		addItems(itemStacks);
 	}
 
 
-
+	/**
+	 * Returns an unmodifiable view of the the content of the inventory.
+	 * You have to use <code>{@link #addItems(ItemStack[])}</code>, <code>{@link #addItems(List)}</code>, 
+	 * <code>{@link #addItem(ItemStack)}</code> and <code>{@link #removeItem(ItemStack)}</code> methods
+	 * to edit this list
+	 * @return an unmodifiable List containing all ItemStack of this inventory.
+	 * @see java.util.Collections#unmodifiableList(List)
+	 */
 	public List<ItemStack> getInventoryContent() {
 		return Collections.unmodifiableList(inventoryContent);
 	}
 	
 	
-	
-	public void addItem(ItemStack i) {
-		if (inventoryContent.contains(i)) {
-			inventoryContent.get(inventoryContent.indexOf(i)).put(i.getNumber());
+	/**
+	 * Add the specified {@link ItemStack} into the inventory.<br/>
+	 * <ul>
+	 * 	<li>If an ItemStack with the same {@link Item} is already in the Inventory,
+	 * the number attribute of the ItenStack in the inventory will increase with
+	 * the number attribute of the specified ItemStack.<br/>
+	 * In other words : <code>invItemStack.put(iStack.getNumber());</code> where
+	 * <code>invItemStack</code> is the ItemStack in the Inventory, and <code>iStack</code>
+	 * is the parameter of this method.</li>
+	 * 	<li>If not, <code>iStack</code> is just added to the inventory.</li>
+	 * </ul>
+	 * @param iStack the stack to add into the inventory
+	 */
+	public void addItem(ItemStack iStack) {
+		if (inventoryContent.contains(iStack)) {
+			inventoryContent.get(inventoryContent.indexOf(iStack)).put(iStack.getNumber());
 		}
 		else {
-			inventoryContent.add(i);
+			inventoryContent.add(iStack);
 		}
 		
 	}
 	
-	public void addItems(ItemStack[] i) {
-		if (i != null)
-			for(ItemStack it : i)
+	/**
+	 * Add all {@link ItemStack} into the inventory.
+	 * @param iStackList an array of ItemStack to add into the inventory.<br/>
+	 * If this parameter is null, nothing will be added. <code>null</code> values in this array will be ignored.
+	 */
+	public void addItems(ItemStack[] iStackList) {
+		if (iStackList != null)
+			for(ItemStack it : iStackList)
 				if (it != null)
 					addItem(it);
 	}
 	
+	/**
+	 * Same as {@link #addItems(ItemStack[])}, but it take a {@link List} as parameter instead of an array.
+	 * @param i a List of ItemStack to add into the inventory.
+	 */
 	public void addItems(List<ItemStack> i) {
 		addItems(i.toArray(new ItemStack[i.size()]));
 	}
@@ -70,9 +101,9 @@ public class Inventory {
 	}
 	
 	/**
-	 * Retourne le stock d'item recherché
-	 * @param L'item recherché
-	 * @return le stock d'item si trouvé, sinon la valeur null est renvoyée
+	 * Return the ItemStack containing the specified Item
+	 * @param i {@link Item} to find
+	 * @return the {@link ItemStack} containing the specified Item
 	 */
 	public ItemStack getItemStack(Item i) {
 		ItemStack temp = new ItemStack(i, 1);
@@ -83,18 +114,21 @@ public class Inventory {
 	}
 	
 	/**
-	 * Supprime un stock de l'inventaire
-	 * @param i Le stock à supprimer
-	 * @return vrai si le stock a bien été supprimé, faux sinon
+	 * An mount of specified Item from Inventory.<br/>
+	 * <b>iStack</b> contain an {@link Item} and an amount.
+	 * If an ItemStack is found in the Inventory, wich contain the same Item,
+	 * the amount of the specified ItemStack will be substracted to the ItemStack in inventory.<br/>
+	 * I other words : <code>invItemStack.take</code>
+	 * @param iStack The ItemStack to remove
+	 * @return true if the items was remove, false otherwise
 	 */
-	public void removeItemStack(ItemStack i) {
-		if(inventoryContent.contains(i)) {
+	public void removeItem(ItemStack iStack) {
+		if(inventoryContent.contains(iStack)) {
 			try {
-				if (inventoryContent.get(inventoryContent.indexOf(i)).take(i.getNumber()) == 0)
-					inventoryContent.remove(i);	// si l'itemStack a été vidé
+				if (inventoryContent.get(inventoryContent.indexOf(iStack)).take(iStack.getNumber()) == 0)
+					inventoryContent.remove(iStack);	// si l'itemStack a été vidé
 			} catch(IllegalArgumentException e) {
-				inventoryContent.remove(i);
-				
+				e.printStackTrace();
 			}
 		}
 		else

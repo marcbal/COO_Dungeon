@@ -2,6 +2,10 @@ package fr.univ_lille1.fil.coo.dungeon.dungeons;
 
 import fr.univ_lille1.fil.coo.dungeon.rooms.Room;
 
+/**
+ * Represent a dungeon<br/>
+ * It only contains a reference to the first room
+ */
 public class Dungeon {
 	
 	private Room spawningRoom;
@@ -13,7 +17,9 @@ public class Dungeon {
 	}
 	
 	
-	
+	/**
+	 * @return the first room of this dungeon
+	 */
 	public Room getSpawningRoom() {
 		return spawningRoom;
 	}

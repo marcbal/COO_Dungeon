@@ -1,7 +1,7 @@
 package fr.univ_lille1.fil.coo.dungeon.rooms;
 
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExit;
-import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitPosition;
+import fr.univ_lille1.fil.coo.dungeon.roomexit.ExitPosition;
 
 /**
  * Une salle dans lequel vous mourrez instantanément
@@ -20,7 +20,7 @@ public class LoosingRoom extends Room {
 	 * dans cette salle, il n'est pas logique de pouvoir en sortir.
 	 */
 	@Override
-	public void addNewNextRoom(RoomExitPosition pos, RoomExit exit) {
+	public void addNewNextRoom(ExitPosition pos, RoomExit exit) {
 		throw new UnsupportedOperationException("LoosingRoom can't contain exit");
 	}
 }

@@ -1,7 +1,7 @@
 package fr.univ_lille1.fil.coo.dungeon.rooms;
 
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExit;
-import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitPosition;
+import fr.univ_lille1.fil.coo.dungeon.roomexit.ExitPosition;
 
 public class WinningRoom extends Room {
 	
@@ -16,7 +16,7 @@ public class WinningRoom extends Room {
 	 * téléporte directement dans le prochain donjon quand vous arrivez dans cette salle.
 	 */
 	@Override
-	public void addNewNextRoom(RoomExitPosition pos, RoomExit exit) {
+	public void addNewNextRoom(ExitPosition pos, RoomExit exit) {
 		throw new UnsupportedOperationException("WinningRoom can't contain exit");
 	}
 }

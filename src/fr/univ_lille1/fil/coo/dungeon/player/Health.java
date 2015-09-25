@@ -1,59 +1,58 @@
 package fr.univ_lille1.fil.coo.dungeon.player;
 
-import fr.univ_lille1.fil.coo.dungeon.items.Potion;
+import fr.univ_lille1.fil.coo.dungeon.items.ItemPotion;
 import fr.univ_lille1.fil.coo.dungeon.ui.Display;
 
+/**
+ * Represent the life and possibly other health status for a player
+ *
+ */
 public class Health {
-	
-	private Player player;
 	
 	private int life;
 	private static int MIN_LIFE = 0;
 	private static int MAX_LIFE = 1000;
 	
 	/**
-	 * Le constructeur de la classe gérant la vie
-	 * @param value La vie de départ
+	 * @param value Initial life value
+	 * @throws IllegalArgumentException if value is outside the range <code>[Health.MIN_LIFE; Health.MAX_LIFE]</code>
 	 */
-	public Health(Player p, int value) {
-		if(value <= MIN_LIFE || value > MAX_LIFE) throw new IllegalArgumentException("La valeur de la vie de départ doit être comprise entre " + MIN_LIFE + " et " + MAX_LIFE);
+	public Health(int value) {
+		if(value <= MIN_LIFE || value > MAX_LIFE) throw new IllegalArgumentException("Initial life must be between " + MIN_LIFE + " and " + MAX_LIFE);
 		life = value;
-		player = p;
 	}
 	
-	//
-	private void heal(Potion potion) {
-		int life_tmp = life + potion.getValue(); //On récupère une valeur temporaire
-		if(life_tmp<MIN_LIFE) life_tmp = 0;
-		if(life_tmp>MAX_LIFE) life_tmp = MAX_LIFE;
-		
+	/**
+	 * Apply a Potion item to the current Health. A Potion is an Item which affect the player life.<br/>
+	 * It can increase or decrease the life value depending of the result of <code>Potion.getValue()</code> method.<br/>
+	 * A positive value increase player life, A negative value decrease the player life.<br/>
+	 * Life value can't be less than Health.MIN_LIFE or greater than Health.MAX_LIFE.
+	 * @param itemPotion The potion to apply
+	 */
+	public void heal(ItemPotion itemPotion) {
 		int old_life = life;
-		life = life_tmp; //On affecte la nouvelle vie avant le sendMessage, comme ça, ça refresh l'affichage de la vie en même temps
+		life += itemPotion.getValue(); //On récupère une valeur temporaire
+		if(life<MIN_LIFE) life = MIN_LIFE;
+		if(life>MAX_LIFE) life = MAX_LIFE;
+		
 		if(life<old_life) {
-			Display.sendMessage("Vous avez perdu " + (-potion.getValue()) + " point"+(-potion.getValue()>1?"s":"")+" de vie");
+			Display.sendMessage("Vous avez perdu " + (old_life-life) + " point"+(old_life-life>1?"s":"")+" de vie");
 		}
 		else  {
-			Display.sendMessage("Vous avez regagné " + potion.getValue() + " point"+(-potion.getValue()>1?"s":"")+" de vie");
+			Display.sendMessage("Vous avez regagné " + (life-old_life) + " point"+(life-old_life>1?"s":"")+" de vie");
 		}
 	}
 	
 	
-	
-	
-	public void tryToHeal(Potion potion) {
-		
-		if(player.getInventory().howMany(potion) == 0) {
-			Display.sendMessage("Vous n'avez pas cette potion");
-		}
-		else {
-			player.getInventory().removeItemStack(new ItemStack(potion, 1));
-			heal(potion);
-		}
-	}
-	
+	/**
+	 * 
+	 * @return the current player life
+	 */
 	public int getLife() {
 		return life;
 	}
+	
+	
 	
 	public String toString() {
 		return life + "";

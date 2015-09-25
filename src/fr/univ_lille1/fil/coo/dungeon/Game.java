@@ -86,6 +86,8 @@ public class Game {
 			return true;
 		if (currentRoom instanceof LoosingRoom)
 			return false;
+		if (player.getHealth().getLife() <= 0)
+			return false;
 		return null;
 	}
 	

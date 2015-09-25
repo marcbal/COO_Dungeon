@@ -3,7 +3,7 @@ package fr.univ_lille1.fil.coo.dungeon.player;
 public class Player {
 	private String name;
 	private Inventory inventory = new Inventory();
-	private Health health = new Health(this, 500);
+	private Health health = new Health(500);
 
 	public Player(String n) {
 		name = n;

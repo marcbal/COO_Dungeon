@@ -9,7 +9,7 @@ import fr.univ_lille1.fil.coo.dungeon.player.Inventory;
 import fr.univ_lille1.fil.coo.dungeon.player.Player;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExit;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitNormal;
-import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitPosition;
+import fr.univ_lille1.fil.coo.dungeon.roomexit.ExitPosition;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitWithKey;
 import fr.univ_lille1.fil.coo.dungeon.ui.console.commands.Command.CommandException;
 import fr.univ_lille1.fil.coo.dungeon.ui.Display;
@@ -18,7 +18,7 @@ import fr.univ_lille1.fil.coo.dungeon.util.EnumUtil;
 public class Room {
 	public final String name;
 	
-	private Map<RoomExitPosition, List<RoomExit>> nextRooms = new HashMap<RoomExitPosition, List<RoomExit>>();
+	private Map<ExitPosition, List<RoomExit>> nextRooms = new HashMap<ExitPosition, List<RoomExit>>();
 	
 	private Inventory chestContent = null; // par défaut, pas de coffre
 	
@@ -37,7 +37,7 @@ public class Room {
 	 * @param canGoBack si défini à true, créer aussi une sortie depuis la salle cible, qui permet de revenir à la salle courante.
 	 * <br/> la position inverse du paramètre <code>pos</code> est utilisé et la sortie généré est de type <code>RoomExitNormal</code>. Si vous voulez utiliser un type différent pour le retour, ommettez ce paramètre, et définissez le manuellement.
 	 */
-	public void addNewNextRoom(RoomExitPosition pos, RoomExit exit, boolean canGoBack) {
+	public void addNewNextRoom(ExitPosition pos, RoomExit exit, boolean canGoBack) {
 		addNewNextRoom(pos, exit);
 		if (canGoBack) {
 			if (pos.getInvert() != null)
@@ -52,7 +52,7 @@ public class Room {
 	 * @param pos la position de la sortie dans la salle
 	 * @param exit la salle vers lequel même cette sortie
 	 */
-	public void addNewNextRoom(RoomExitPosition pos, RoomExit exit) {
+	public void addNewNextRoom(ExitPosition pos, RoomExit exit) {
 		if (!nextRooms.containsKey(pos))
 			nextRooms.put(pos, new ArrayList<RoomExit>());
 		nextRooms.get(pos).add(exit);// pas oublier : on peut avoir plusieurs sorties par position (genre 2 à l'ouest)
@@ -99,10 +99,10 @@ public class Room {
 		if (args.length == 0)
 			throw new CommandException("Vous devez spécifier au moins 1 paramètre");
 		
-		RoomExitPosition requestedDirection = EnumUtil.searchEnum(RoomExitPosition.class, args[0]);
+		ExitPosition requestedDirection = EnumUtil.searchEnum(ExitPosition.class, args[0]);
 		
 		if (requestedDirection == null)
-			throw new CommandException("Vous devez spécifier une direction valide parmis "+EnumUtil.enumList(RoomExitPosition.class));
+			throw new CommandException("Vous devez spécifier une direction valide parmis "+EnumUtil.enumList(ExitPosition.class));
 		
 		if (!nextRooms.containsKey(requestedDirection))
 			throw new CommandException("Cette direction ne contient aucune sortie");
@@ -137,7 +137,7 @@ public class Room {
 	 * @param p le joueur qui est censé avoir des clés sur lui
 	 */
 	public void tryToOpenLockedExit(Player p) {
-		for(RoomExitPosition exitPos : nextRooms.keySet()) {
+		for(ExitPosition exitPos : nextRooms.keySet()) {
 			List<RoomExit> exits = nextRooms.get(exitPos);
 			
 			for (int i = 0; i<exits.size(); i++) {
@@ -155,7 +155,7 @@ public class Room {
 	
 	public List<String> listNextRooms() {
 		List<String> ret = new ArrayList<String>();
-		for(RoomExitPosition exitPos : nextRooms.keySet()) {
+		for(ExitPosition exitPos : nextRooms.keySet()) {
 			List<RoomExit> exits = nextRooms.get(exitPos);
 			
 			if (exits.size() == 1) {
@@ -172,7 +172,7 @@ public class Room {
 		return ret;
 	}
 	
-	private String printOneExit(RoomExitPosition pos, RoomExit exit, Integer index) {
+	private String printOneExit(ExitPosition pos, RoomExit exit, Integer index) {
 		return "Sortie "+
 				pos.name+
 				", "+

@@ -1,9 +1,11 @@
 package fr.univ_lille1.fil.coo.dungeon.items;
 
 /**
- * Représente une clé pour ouvrir certaines portes dans les donjons
+ * Represent a key that can be used to open some room exit.<br/>
+ * A key can be associated to a RoomExitWithKey, and can be stored into chest or other inventory.
+ * 
  */
-public class KeyItem extends Item {
+public class ItemKey extends Item {
 	// valeur permettant l'unicité de toutes les clés créées
 	private static int keyIncrementIdentifier = 0;
 	
@@ -11,9 +13,9 @@ public class KeyItem extends Item {
 	private final int id;
 	
 	/**
-	 * Créer une nouvelle clée. Vous avez une garantie que la clé sera unique
+	 * Create a new key. Every new key is different (it internally use a unique identifier).
 	 */
-	public KeyItem() {
+	public ItemKey() {
 		id = keyIncrementIdentifier++;
 	}
 	
@@ -24,8 +26,8 @@ public class KeyItem extends Item {
 	@Override
 	public boolean equals(Object o) {
 		if (o == null) return false;
-		if (!(o instanceof KeyItem)) return false;
-		return (id == ((KeyItem)o).id);
+		if (!(o instanceof ItemKey)) return false;
+		return (id == ((ItemKey)o).id);
 	}
 	
 	

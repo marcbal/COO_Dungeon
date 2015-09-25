@@ -1,6 +1,6 @@
 package fr.univ_lille1.fil.coo.dungeon.roomexit;
 
-import fr.univ_lille1.fil.coo.dungeon.items.KeyItem;
+import fr.univ_lille1.fil.coo.dungeon.items.ItemKey;
 import fr.univ_lille1.fil.coo.dungeon.player.Player;
 import fr.univ_lille1.fil.coo.dungeon.rooms.Room;
 
@@ -8,10 +8,10 @@ public class RoomExitWithKey extends RoomExit {
 
 	private boolean unlocked = false;
 	
-	private KeyItem keyToHave;
+	private ItemKey keyToHave;
 	
 	
-	public RoomExitWithKey(Room next, KeyItem key) {
+	public RoomExitWithKey(Room next, ItemKey key) {
 		super(next);
 		if (key == null) throw new IllegalArgumentException("key can't be null");
 		keyToHave = key;
