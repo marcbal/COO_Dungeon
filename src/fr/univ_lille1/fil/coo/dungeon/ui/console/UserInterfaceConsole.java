@@ -128,7 +128,7 @@ public class UserInterfaceConsole {
 	
 	public void displayFinish() {
 		System.out.print("\n\n\n\n\n");
-		ConsoleWindow message = new ConsoleWindow(25, 3, 50, 5);
+		ConsoleWindow message = new ConsoleWindow(30, 5, 50, 5);
 		message.setBorderType(BorderType.SHADOW_LIKE);
 		if (game.getWinningStatus() == true) {
 			message.setContent("\n               Vous avez gagné :D");
