@@ -77,20 +77,20 @@ public class UserInterfaceConsole {
 	 */
 	public void mainLoop() {
 		do {
-			// afficher l'état actuel du jeu
+			// display game state
 			display();
 			
-			// invite de commande
+			// command prompt
 			System.out.print(">>");
 			String command = keyboard.nextLine();
 			
-			// traitement de la commande
+			// command execution
 			commandsManager.dispatchCommand(game, command);
 			
 			
 		} while (game.getWinningStatus() == null);
 		
-		// on affiche le message de fin
+		// ending message
 		displayFinish();
 		System.out.print("--");
 		
@@ -106,7 +106,7 @@ public class UserInterfaceConsole {
 	public void display() {
 		System.out.print("\n\n\n\n\n");
 		
-		// on prépare l'affichage dans la console
+		// preparing all windows
 		screen.drawWindow(titleWindow);
 		
 
@@ -130,7 +130,7 @@ public class UserInterfaceConsole {
 		messagesWindow.setContent(Display.getAndClear());
 		screen.drawWindow(messagesWindow);
 		
-		// on affiche enfin dans la console
+		// print out to the console
 		screen.printOut(System.out);
 	}
 	

@@ -10,6 +10,9 @@ import fr.univ_lille1.fil.coo.dungeon.rooms.Room;
 import fr.univ_lille1.fil.coo.dungeon.rooms.RoomLoosing;
 import fr.univ_lille1.fil.coo.dungeon.rooms.RoomWinning;
 
+/**
+ * Represent a Game instance
+ */
 public class Game {
 	
 	private List<Dungeon> dungeons = new ArrayList<Dungeon>();
@@ -19,7 +22,10 @@ public class Game {
 	private Room currentRoom;
 	
 	
-	
+	/**
+	 * Create a new game. Initialize all dungeons, and set the player
+	 * position to the first room of the first dungeon.
+	 */
 	public Game() {
 		player = new Player();
 		
@@ -31,21 +37,34 @@ public class Game {
 		nextDungeon();
 	}
 	
+	/**
+	 * Return the player.
+	 * @return the player.
+	 */
 	public Player getPlayer() {
 		return player;
 	}
+	/**
+	 * Return the current dungeon.
+	 * @return the current dungeon.
+	 */
 	public Dungeon getCurrentDungeon() {
 		return dungeons.get(currentDungeonIndex);
 	}
+	
+	/**
+	 * Return the current room.
+	 * @return the current room.
+	 */
 	public Room getCurrentRoom() {
 		return currentRoom;
 	}
 	
 	/**
-	 * Défini la salle courante. Si cette nouvelle salle est de type WinningRoom,
-	 * on passe directement au donjon suivant.<br/>
-	 * <b>Il est alors possible que getCurrentRoom() ne retourne pas la salle défini via setCurrentRoom() juste avant.</b>
-	 * @param
+	 * Set the current {@link Room}. If this room is a {@link RoomWinning}, and there is
+	 * a next dungeon, the current room will be the first room of the next dungeon,
+	 * and the next dungeon is set as the current dungeon.
+	 * @param the room to set as the current room.
 	 */
 	public void setCurrentRoom(Room room) {
 		currentRoom = room;
@@ -58,7 +77,11 @@ public class Game {
 
 
 
-
+	/**
+	 * Set the next dungeon as the current dungeon, dans set the first room
+	 * of this dungeon as the current room.
+	 * @return true if all is ok, false if there is no next room.
+	 */
 	private boolean nextDungeon() {
 		if (currentDungeonIndex == dungeons.size()-1)
 			return false;	// on est au dernier donjon
@@ -76,10 +99,9 @@ public class Game {
 
 	
 	/**
-	 * Donne l'état actuel du jeu
-	 * @return null si le jeu est toujours en cours, false si le joueur a perdu et
-	 * true si le joueur a gagné le jeu
-	 * 
+	 * Get the current state of the game.
+	 * @return null if the player is currently playing, false if he lost the game,
+	 * or true if he won the game.
 	 */
 	public Boolean getWinningStatus() {
 		if ((currentRoom instanceof RoomWinning) && currentDungeonIndex == dungeons.size()-1)
