@@ -15,10 +15,13 @@ import fr.univ_lille1.fil.coo.dungeon.ui.console.screen.ConsoleScreen;
 import fr.univ_lille1.fil.coo.dungeon.ui.console.screen.ConsoleWindow;
 import fr.univ_lille1.fil.coo.dungeon.ui.console.screen.ConsoleWindow.BorderType;
 
+/**
+ * Handle all user interraction, from display to keyboard input.
+ */
 public class UserInterfaceConsole {
 	
 	
-	// affichage
+	// display
 	public static final int SCREEN_WIDTH = 110;
 	public static final int SCREEN_HEIGHT = 17;
 	private ConsoleScreen screen = new ConsoleScreen(SCREEN_WIDTH, SCREEN_HEIGHT-1);
@@ -29,16 +32,15 @@ public class UserInterfaceConsole {
 	private ConsoleWindow messagesWindow = new ConsoleWindow(0, 14, 110, 2);
 	
 	
-	// clavier
 	private Scanner keyboard = new Scanner(System.in);
 	
 	
-	// instance du jeu
+	// Game instance
 	private Game game;
 	
 	
 	
-	// gestionnaire des commandes
+	// command manager
 	private CommandsManager commandsManager = new CommandsManager();
 	
 	
@@ -46,7 +48,7 @@ public class UserInterfaceConsole {
 	public UserInterfaceConsole(Game g) {
 		game = g;
 		
-		// initialisation de l'affichage
+		// display initialisation
 		titleWindow.setBorderType(BorderType.HEAVY);
 		titleWindow.setContent("Lille 1 Info COO                             Mini-jeux Donjon          Par M. Maroine, M. Baloup, V. Oudjail");
 		
@@ -68,7 +70,11 @@ public class UserInterfaceConsole {
 	
 	
 	
-	
+	/**
+	 * Run the game.
+	 * The state of the game will be displayed, then the method prompt the user for a command,
+	 * and it is executed. We loop this 3 steps while the game is not finished.
+	 */
 	public void mainLoop() {
 		do {
 			// afficher l'état actuel du jeu
@@ -92,7 +98,11 @@ public class UserInterfaceConsole {
 	
 	
 	
-	
+	/**
+	 * Display the game state on the console.
+	 * The display use the {@link ConsoleScreen} and {@link ConsoleWindow} class
+	 * to have a beautiful interface easy to undestand for the player.
+	 */
 	public void display() {
 		System.out.print("\n\n\n\n\n");
 		
@@ -125,7 +135,9 @@ public class UserInterfaceConsole {
 	}
 	
 	
-	
+	/**
+	 * Display the finish screen when the player Win or Loose the game.
+	 */
 	public void displayFinish() {
 		System.out.print("\n\n\n\n\n");
 		ConsoleWindow message = new ConsoleWindow(30, 5, 50, 5);

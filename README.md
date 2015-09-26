@@ -25,9 +25,9 @@ Le chiffre entre parenthèse représente la note estimée actuellement.
 - *(2)* On peut terminer le premier niveau
 - *(-)* On peut aller au niveau suivant
 - *(2 à priori)* Quelques secondes de jeu ne soulève pas de bug majeur
-- *(-)* Il n'y a pas 2 classes presque identiques
-- *(-)* Il n'y a pas 2 méthodes presque identiques
-- *(-)* Il n'y a pas 2 bouts de codes presque identiques
+- *(2 à priori)* Il n'y a pas 2 classes presque identiques
+- *(2 à priori)* Il n'y a pas 2 méthodes presque identiques
+- *(2 à priori)* Il n'y a pas 2 bouts de codes presque identiques
 - *(2)* Il y a une classe Room
 - *(2)* La classe Room est commentée
 - *(2)* Il y a une hiérarchie de Room (des sous-classes)
@@ -44,7 +44,7 @@ Le chiffre entre parenthèse représente la note estimée actuellement.
 - *(-)* 100% de la logique globale du jeu est testée (interpréteur de commande, fin de partie, changement de donjon)
 - *(-)* Commentaires abondants et en anglais
 
-Total temporaire estimée : 29/46 => 12.6/20
+Total temporaire estimée : **23 à 35**/46 => **10 à 15.2**/20
 
 
 

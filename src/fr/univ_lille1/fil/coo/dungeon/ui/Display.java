@@ -6,9 +6,8 @@ import java.util.List;
 import fr.univ_lille1.fil.coo.dungeon.util.StringUtil;
 
 /**
- * Classe utilitaire pour gérer l'affichage des messages provenant du moteur du jeu.
- * L'interface graphique choisi pour prendre en charges les messages pour les utiliser à sa guise.
- * @author Marc
+ * Handle the messages sended by the game, and allow the user interface
+ * to display it as he want.
  *
  */
 public class Display {
@@ -16,7 +15,10 @@ public class Display {
 	private static List<String> messageLines = new ArrayList<String>();
 	
 	
-	
+	/**
+	 * Store a message which will displayed into the user interface
+	 * @param str
+	 */
 	public static void sendMessage(String str) {
 		if (str == null) str = "null";
 		messageLines.addAll(StringUtil.linesToList(str));
@@ -24,7 +26,11 @@ public class Display {
 	
 	
 	
-	
+	/**
+	 * Only the user interface may use this method. It return all message
+	 * sended by the game in a List, and clear the the stored messages lines.
+	 * @return all messages passed by {@link #sendMessage(String)} method.
+	 */
 	public static List<String> getAndClear() {
 		List<String> content = messageLines;
 		messageLines = new ArrayList<String>();
