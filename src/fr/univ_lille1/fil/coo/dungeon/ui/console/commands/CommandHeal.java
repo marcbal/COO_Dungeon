@@ -69,7 +69,7 @@ public class CommandHeal extends Command {
 		ItemPotion itemPotion = (ItemPotion) potionStack.getItem();
 		
 		
-		player.getHealth().heal(itemPotion);
+		player.heal(itemPotion);
 		player.getInventory().removeItem(new ItemStack(itemPotion, 1));
 		
 	}
