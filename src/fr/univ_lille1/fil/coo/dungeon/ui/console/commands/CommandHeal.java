@@ -22,15 +22,15 @@ public class CommandHeal extends Command {
 			int idPotion = ((args != null && args.length>0)?Integer.parseInt((args[0].length()>0)?args[0]:"-1"):-1);
 			ItemStack potionStack = player.getInventory().getItemStack(new ItemPotion(idPotion, "", 0) {});
 			if (potionStack == null || potionStack.getNumber() <= 0)
-				throw new CommandException("La potion n'existe pas dans votre inventaire");
+				throw new CommandBadUseException("La potion n'existe pas dans votre inventaire");
 		
 			ItemPotion itemPotion = (ItemPotion) potionStack.getItem();
 			
-			player.getHealth().heal(itemPotion);
+			player.heal(itemPotion);
 			player.getInventory().removeItem(new ItemStack(itemPotion, 1));
 		} catch(NumberFormatException e) {//If exception is launched, we just display a message
 			e.printStackTrace();
-			throw new CommandException("La potion n'existe pas dans votre inventaire");
+			throw new CommandBadUseException("La potion n'existe pas dans votre inventaire");
 		}
 	}
 }

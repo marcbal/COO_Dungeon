@@ -24,11 +24,15 @@ public class UserInterfaceConsole {
 	// display
 	public static final int SCREEN_WIDTH = 110;
 	public static final int SCREEN_HEIGHT = 17;
-	private ConsoleScreen screen = new ConsoleScreen(SCREEN_WIDTH, SCREEN_HEIGHT-1);
+	private ConsoleScreen defaultScreen = new ConsoleScreen(SCREEN_WIDTH, SCREEN_HEIGHT-1);
+	private ConsoleScreen fightScreen = new ConsoleScreen(SCREEN_WIDTH, SCREEN_HEIGHT-1);
 	private ConsoleWindow titleWindow = new ConsoleWindow(0, 0, SCREEN_WIDTH, 3);
 	private ConsoleWindow playerDataWindow = new ConsoleWindow(0, 3, 75, 3);
 	private ConsoleWindow roomWindow = new ConsoleWindow(0, 6, 75, 8);
 	private ConsoleWindow inventoryWindow = new ConsoleWindow(75, 3, 35, 11);
+	private ConsoleWindow monsterWindow = new ConsoleWindow(0, 3, 40, SCREEN_HEIGHT-4);
+	private ConsoleWindow weaponWindow = new ConsoleWindow(40, 3, 35, SCREEN_HEIGHT-4);
+	private ConsoleWindow potionWindow = new ConsoleWindow(75, 3, 35, SCREEN_HEIGHT-4);
 	private ConsoleWindow messagesWindow = new ConsoleWindow(0, 14, 110, 2);
 	
 	
@@ -107,17 +111,17 @@ public class UserInterfaceConsole {
 		System.out.print("\n\n\n\n\n");
 		
 		// preparing all windows
-		screen.drawWindow(titleWindow);
+		defaultScreen.drawWindow(titleWindow);
 		
 
 		List<String> playerData = new ArrayList<String>();
-		playerData.add("Vie : " + game.getPlayer().getHealth());
+		playerData.add("Vie : " + game.getPlayer().getLife());
 		playerDataWindow.setContent(playerData);
-		screen.drawWindow(playerDataWindow);
+		defaultScreen.drawWindow(playerDataWindow);
 		
 		List<String> invDisplay = game.getPlayer().getInventory().getInventoryString();
 		inventoryWindow.setContent(invDisplay);
-		screen.drawWindow(inventoryWindow);
+		defaultScreen.drawWindow(inventoryWindow);
 		
 		List<String> roomDisplay = new ArrayList<String>();
 		roomWindow.setTitle("Salle : "+game.getCurrentRoom().name);
@@ -125,13 +129,36 @@ public class UserInterfaceConsole {
 			roomDisplay.add("Cette salle contient un coffre : >> chest");
 		roomDisplay.addAll(game.getCurrentRoom().listNextRooms());
 		roomWindow.setContent(roomDisplay);
-		screen.drawWindow(roomWindow);
+		defaultScreen.drawWindow(roomWindow);
 		
 		messagesWindow.setContent(Display.getAndClear());
-		screen.drawWindow(messagesWindow);
+		defaultScreen.drawWindow(messagesWindow);
 		
-		// print out to the console
-		screen.printOut(System.out);
+		if(game.getCurrentRoom().getMonsters() != null) {
+			fightScreen.drawWindow(titleWindow);
+			
+			monsterWindow.setTitle("Monsters :");
+			monsterWindow.setBorderType(BorderType.LIGHT);
+			monsterWindow.setContent(game.getCurrentRoom().listMonsters());
+			
+			weaponWindow.setTitle("Armes :");
+			weaponWindow.setBorderType(BorderType.LIGHT);
+			weaponWindow.setContent(game.getPlayer().getInventory().getWeaponString());
+			
+			potionWindow.setTitle("Potions :");
+			potionWindow.setBorderType(BorderType.LIGHT);
+			potionWindow.setContent(game.getPlayer().getInventory().getPotionString());
+			
+			fightScreen.drawWindow(monsterWindow);
+			fightScreen.drawWindow(weaponWindow);
+			fightScreen.drawWindow(potionWindow);
+			//print out to the fight console
+			fightScreen.printOut(System.out);
+		}
+		else {
+			// print out to the default console
+			defaultScreen.printOut(System.out);
+		}
 	}
 	
 	
@@ -148,8 +175,8 @@ public class UserInterfaceConsole {
 		else {
 			message.setContent("\n               Vous avez perdu :(");
 		}
-		screen.drawWindow(message);
-		screen.printOut(System.out);
+		defaultScreen.drawWindow(message);
+		defaultScreen.printOut(System.out);
 	}
 	
 	

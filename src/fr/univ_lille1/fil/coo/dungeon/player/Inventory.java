@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 import fr.univ_lille1.fil.coo.dungeon.items.Item;
+import fr.univ_lille1.fil.coo.dungeon.items.ItemPotion;
+import fr.univ_lille1.fil.coo.dungeon.weapons.Weapon;
 
 /**
  * Represent an inventory. It may be for a player, or for a chest in a room.<br/>
@@ -172,6 +174,30 @@ public class Inventory {
 		List<String> ret = new ArrayList<String>();
 		for (ItemStack stack : inventoryContent) {
 			ret.add(stack.toString());
+		}
+		return ret;
+	}
+	
+	/**
+	 * Get all String reprensentation of the weapons available in the inventory
+	 * @return a {@link List} of {@link String} describing the weapons
+	 */
+	public List<String> getWeaponString() {
+		List<String> ret = new ArrayList<String>();
+		for (ItemStack stack : inventoryContent) {
+			if(stack.getItem() instanceof Weapon) ret.add(stack.toString());
+		}
+		return ret;
+	}
+	
+	/**
+	 * Get all String reprensentation of the potions available in the inventory
+	 * @return a {@link List} of {@link String} describing the potions
+	 */
+	public List<String> getPotionString() {
+		List<String> ret = new ArrayList<String>();
+		for (ItemStack stack : inventoryContent) {
+			if(stack.getItem() instanceof ItemPotion) ret.add(stack.toString());
 		}
 		return ret;
 	}

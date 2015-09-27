@@ -108,7 +108,7 @@ public class Game {
 			return true;
 		if (currentRoom instanceof RoomLoosing)
 			return false;
-		if (player.getHealth().getLife() <= 0)
+		if (player.getLife() <= 0)
 			return false;
 		return null;
 	}

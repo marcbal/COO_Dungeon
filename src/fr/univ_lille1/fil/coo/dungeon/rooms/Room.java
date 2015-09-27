@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import fr.univ_lille1.fil.coo.dungeon.monsters.Monster;
 import fr.univ_lille1.fil.coo.dungeon.player.Inventory;
 import fr.univ_lille1.fil.coo.dungeon.player.Player;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExit;
@@ -23,6 +24,7 @@ public class Room {
 	public final String name;
 	
 	private Map<ExitPosition, List<RoomExit>> nextRooms = new HashMap<ExitPosition, List<RoomExit>>();
+	private ArrayList<Monster> monsters = new ArrayList<>();
 	
 	private Inventory chestContent = null; // par défaut, pas de coffre
 	
@@ -83,6 +85,14 @@ public class Room {
 	}
 	
 	/**
+	 * Add monster(s) in the room
+	 * @param monsters monster(s) to add 
+	 */
+	public void setMonster(ArrayList<Monster> monsters) {
+		this.monsters.addAll(monsters);
+	}
+	
+	/**
 	 * Get the current chest content.
 	 * @return the current chest content.
 	 */
@@ -90,7 +100,13 @@ public class Room {
 		return chestContent;
 	}
 	
-	
+	/**
+	 * Get all monsters
+	 * @return all the monsters of the actual room
+	 */
+	public ArrayList<Monster> getMonsters() {
+		return (monsters.size() == 0 ? null : monsters);
+	}
 	
 	
 	/**
@@ -170,6 +186,20 @@ public class Room {
 						ret.add(printOneExit(exitPos, exits.get(i), i+1));
 				}
 			}
+		}
+		return ret;
+	}
+	
+	/**
+	 * Return all strings representations for all monsters and their id in this room.
+	 * @return a liste containing all monsters strings representation.
+	 */
+	public List<String> listMonsters() {
+		int index = 0;
+		List<String> ret = new ArrayList<String>();
+		for(Monster m : monsters) {
+			ret.add(index + " " + m.toString());
+			index++;
 		}
 		return ret;
 	}
