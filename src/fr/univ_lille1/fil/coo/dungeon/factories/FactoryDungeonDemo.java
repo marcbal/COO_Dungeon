@@ -16,6 +16,7 @@ import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitWithKey;
 import fr.univ_lille1.fil.coo.dungeon.rooms.RoomLoosing;
 import fr.univ_lille1.fil.coo.dungeon.rooms.Room;
 import fr.univ_lille1.fil.coo.dungeon.rooms.RoomWinning;
+import fr.univ_lille1.fil.coo.dungeon.weapons.ItemWeaponAtomicBomb;
 import fr.univ_lille1.fil.coo.dungeon.weapons.ItemWeaponBaseballBat;
 import fr.univ_lille1.fil.coo.dungeon.weapons.Weapon;
 
@@ -41,14 +42,17 @@ public class FactoryDungeonDemo implements FactoryDungeon {
 		ItemKey key = new ItemKey();
 		ItemPotion p = new ItemPotionClassic();
 		Weapon b = new ItemWeaponBaseballBat();
+		Weapon ab = new ItemWeaponAtomicBomb();
 		ArrayList<Monster> m = new ArrayList<>();
-		m.add(new Beast(150));
-		m.add(new Beast(2000));
+		m.add(new Beast(1));
+		m.add(new Beast(1));
 		
 		// on défini un coffre dans la salle du coffre, avec un exemplaire de cette clé.
 		roomWithKey.setChestContent(new Inventory(new ItemStack(key, 1)));
-		roomWithPotion.setChestContent(new Inventory(new ItemStack(p, 3), new ItemStack(b, 1)));
+		roomWithPotion.setChestContent(new Inventory(new ItemStack(p, 3), new ItemStack(b, 1), new ItemStack(ab, 1)));
 		roomWithMonster.setMonster(m);
+		roomWithMonster.setChestContent(new Inventory(new ItemStack(p, 999)));
+
 		
 		// définition des passages entre les salles
 		entry.addNewNextRoom(ExitPosition.NORTH, new RoomExitNormal(intersection), true);

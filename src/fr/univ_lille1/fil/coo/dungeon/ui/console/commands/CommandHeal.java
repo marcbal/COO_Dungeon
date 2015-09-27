@@ -2,6 +2,7 @@ package fr.univ_lille1.fil.coo.dungeon.ui.console.commands;
 
 import fr.univ_lille1.fil.coo.dungeon.Game;
 import fr.univ_lille1.fil.coo.dungeon.items.ItemPotion;
+import fr.univ_lille1.fil.coo.dungeon.monsters.Monster;
 import fr.univ_lille1.fil.coo.dungeon.player.ItemStack;
 import fr.univ_lille1.fil.coo.dungeon.player.Player;
 
@@ -18,35 +19,6 @@ public class CommandHeal extends Command {
 	public void execute(Game game, String[] args) {
 		
 		Player player = game.getPlayer();
-		
-		
-		/*
-		 * Solution proposé par Maxime
-		try { //We manage the case which the player try to type a real char instead of an integer
-			int idPotion = ((args != null && args.length>0)?Integer.parseInt((args[0].length()>0)?args[0]:"-1"):-1);
-			ItemStack potionStack = player.getInventory().getItemStack(new ItemPotion(idPotion, "", 0) {});
-			if (potionStack == null || potionStack.getNumber() <= 0)
-				throw new CommandBadUseException("La potion n'existe pas dans votre inventaire");
-		
-			ItemPotion itemPotion = (ItemPotion) potionStack.getItem();
-			
-			player.heal(itemPotion);
-			player.getInventory().removeItem(new ItemStack(itemPotion, 1));
-		} catch(NumberFormatException e) {//If exception is launched, we just display a message
-			e.printStackTrace();
-			throw new CommandBadUseException("La potion n'existe pas dans votre inventaire");
-		}
-		*/
-		
-		
-		
-		
-		
-		/*
-		 * Solution de Marc :
-		 */
-		
-		// partie changeante du code :
 		
 		// première étape, on vérifie l'existance de l'argument
 		if (args.length == 0)
@@ -71,6 +43,13 @@ public class CommandHeal extends Command {
 		
 		player.heal(itemPotion);
 		player.getInventory().removeItem(new ItemStack(itemPotion, 1));
+		
+		//Time to the monster to attack if they are alive
+		if(game.getCurrentRoom().getMonsters() != null) {
+			for(Monster m : game.getCurrentRoom().getMonsters()) {
+				m.attack(game.getPlayer());
+			}
+		}
 		
 	}
 }

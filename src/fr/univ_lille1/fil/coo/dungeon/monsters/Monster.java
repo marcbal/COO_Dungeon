@@ -27,7 +27,11 @@ public abstract class Monster {
 	 * @param p The player attacked
 	 */
 	public void attack(Player p) {
-		p.reduceLife(damage+level*10);
+		p.takeDamage(damage+level*10);
+	}
+	
+	public void takeDamage(int d) {
+		life -= d;
 	}
 	
 	/**
@@ -38,6 +42,13 @@ public abstract class Monster {
 		return life;
 	}
 	
+	/**
+	 * return the level of the monster
+	 * @return level of the monster
+	 */
+	public int getLevel() {
+		return level;
+	}
 	public String toString() {
 		return name + " niv. : " + level + " vie : " + life;
 	}

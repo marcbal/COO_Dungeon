@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import fr.univ_lille1.fil.coo.dungeon.Game;
 import fr.univ_lille1.fil.coo.dungeon.ui.Display;
+import fr.univ_lille1.fil.coo.dungeon.ui.console.commands.CommandAttack;
 import fr.univ_lille1.fil.coo.dungeon.ui.console.commands.CommandChest;
 import fr.univ_lille1.fil.coo.dungeon.ui.console.commands.CommandGo;
 import fr.univ_lille1.fil.coo.dungeon.ui.console.commands.CommandHeal;
@@ -30,9 +31,9 @@ public class UserInterfaceConsole {
 	private ConsoleWindow playerDataWindow = new ConsoleWindow(0, 3, 75, 3);
 	private ConsoleWindow roomWindow = new ConsoleWindow(0, 6, 75, 8);
 	private ConsoleWindow inventoryWindow = new ConsoleWindow(75, 3, 35, 11);
-	private ConsoleWindow monsterWindow = new ConsoleWindow(0, 3, 40, SCREEN_HEIGHT-4);
-	private ConsoleWindow weaponWindow = new ConsoleWindow(40, 3, 35, SCREEN_HEIGHT-4);
-	private ConsoleWindow potionWindow = new ConsoleWindow(75, 3, 35, SCREEN_HEIGHT-4);
+	private ConsoleWindow monsterWindow = new ConsoleWindow(0, 6, 40, SCREEN_HEIGHT-9);
+	private ConsoleWindow weaponWindow = new ConsoleWindow(40, 6, 35, SCREEN_HEIGHT-9);
+	private ConsoleWindow potionWindow = new ConsoleWindow(75, 6, 35, SCREEN_HEIGHT-9);
 	private ConsoleWindow messagesWindow = new ConsoleWindow(0, 14, 110, 2);
 	
 	
@@ -68,6 +69,7 @@ public class UserInterfaceConsole {
 		commandsManager.addCommand(new CommandChest());
 		commandsManager.addCommand(new CommandKey());
 		commandsManager.addCommand(new CommandHeal());
+		commandsManager.addCommand(new CommandAttack());
 	}
 	
 	
@@ -91,10 +93,10 @@ public class UserInterfaceConsole {
 			// command execution
 			commandsManager.dispatchCommand(game, command);
 			
-			
 		} while (game.getWinningStatus() == null);
 		
 		// ending message
+		display();
 		displayFinish();
 		System.out.print("--");
 		
@@ -115,7 +117,7 @@ public class UserInterfaceConsole {
 		
 
 		List<String> playerData = new ArrayList<String>();
-		playerData.add("Vie : " + game.getPlayer().getLife());
+		playerData.add("Vie : " + game.getPlayer().getLife() + " | Niveau : " + game.getPlayer().getLevel() + " | Expérience : " + game.getPlayer().getExperience());
 		playerDataWindow.setContent(playerData);
 		defaultScreen.drawWindow(playerDataWindow);
 		
@@ -152,6 +154,8 @@ public class UserInterfaceConsole {
 			fightScreen.drawWindow(monsterWindow);
 			fightScreen.drawWindow(weaponWindow);
 			fightScreen.drawWindow(potionWindow);
+			fightScreen.drawWindow(playerDataWindow);
+			fightScreen.drawWindow(messagesWindow);
 			//print out to the fight console
 			fightScreen.printOut(System.out);
 		}

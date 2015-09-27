@@ -1,7 +1,9 @@
 package fr.univ_lille1.fil.coo.dungeon.player;
 
 import fr.univ_lille1.fil.coo.dungeon.items.ItemPotion;
+import fr.univ_lille1.fil.coo.dungeon.monsters.Monster;
 import fr.univ_lille1.fil.coo.dungeon.ui.Display;
+import fr.univ_lille1.fil.coo.dungeon.weapons.Weapon;
 
 /**
  * Represent the player with an {@link Inventory}, a {@link Health}
@@ -12,7 +14,7 @@ public class Player {
 	private int level  = 1;
 	private int experience;
 	private static int MIN_LIFE = 0;
-	private static int MAX_LIFE = 1000;
+	private int MAX_LIFE = 1000;
 	
 	/**
 	 * Construct a new Player
@@ -67,6 +69,18 @@ public class Player {
 	}
 	
 	/**
+	 * Put the experience of the player and the level
+	 * @param e experience earned
+	 */
+	public void setExperience(int e) {
+		experience += e;
+		while(experience >= (Math.log10(Math.pow(level, 1000)))/level) {
+			experience -= (Math.log10(Math.pow(level, 1000)))/level;
+			level++;
+		}
+	}
+	
+	/**
 	 * Return the experience of the player
 	 * @return the experience of the player
 	 */
@@ -75,10 +89,17 @@ public class Player {
 	}
 	
 	/**
+	 * When the player attack the monster
+	 */
+	public void attack(Weapon w, Monster target) {
+		target.takeDamage(w.getDamage()+level*20);
+	}
+	
+	/**
 	 * When a monster attack the player
 	 * @param damage
 	 */
-	public void reduceLife(int damage) {
+	public void takeDamage(int damage) {
 		life -= damage;
 	}
 	

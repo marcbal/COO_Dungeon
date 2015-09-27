@@ -185,8 +185,9 @@ public class Inventory {
 	public List<String> getWeaponString() {
 		List<String> ret = new ArrayList<String>();
 		for (ItemStack stack : inventoryContent) {
-			if(stack.getItem() instanceof Weapon) ret.add(stack.toString());
+			if(stack.getItem() instanceof Weapon) ret.add(stack.toString().substring(2, stack.toString().length()));
 		}
+		ret.add("Coup de poing >> punch");
 		return ret;
 	}
 	

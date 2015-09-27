@@ -16,6 +16,9 @@ public class CommandGo extends Command {
 
 	@Override
 	public void execute(Game game, String[] args) {
+		if(game.getCurrentRoom().getMonsters() != null) {
+			throw new CommandBadUseException("Vous ne pouvez pas fuir, lâche !");
+		}
 		
 		if (args.length == 0)
 			throw new CommandBadUseException("Vous devez spécifier au moins 1 paramètre");
