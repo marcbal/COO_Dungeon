@@ -13,21 +13,30 @@ public class CommandHeal extends Command {
 
 	@Override
 	public void execute(Game game, String[] args) {
-		
-		// ligne à changer
-		int idPotion = ((args != null && args.length>0)?Integer.parseInt((args[0].length()>0)?args[0]:"-1"):-1);
-		// ---------------
-		
 		Player player = game.getPlayer();
 		
-		ItemStack potionStack = player.getInventory().getItemStack(new ItemPotion(idPotion, "", 0) {});
-		if (potionStack == null || potionStack.getNumber() <= 0)
-			throw new CommandException("La potion n'existe pas dans votre inventaire");
+		try { //We manage the case which the player try to type a real char instead of an integer
+			int idPotion = ((args != null && args.length>0)?Integer.parseInt((args[0].length()>0)?args[0]:"-1"):-1);
+			ItemStack potionStack = player.getInventory().getItemStack(new ItemPotion(idPotion, "", 0) {});
+			if (potionStack == null || potionStack.getNumber() <= 0)
+				throw new CommandException("La potion n'existe pas dans votre inventaire");
 		
-		ItemPotion itemPotion = (ItemPotion) potionStack.getItem();
+			ItemPotion itemPotion = (ItemPotion) potionStack.getItem();
+			
+			player.getHealth().heal(itemPotion);
+			player.getInventory().removeItem(new ItemStack(itemPotion, 1));
+		} catch(NumberFormatException e) {
+			e.printStackTrace();
+		} finally { //By default, we put a potion which doesn't exist
+			ItemStack potionStack = player.getInventory().getItemStack(new ItemPotion(-1, "", 0) {});
+			if (potionStack == null || potionStack.getNumber() <= 0)
+				throw new CommandException("La potion n'existe pas dans votre inventaire");
 		
-		player.getHealth().heal(itemPotion);
-		player.getInventory().removeItem(new ItemStack(itemPotion, 1));
+			ItemPotion itemPotion = (ItemPotion) potionStack.getItem();
+			
+			player.getHealth().heal(itemPotion);
+			player.getInventory().removeItem(new ItemStack(itemPotion, 1));
+		}
 	}
 
 }
