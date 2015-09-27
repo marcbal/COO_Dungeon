@@ -4,6 +4,10 @@ import fr.univ_lille1.fil.coo.dungeon.Game;
 import fr.univ_lille1.fil.coo.dungeon.player.Inventory;
 import fr.univ_lille1.fil.coo.dungeon.ui.Display;
 
+/**
+ * This command allow player to get all item stored in the chest of the current room, into
+ * their inventory.
+ */
 public class CommandChest extends Command {
 
 	public CommandChest() {
@@ -16,9 +20,9 @@ public class CommandChest extends Command {
 		Inventory chest = game.getCurrentRoom().getChestContent();
 
 		if (chest == null)
-			throw new CommandException("Cette salle ne contient aucun coffre");
+			throw new CommandBadUseException("Cette salle ne contient aucun coffre");
 		if (chest.isEmpty())
-			throw new CommandException("Le coffre de cette salle est vide");
+			throw new CommandBadUseException("Le coffre de cette salle est vide");
 		
 		chest.transfertIn(game.getPlayer().getInventory());
 		Display.sendMessage("Vous avez de nouveaux items dans votre inventaire");

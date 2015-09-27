@@ -7,7 +7,7 @@ Projet de Licence informatique L3 à l'université Lille 1, 2015-2016
 - Maxime Maroine
 - Veïs Oudjail
 
-Projet fait avec Ecplise Mars et Java 8
+Projet fait avec Eclipse Mars et Java 8
 
 
 
@@ -25,9 +25,9 @@ Le chiffre entre parenthèse représente la note estimée actuellement.
 - *(2)* On peut terminer le premier niveau
 - *(-)* On peut aller au niveau suivant
 - *(2 à priori)* Quelques secondes de jeu ne soulève pas de bug majeur
-- *(-)* Il n'y a pas 2 classes presque identiques
-- *(-)* Il n'y a pas 2 méthodes presque identiques
-- *(-)* Il n'y a pas 2 bouts de codes presque identiques
+- *(2 à priori)* Il n'y a pas 2 classes presque identiques
+- *(2 à priori)* Il n'y a pas 2 méthodes presque identiques
+- *(2 à priori)* Il n'y a pas 2 bouts de codes presque identiques
 - *(2)* Il y a une classe Room
 - *(2)* La classe Room est commentée
 - *(2)* Il y a une hiérarchie de Room (des sous-classes)
@@ -37,14 +37,14 @@ Le chiffre entre parenthèse représente la note estimée actuellement.
 - *(2)* Il existe une hiérarchie d'Exit (des sous-classes)
 - *(-)* Chaque type d'Exit est testée
 - *(3 vu tout ce qu'on a fait, Factory, Interface console)* Il existe plusieurs type d'objet
-- *(2 à priori)* Il n'y a pas de if/switch injustifié
-- *(2 à priori)* Il n'y a pas d'instanceof injustifié
+- *(2)* Il n'y a pas de if/switch injustifié
+- *(2)* Il n'y a pas d'instanceof injustifié
 - *(2)* Les noms de classes et de variables sont bien nommés et en anglais
 - *(-)* Couverture (de quoi ? ) : 60% sont atteints, 1 point pour 50%
 - *(-)* 100% de la logique globale du jeu est testée (interpréteur de commande, fin de partie, changement de donjon)
-- *(-)* Commentaires abondants et en anglais
+- *(2)* Commentaires abondants et en anglais
 
-Total temporaire estimée : 29/46 => 12.6/20
+Total temporaire estimée : **29 à 37**/46 => **12.6 à 16.1**/20
 
 
 

@@ -5,6 +5,9 @@ import fr.univ_lille1.fil.coo.dungeon.items.ItemPotion;
 import fr.univ_lille1.fil.coo.dungeon.player.ItemStack;
 import fr.univ_lille1.fil.coo.dungeon.player.Player;
 
+/**
+ * Allow player to use a potion to affect their own health
+ */
 public class CommandHeal extends Command {
 
 	public CommandHeal() {
@@ -25,18 +28,9 @@ public class CommandHeal extends Command {
 			
 			player.getHealth().heal(itemPotion);
 			player.getInventory().removeItem(new ItemStack(itemPotion, 1));
-		} catch(NumberFormatException e) {
+		} catch(NumberFormatException e) {//If exception is launched, we just display a message
 			e.printStackTrace();
-		} finally { //By default, we put a potion which doesn't exist
-			ItemStack potionStack = player.getInventory().getItemStack(new ItemPotion(-1, "", 0) {});
-			if (potionStack == null || potionStack.getNumber() <= 0)
-				throw new CommandException("La potion n'existe pas dans votre inventaire");
-		
-			ItemPotion itemPotion = (ItemPotion) potionStack.getItem();
-			
-			player.getHealth().heal(itemPotion);
-			player.getInventory().removeItem(new ItemStack(itemPotion, 1));
+			throw new CommandException("La potion n'existe pas dans votre inventaire");
 		}
 	}
-
 }
