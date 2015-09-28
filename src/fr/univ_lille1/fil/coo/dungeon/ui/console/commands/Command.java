@@ -33,6 +33,13 @@ public abstract class Command {
 	public abstract void execute(Game game, String[] args);
 	
 	
+	/**
+	 * Return the command usage which will be displayed to the screen. It doesn't include the command name.
+	 * @return the command usage, without the command name.
+	 */
+	public abstract String getCommandUsage();
+	
+	
 	
 	/**
 	 * Exception thrown when the user is misusing a command (wrong arguments, for example).<br/>

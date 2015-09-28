@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import fr.univ_lille1.fil.coo.dungeon.items.Item;
-import fr.univ_lille1.fil.coo.dungeon.items.ItemPotion;
-import fr.univ_lille1.fil.coo.dungeon.weapons.Weapon;
 
 /**
  * Represent an inventory. It may be for a player, or for a chest in a room.<br/>
@@ -164,44 +162,32 @@ public class Inventory {
 		targetInventory.addItems(getInventoryContent());
 		clear();
 	}
+
+	/**
+	 * Get all String representation of all ItemStack in this inventory.
+	 * @param displayedClass the which item must be instanceof to be returned.
+	 * @return a {@link List} of {@link String} describing all items in the inventory.
+	 * One String use this format : <code>"&lt;amount&gt; &lt;Item name&gt;"</code>
+	 */
+	public <T> List<String> getInventoryString(Class<T> displayedClass, boolean displayStackCount) {
+		List<String> ret = new ArrayList<String>();
+		for (ItemStack stack : inventoryContent) {
+			if (displayedClass.isInstance(stack.getItem()))
+				if (displayStackCount)
+					ret.add(stack.toString());
+				else
+					ret.add(stack.getItem().toString());
+		}
+		return ret;
+	}
 	
 	/**
 	 * Get all String representation of all ItemStack in this inventory.
 	 * @return a {@link List} of {@link String} describing all items in the inventory.
 	 * One String use this format : <code>"&lt;amount&gt; &lt;Item name&gt;"</code>
 	 */
-	public List<String> getInventoryString() {
-		List<String> ret = new ArrayList<String>();
-		for (ItemStack stack : inventoryContent) {
-			ret.add(stack.toString());
-		}
-		return ret;
+	public <T> List<String> getInventoryString() {
+		return getInventoryString(Item.class, true);
 	}
-	
-	/**
-	 * Get all String reprensentation of the weapons available in the inventory
-	 * @return a {@link List} of {@link String} describing the weapons
-	 */
-	public List<String> getWeaponString() {
-		List<String> ret = new ArrayList<String>();
-		for (ItemStack stack : inventoryContent) {
-			if(stack.getItem() instanceof Weapon) ret.add(stack.toString().substring(2, stack.toString().length()));
-		}
-		ret.add("Coup de poing >> punch");
-		return ret;
-	}
-	
-	/**
-	 * Get all String reprensentation of the potions available in the inventory
-	 * @return a {@link List} of {@link String} describing the potions
-	 */
-	public List<String> getPotionString() {
-		List<String> ret = new ArrayList<String>();
-		for (ItemStack stack : inventoryContent) {
-			if(stack.getItem() instanceof ItemPotion) ret.add(stack.toString());
-		}
-		return ret;
-	}
-
 
 }

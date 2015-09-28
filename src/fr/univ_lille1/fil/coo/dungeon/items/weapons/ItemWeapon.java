@@ -1,8 +1,8 @@
-package fr.univ_lille1.fil.coo.dungeon.weapons;
+package fr.univ_lille1.fil.coo.dungeon.items.weapons;
 
 import fr.univ_lille1.fil.coo.dungeon.items.Item;
 
-public abstract class Weapon extends Item {
+public abstract class ItemWeapon extends Item {
 	private String id;
 	private String name;
 	private int damage;
@@ -13,7 +13,7 @@ public abstract class Weapon extends Item {
 	 * @param name the Complete name of the weapon
 	 * @param d the damages
 	 */
-	public Weapon(String id, String name, int d) {
+	public ItemWeapon(String id, String name, int d) {
 		this.id = id;
 		this.name = name;
 		damage = d;
@@ -35,8 +35,8 @@ public abstract class Weapon extends Item {
 	@Override
 	public boolean equals(Object o) {
 		if(o == null) return false;
-		if(o instanceof Weapon) {
-			return ((Weapon)o).id.equals(id);
+		if(o instanceof ItemWeapon) {
+			return ((ItemWeapon)o).id.equals(id);
 		}
 		return false;
 	}

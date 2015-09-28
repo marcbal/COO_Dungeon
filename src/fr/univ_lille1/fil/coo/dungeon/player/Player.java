@@ -1,9 +1,9 @@
 package fr.univ_lille1.fil.coo.dungeon.player;
 
-import fr.univ_lille1.fil.coo.dungeon.items.ItemPotion;
+import fr.univ_lille1.fil.coo.dungeon.items.potions.ItemPotion;
+import fr.univ_lille1.fil.coo.dungeon.items.weapons.ItemWeapon;
 import fr.univ_lille1.fil.coo.dungeon.monsters.Monster;
 import fr.univ_lille1.fil.coo.dungeon.ui.Display;
-import fr.univ_lille1.fil.coo.dungeon.weapons.Weapon;
 
 /**
  * Represent the player with an {@link Inventory}, a {@link Health}
@@ -91,7 +91,7 @@ public class Player {
 	/**
 	 * When the player attack the monster
 	 */
-	public void attack(Weapon w, Monster target) {
+	public void attack(ItemWeapon w, Monster target) {
 		target.takeDamage(w.getDamage()+level*20);
 	}
 	

@@ -3,11 +3,14 @@ package fr.univ_lille1.fil.coo.dungeon.factories;
 import java.util.ArrayList;
 
 import fr.univ_lille1.fil.coo.dungeon.dungeons.Dungeon;
-import fr.univ_lille1.fil.coo.dungeon.items.ItemPotionClassic;
+import fr.univ_lille1.fil.coo.dungeon.items.weapons.ItemWeaponAtomicBomb;
+import fr.univ_lille1.fil.coo.dungeon.items.weapons.ItemWeaponBaseballBat;
+import fr.univ_lille1.fil.coo.dungeon.items.weapons.ItemWeapon;
 import fr.univ_lille1.fil.coo.dungeon.monsters.Beast;
 import fr.univ_lille1.fil.coo.dungeon.monsters.Monster;
 import fr.univ_lille1.fil.coo.dungeon.items.ItemKey;
-import fr.univ_lille1.fil.coo.dungeon.items.ItemPotion;
+import fr.univ_lille1.fil.coo.dungeon.items.potions.ItemPotion;
+import fr.univ_lille1.fil.coo.dungeon.items.potions.ItemPotionClassic;
 import fr.univ_lille1.fil.coo.dungeon.player.Inventory;
 import fr.univ_lille1.fil.coo.dungeon.player.ItemStack;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitNormal;
@@ -16,9 +19,6 @@ import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitWithKey;
 import fr.univ_lille1.fil.coo.dungeon.rooms.RoomLoosing;
 import fr.univ_lille1.fil.coo.dungeon.rooms.Room;
 import fr.univ_lille1.fil.coo.dungeon.rooms.RoomWinning;
-import fr.univ_lille1.fil.coo.dungeon.weapons.ItemWeaponAtomicBomb;
-import fr.univ_lille1.fil.coo.dungeon.weapons.ItemWeaponBaseballBat;
-import fr.univ_lille1.fil.coo.dungeon.weapons.Weapon;
 
 /**
  * Classic Dungeon.<br/>
@@ -41,8 +41,8 @@ public class FactoryDungeonDemo implements FactoryDungeon {
 		// on crée une clé pour l'accès à la salle Sortie
 		ItemKey key = new ItemKey();
 		ItemPotion p = new ItemPotionClassic();
-		Weapon b = new ItemWeaponBaseballBat();
-		Weapon ab = new ItemWeaponAtomicBomb();
+		ItemWeapon b = new ItemWeaponBaseballBat();
+		ItemWeapon ab = new ItemWeaponAtomicBomb();
 		ArrayList<Monster> m = new ArrayList<>();
 		m.add(new Beast(1));
 		m.add(new Beast(1));
@@ -50,7 +50,7 @@ public class FactoryDungeonDemo implements FactoryDungeon {
 		// on défini un coffre dans la salle du coffre, avec un exemplaire de cette clé.
 		roomWithKey.setChestContent(new Inventory(new ItemStack(key, 1)));
 		roomWithPotion.setChestContent(new Inventory(new ItemStack(p, 3), new ItemStack(b, 1), new ItemStack(ab, 1)));
-		roomWithMonster.setMonster(m);
+		roomWithMonster.setMonsters(m);
 		roomWithMonster.setChestContent(new Inventory(new ItemStack(p, 999)));
 
 		
