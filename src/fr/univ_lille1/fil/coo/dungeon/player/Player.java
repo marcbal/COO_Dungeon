@@ -1,16 +1,16 @@
 package fr.univ_lille1.fil.coo.dungeon.player;
 
-import fr.univ_lille1.fil.coo.dungeon.items.ItemPotion;
+import fr.univ_lille1.fil.coo.dungeon.items.potions.ItemPotion;
+import fr.univ_lille1.fil.coo.dungeon.items.weapons.ItemWeapon;
 import fr.univ_lille1.fil.coo.dungeon.monsters.Monster;
 import fr.univ_lille1.fil.coo.dungeon.ui.Display;
-import fr.univ_lille1.fil.coo.dungeon.weapons.Weapon;
 
 /**
  * Represent the player with an {@link Inventory}, a {@link Health}
  */
 public class Player {
 	private Inventory inventory = new Inventory();
-	private int life = 500;
+	private int life = 1000;
 	private int level  = 1;
 	private int experience;
 	private static int MIN_LIFE = 0;
@@ -59,6 +59,14 @@ public class Player {
 		return life;
 	}
 	
+	/**
+	 * Return the maximal life the player can have
+	 * @return the maximal life of the player
+	 */
+	public int getMaxLife() {
+		return MAX_LIFE;
+	}
+	
 	
 	/**
 	 * Return the level of the player
@@ -74,10 +82,12 @@ public class Player {
 	 */
 	public void setExperience(int e) {
 		experience += e;
-		while(experience >= (Math.log10(Math.pow(level, 1000)))/level) {
-			experience -= (Math.log10(Math.pow(level, 1000)))/level;
+		while(experience >= getExperienceToNextLevel()) {
+			experience -= getExperienceToNextLevel();
 			level++;
 		}
+		MAX_LIFE+= level*100;
+		life = MAX_LIFE;
 	}
 	
 	/**
@@ -89,9 +99,16 @@ public class Player {
 	}
 	
 	/**
+	 * Return the experience remaining for the next level
+	 * @return Experience remaining to the next level
+	 */
+	public int getExperienceToNextLevel() {
+		return (int)(Math.sqrt(level)*2*(level*level));
+	}
+	/**
 	 * When the player attack the monster
 	 */
-	public void attack(Weapon w, Monster target) {
+	public void attack(ItemWeapon w, Monster target) {
 		target.takeDamage(w.getDamage()+level*20);
 	}
 	
@@ -100,7 +117,7 @@ public class Player {
 	 * @param damage
 	 */
 	public void takeDamage(int damage) {
-		life -= damage;
+		life = (life-damage<0)?0:life-damage;
 	}
 	
 	public String toString() {

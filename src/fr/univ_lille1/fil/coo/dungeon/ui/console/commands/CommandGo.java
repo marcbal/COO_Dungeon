@@ -16,7 +16,7 @@ public class CommandGo extends Command {
 
 	@Override
 	public void execute(Game game, String[] args) {
-		if(game.getCurrentRoom().getMonsters() != null) {
+		if(game.getCurrentRoom().containsMonsters()) {
 			throw new CommandBadUseException("Vous ne pouvez pas fuir, lâche !");
 		}
 		
@@ -40,6 +40,11 @@ public class CommandGo extends Command {
 		
 		
 		game.setCurrentRoom(game.getCurrentRoom().requestChangingRoom(requestedDirection, index));
+	}
+
+	@Override
+	public String getCommandUsage() {
+		return "<"+EnumUtil.enumList(ExitPosition.class, "|")+"> [exitIndex]";
 	}
 
 }

@@ -16,4 +16,9 @@ public class CommandKey extends Command {
 		game.getCurrentRoom().tryToOpenLockedExit(game.getPlayer());
 	}
 
+	@Override
+	public String getCommandUsage() {
+		return "";
+	}
+
 }

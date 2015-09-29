@@ -1,4 +1,6 @@
-package fr.univ_lille1.fil.coo.dungeon.items;
+package fr.univ_lille1.fil.coo.dungeon.items.potions;
+
+import fr.univ_lille1.fil.coo.dungeon.items.Item;
 
 /**
  * Represent a potion ttem that can be used to change the health of the player

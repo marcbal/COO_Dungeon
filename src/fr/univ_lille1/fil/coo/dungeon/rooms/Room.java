@@ -24,7 +24,7 @@ public class Room {
 	public final String name;
 	
 	private Map<ExitPosition, List<RoomExit>> nextRooms = new HashMap<ExitPosition, List<RoomExit>>();
-	private ArrayList<Monster> monsters = new ArrayList<>();
+	private List<Monster> monsters = null;
 	
 	private Inventory chestContent = null; // par défaut, pas de coffre
 	
@@ -88,8 +88,8 @@ public class Room {
 	 * Add monster(s) in the room
 	 * @param monsters monster(s) to add 
 	 */
-	public void setMonster(ArrayList<Monster> monsters) {
-		this.monsters.addAll(monsters);
+	public void setMonsters(List<Monster> monsters) {
+		this.monsters = monsters;
 	}
 	
 	/**
@@ -104,8 +104,16 @@ public class Room {
 	 * Get all monsters
 	 * @return all the monsters of the actual room
 	 */
-	public ArrayList<Monster> getMonsters() {
-		return (monsters.size() == 0 ? null : monsters);
+	public List<Monster> getMonsters() {
+		return monsters;
+	}
+	
+	/**
+	 * Check if the current room contains at least one monster
+	 * @return true if the current room contains at least one monster
+	 */
+	public boolean containsMonsters() {
+		return monsters != null && monsters.size() > 0;
 	}
 	
 	

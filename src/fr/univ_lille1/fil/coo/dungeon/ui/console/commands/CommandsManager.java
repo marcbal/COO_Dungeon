@@ -43,6 +43,7 @@ public class CommandsManager {
 			cmdExecutor.execute(game, args);
 		} catch (CommandBadUseException e) {
 			Display.sendMessage("/!\\ "+e.getMessage());
+			Display.sendMessage("Utilisation de la commande >> "+command+" "+cmdExecutor.getCommandUsage());
 		} catch (Exception e) {
 			e.printStackTrace();
 			Display.sendMessage("Erreur interne : "+e.toString());

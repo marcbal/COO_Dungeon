@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import fr.univ_lille1.fil.coo.dungeon.Game;
+import fr.univ_lille1.fil.coo.dungeon.items.potions.ItemPotion;
+import fr.univ_lille1.fil.coo.dungeon.items.weapons.ItemWeapon;
 import fr.univ_lille1.fil.coo.dungeon.ui.Display;
 import fr.univ_lille1.fil.coo.dungeon.ui.console.commands.CommandAttack;
 import fr.univ_lille1.fil.coo.dungeon.ui.console.commands.CommandChest;
@@ -117,7 +119,7 @@ public class UserInterfaceConsole {
 		
 
 		List<String> playerData = new ArrayList<String>();
-		playerData.add("Vie : " + game.getPlayer().getLife() + " | Niveau : " + game.getPlayer().getLevel() + " | Expérience : " + game.getPlayer().getExperience());
+		playerData.add("Vie : " + game.getPlayer().getLife() + "/" + game.getPlayer().getMaxLife() + " | Niveau : " + game.getPlayer().getLevel() + " | Expérience : " + game.getPlayer().getExperience() + "/" + game.getPlayer().getExperienceToNextLevel());
 		playerDataWindow.setContent(playerData);
 		defaultScreen.drawWindow(playerDataWindow);
 		
@@ -136,7 +138,7 @@ public class UserInterfaceConsole {
 		messagesWindow.setContent(Display.getAndClear());
 		defaultScreen.drawWindow(messagesWindow);
 		
-		if(game.getCurrentRoom().getMonsters() != null) {
+		if(game.getCurrentRoom().containsMonsters()) {
 			fightScreen.drawWindow(titleWindow);
 			
 			monsterWindow.setTitle("Monsters :");
@@ -145,11 +147,13 @@ public class UserInterfaceConsole {
 			
 			weaponWindow.setTitle("Armes :");
 			weaponWindow.setBorderType(BorderType.LIGHT);
-			weaponWindow.setContent(game.getPlayer().getInventory().getWeaponString());
+			List<String> weaponList = game.getPlayer().getInventory().getInventoryString(ItemWeapon.class, false);
+			weaponList.add(0, "Poings (30) >> punch");
+			weaponWindow.setContent(weaponList);
 			
 			potionWindow.setTitle("Potions :");
 			potionWindow.setBorderType(BorderType.LIGHT);
-			potionWindow.setContent(game.getPlayer().getInventory().getPotionString());
+			potionWindow.setContent(game.getPlayer().getInventory().getInventoryString(ItemPotion.class, true));
 			
 			fightScreen.drawWindow(monsterWindow);
 			fightScreen.drawWindow(weaponWindow);

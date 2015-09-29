@@ -1,26 +1,38 @@
 package fr.univ_lille1.fil.coo.dungeon.util;
 
 public class EnumUtil {
-	
+
 	/**
-	 * Permet de lister les constantes d'un enum passé en paramètre, dans une chaine de caractère
-	 * @param enumType la classe correspondant à l'enum à lister
-	 * @return une chaine de caractère représentant les éléments de l'enum
+	 * List all enum constants which are in the specified enum class.
+	 * @param enumType the enum class.
+	 * @param separator a string which will be used as a separator
+	 * @return a string representation of the enum class.
 	 */
-	public static <T extends Enum<T>> String enumList(Class<T> enumType) {
+	public static <T extends Enum<T>> String enumList(Class<T> enumType, String separator) {
 		T[] elements = enumType.getEnumConstants();
 		
 		String out = "";
 		boolean first = true;
 		for (T el : elements) {
 			if (!first) {
-				out += ", ";
+				out += separator;
 			}
 			first = false;
 			out += el.name();
 			
 		}
 		return out;
+	}
+	
+
+	/**
+	 * List all enum constants which are in the specified enum class. It is equivalent to call
+	 * {@link #enumList(Class, String)} with the second parameter <code>", "</code>
+	 * @param enumType the enum class.
+	 * @return a string representation of the enum class.
+	 */
+	public static <T extends Enum<T>> String enumList(Class<T> enumType) {
+		return enumList(enumType, ", ");
 	}
 	
 	/**

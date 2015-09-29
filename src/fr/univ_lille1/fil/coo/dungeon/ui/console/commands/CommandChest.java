@@ -23,12 +23,17 @@ public class CommandChest extends Command {
 			throw new CommandBadUseException("Cette salle ne contient aucun coffre");
 		if (chest.isEmpty())
 			throw new CommandBadUseException("Le coffre de cette salle est vide");
-		if(game.getCurrentRoom().getMonsters() != null) {
-			throw new CommandBadUseException("Les ennemis sont devant le coffre ! :p ");
+		if(game.getCurrentRoom().containsMonsters()) {
+			throw new CommandBadUseException("Des ennemis sont devant le coffre ! :P");
 		}
 		
 		chest.transfertIn(game.getPlayer().getInventory());
 		Display.sendMessage("Vous avez de nouveaux items dans votre inventaire");
+	}
+
+	@Override
+	public String getCommandUsage() {
+		return "";
 	}
 
 }
