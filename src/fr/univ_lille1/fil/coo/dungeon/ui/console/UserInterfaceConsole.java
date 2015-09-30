@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import fr.univ_lille1.fil.coo.dungeon.Game;
-import fr.univ_lille1.fil.coo.dungeon.items.potions.ItemPotion;
-import fr.univ_lille1.fil.coo.dungeon.items.weapons.ItemWeapon;
+import fr.univ_lille1.fil.coo.dungeon.items.ItemPotion;
+import fr.univ_lille1.fil.coo.dungeon.items.ItemWeapon;
 import fr.univ_lille1.fil.coo.dungeon.ui.Display;
 import fr.univ_lille1.fil.coo.dungeon.ui.console.commands.CommandAttack;
 import fr.univ_lille1.fil.coo.dungeon.ui.console.commands.CommandChest;

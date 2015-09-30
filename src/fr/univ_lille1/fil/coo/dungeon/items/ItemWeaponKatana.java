@@ -1,4 +1,4 @@
-package fr.univ_lille1.fil.coo.dungeon.items.weapons;
+package fr.univ_lille1.fil.coo.dungeon.items;
 
 public class ItemWeaponKatana extends ItemWeapon {
 

@@ -1,6 +1,4 @@
-package fr.univ_lille1.fil.coo.dungeon.items.weapons;
-
-import fr.univ_lille1.fil.coo.dungeon.items.Item;
+package fr.univ_lille1.fil.coo.dungeon.items;
 
 public abstract class ItemWeapon extends Item {
 	private String id;

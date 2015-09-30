@@ -1,4 +1,4 @@
-package fr.univ_lille1.fil.coo.dungeon.items.potions;
+package fr.univ_lille1.fil.coo.dungeon.items;
 
 /**
  * A type of potion

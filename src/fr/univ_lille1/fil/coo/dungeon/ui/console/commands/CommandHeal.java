@@ -1,7 +1,7 @@
 package fr.univ_lille1.fil.coo.dungeon.ui.console.commands;
 
 import fr.univ_lille1.fil.coo.dungeon.Game;
-import fr.univ_lille1.fil.coo.dungeon.items.potions.ItemPotion;
+import fr.univ_lille1.fil.coo.dungeon.items.ItemPotion;
 import fr.univ_lille1.fil.coo.dungeon.monsters.Monster;
 import fr.univ_lille1.fil.coo.dungeon.player.ItemStack;
 import fr.univ_lille1.fil.coo.dungeon.player.Player;
