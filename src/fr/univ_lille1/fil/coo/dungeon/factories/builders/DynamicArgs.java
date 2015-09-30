@@ -1,4 +1,4 @@
-package fr.univ_lille1.fil.coo.dungeon.core;
+package fr.univ_lille1.fil.coo.dungeon.factories.builders;
 
 import java.util.ArrayList;
 

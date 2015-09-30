@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import fr.univ_lille1.fil.coo.dungeon.core.CoreUtils;
-import fr.univ_lille1.fil.coo.dungeon.core.DynamicArgs;
+import fr.univ_lille1.fil.coo.dungeon.factories.builders.DynamicArgs;
 import fr.univ_lille1.fil.coo.dungeon.monsters.Monster;
 import fr.univ_lille1.fil.coo.dungeon.player.Inventory;
 import fr.univ_lille1.fil.coo.dungeon.player.Player;

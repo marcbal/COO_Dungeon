@@ -1,6 +1,6 @@
 package fr.univ_lille1.fil.coo.dungeon.roomexit;
 
-import fr.univ_lille1.fil.coo.dungeon.core.DynamicArgs;
+import fr.univ_lille1.fil.coo.dungeon.factories.builders.DynamicArgs;
 import fr.univ_lille1.fil.coo.dungeon.rooms.Room;
 
 /**

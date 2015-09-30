@@ -1,6 +1,6 @@
 package fr.univ_lille1.fil.coo.dungeon.roomexit;
 
-import fr.univ_lille1.fil.coo.dungeon.core.DynamicArgs;
+import fr.univ_lille1.fil.coo.dungeon.factories.builders.DynamicArgs;
 import fr.univ_lille1.fil.coo.dungeon.items.ItemKey;
 import fr.univ_lille1.fil.coo.dungeon.player.Inventory;
 import fr.univ_lille1.fil.coo.dungeon.player.Player;
