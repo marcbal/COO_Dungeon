@@ -9,6 +9,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 
 import fr.univ_lille1.fil.coo.dungeon.core.CoreUtils;
+import fr.univ_lille1.fil.coo.dungeon.core.DynamicArgs;
 import fr.univ_lille1.fil.coo.dungeon.dungeons.Dungeon;
 import fr.univ_lille1.fil.coo.dungeon.items.Item;
 import fr.univ_lille1.fil.coo.dungeon.monsters.Monster;
@@ -48,7 +49,21 @@ public class BuilderGSon implements Builder {
 	}
 
 	
-	public Object createObjectDungeonByType(String type, )
+	public Object createObjectDungeonByType(String prefixeImport, String type, DynamicArgs args) {
+		Object result = null;
+		try {
+			if(args.size() == 0) {
+				result = Class.forName(prefixeImport + type).newInstance();
+			}
+			else {
+				result = Class.forName(prefixeImport + type).getConstructor(new Class [] {DynamicArgs.class}).newInstance(args);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 	@Override
 	public void onRooms() {
