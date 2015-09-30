@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 
+import fr.univ_lille1.fil.coo.dungeon.core.CoreUtils;
 import fr.univ_lille1.fil.coo.dungeon.dungeons.Dungeon;
 import fr.univ_lille1.fil.coo.dungeon.items.Item;
 import fr.univ_lille1.fil.coo.dungeon.monsters.Monster;
@@ -46,9 +47,15 @@ public class BuilderGSon implements Builder {
 		
 	}
 
+	
+	public Object createObjectDungeonByType(String type, )
+	
 	@Override
 	public void onRooms() {
 		// TODO Auto-generated method stub
+		if(!mapGSon.containsKey(KEY_ROOMS)) {
+			CoreUtils.fail("Error, not " + KEY_ROOMS);
+		}
 		
 	}
 
