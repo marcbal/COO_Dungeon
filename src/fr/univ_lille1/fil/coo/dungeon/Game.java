@@ -125,7 +125,7 @@ public class Game {
 		
 		dungeons.add(new FactoryDungeonGSon("ressource/bdd/Dungeons.json").createDungeon());
 		
-		//dungeons.add(new FactoryDungeonDemo().createDungeon());
+		dungeons.add(new FactoryDungeonDemo().createDungeon());
 		
 		
 		
