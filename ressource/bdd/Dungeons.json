@@ -1,0 +1,47 @@
+{
+	
+
+"rooms" : [{"id" : "entry", "type" : "Room", "args" : ["Entree"]},
+		   {"id" : "intersection", "type" : "Room", "args" : ["Salle intermediaire"]},
+		   {"id" : "exit", "type" : "RoomWinning", "args" : []},
+		   {"id" : "trap", "type" : "RoomLoosing", "args" : []},
+		   {"id" : "roomWithKey", "type" : "Room", "args" : ["Salle du coffre"]},
+		   {"id" : "roomWithMonster", "type" : "Room", "args" : ["Salle du monstre"]},
+		   {"id" : "roomWithPotion", "type" : "Room", "args" : ["Salle du soin"]}
+		  ],
+
+"items" : [{"id" : "ik1", "type" : "ItemKey"},
+		   {"id" : "ip1", "type" : "ItemPotionClassic"},
+		   {"id" : "iw1", "type" : "ItemWeaponBaseballBat"}
+		  ],
+
+"monsters" : [{"id" : "m1", "type" : "Beast", "lvl" : 150},
+			  {"id" : "m2", "type" : "Beast", "lvl" : 2000}
+			 ],
+			  
+			
+"exitRoom" : [{"id_room" : "entry", "rooms" : [{"direction" : "NORTH", "exit" : {"type" : "RoomExitNormal", "nextRoom" : "intersection", "back" : true}},
+										       {"direction" : "EAST",  "exit" : {"type" : "RoomExitNormal", "nextRoom" : "roomWithKey", "back" : true}},
+										       {"direction" : "SOUTH", "exit" : {"type" : "RoomExitNormal", "nextRoom" : "roomWithMonster", "back" : true}},
+											   {"direction" : "WEST",  "exit" : {"type" : "RoomExitNormal", "nextRoom" : "roomWithPotion", "back" : true}}
+												
+										      ]},
+										 
+			  {"id_room" : "intersection", "rooms" : [{"direction" : "NORTH", "exit" : {"type" : "RoomExitWithKey", "nextRoom" : "intersection", "key" : "ik1"}},
+												      {"direction" : "WEST",  "exit" : {"type" : "RoomExitNormal", "nextRoom" : "intersection"}}
+												
+												     ]}
+							 											  
+			 ],
+			 
+"monsterRoom" : [{"id_room" : "roomWithMonster", "monsters" : ["m1", "m2"]}],
+
+"inventoryRooms" : [{"id_room" : "roomWithKey", "inventory" : [{"id_item" : "ik1", "nb_item" : 1}]},
+					
+					{"id_room" : "roomWithPotion", "inventory" : [{"id_item" : "ip1", "nb_item" : 3},
+																  {"id_item" : "iw1", "nb_item" : 1}
+																 ]
+					}
+				   ]
+
+}
