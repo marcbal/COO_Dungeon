@@ -28,8 +28,17 @@ public class BuilderGSon implements Builder {
 	private static final String PRX_ROOMS = "fr.univ_lille1.fil.coo.dungeon.rooms.";
 	private static final String PRX_ITEMS = "fr.univ_lille1.fil.coo.dungeon.items.";
 	private static final String PRX_MONSTERS = "fr.univ_lille1.fil.coo.dungeon.monsters.";
+	private static final String PRX_WEAPONS = "fr.univ_lille1.fil.coo.dungeon.items.weapons.";
+	private static final String PRX_POTIONS = "fr.univ_lille1.fil.coo.dungeon.items.potions.";
+
+
+	
 	
 	private static final String KEY_ROOMS = "rooms";
+	private static final String KEY_MONSTERS = "monsters";
+	private static final String KEY_ITEMS = "items";
+
+
 	
 	private static final String ID_NATURAL = "id";
 	
@@ -90,13 +99,34 @@ public class BuilderGSon implements Builder {
 			
 			this.rooms.put(idRoom, (Room) createObjectDungeonByType(PRX_ROOMS, typeRoom, argsRoom));
 		}
-		System.out.println(this.rooms);
+	}
+	
+	private static String getPrefixeImportByTypeItem(String type) {
+		if(type.contains("Weapon")) {
+			return PRX_WEAPONS;
+		}
+		if(type.contains("Potion")) {
+			return PRX_POTIONS;
+		}
+		return PRX_ITEMS;
 	}
 
 	@Override
 	public void onItems() {
 		// TODO Auto-generated method stub
-		
+		if(!mapGSon.containsKey(KEY_ITEMS)) {
+			CoreUtils.fail("Error, not " + KEY_ITEMS);
+		}
+		List<Map<String, Object>> items = (List<Map<String, Object>>) mapGSon.get(KEY_ITEMS);
+		System.out.println(items);
+		for(int i=0; i < items.size(); ++i) {
+			
+			String idItem = (String) items.get(i).get(ID_NATURAL);
+			String typeItem = (String) items.get(i).get(TYPE);
+			DynamicArgs<Object> argsItem = new DynamicArgs<>();
+			this.items.put(idItem, (Item) createObjectDungeonByType(getPrefixeImportByTypeItem(typeItem), typeItem, argsItem));
+			
+		}
 	}
 
 	@Override

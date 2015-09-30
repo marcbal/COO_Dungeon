@@ -13,4 +13,9 @@ public class DynamicArgs<T> extends ArrayList<T> {
 		// TODO Auto-generated constructor stub
 		super(arrayList);
 	}
+	
+	public DynamicArgs() {
+		// TODO Auto-generated constructor stub
+		super();
+	}
 }

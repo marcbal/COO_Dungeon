@@ -1,5 +1,6 @@
 package fr.univ_lille1.fil.coo.dungeon.items.potions;
 
+import fr.univ_lille1.fil.coo.dungeon.core.DynamicArgs;
 import fr.univ_lille1.fil.coo.dungeon.items.Item;
 
 /**
@@ -23,6 +24,8 @@ public abstract class ItemPotion extends Item {
 		name = n;
 		value = v;
 	}
+	
+	
 	
 	public int getValue() {
 		return value;
