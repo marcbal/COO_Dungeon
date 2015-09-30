@@ -9,13 +9,17 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
+import com.sun.javafx.scene.traversal.Direction;
 
 import fr.univ_lille1.fil.coo.dungeon.core.CoreUtils;
 import fr.univ_lille1.fil.coo.dungeon.core.DynamicArgs;
 import fr.univ_lille1.fil.coo.dungeon.dungeons.Dungeon;
 import fr.univ_lille1.fil.coo.dungeon.items.Item;
 import fr.univ_lille1.fil.coo.dungeon.monsters.Monster;
+import fr.univ_lille1.fil.coo.dungeon.roomexit.ExitPosition;
+import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExit;
 import fr.univ_lille1.fil.coo.dungeon.rooms.Room;
+import fr.univ_lille1.fil.coo.dungeon.util.EnumUtil;
 
 public class BuilderGSon implements Builder {
 	
@@ -30,26 +34,34 @@ public class BuilderGSon implements Builder {
 	private static final String PRX_MONSTERS = "fr.univ_lille1.fil.coo.dungeon.monsters.";
 	private static final String PRX_WEAPONS = "fr.univ_lille1.fil.coo.dungeon.items.weapons.";
 	private static final String PRX_POTIONS = "fr.univ_lille1.fil.coo.dungeon.items.potions.";
+	private static final String PRX_ROOMS_EXITS = "fr.univ_lille1.fil.coo.dungeon.roomexit.";
 
-
-	
-	
 	private static final String KEY_ROOMS = "rooms";
 	private static final String KEY_MONSTERS = "monsters";
 	private static final String KEY_ITEMS = "items";
 
+	private static final String KEY_EXITS_ROOMS = "exitRoom";
+	private static final String KEY_MONSTERS_ROOMS = "monsterRoom";
+	private static final String KEY_ITEMS_ROOMS = "inventoryRooms";
 
-	
 	private static final String ID_NATURAL = "id";
+	private static final String ID_ROOM = "id_room";
+
 	
 	private static final String TYPE = "type";
 	
 	private static final String ARGS = "args";
+	
+	private static final String ARGS_LVL = "lvl";
+	private static final String ARGS_ROOMS = "rooms";
+	private static final String ARGS_DIRECTION = "direction";
+	private static final String ARGS_EXIT = "exit";
+	private static final String ARGS_NEXT_ROOM = "nextRoom";
+	private static final String ARGS_BACK = "back";
 
-	
+	private static final Object ARGS_KEY = "key";
 
-	
-	
+
 
 
 
@@ -118,7 +130,6 @@ public class BuilderGSon implements Builder {
 			CoreUtils.fail("Error, not " + KEY_ITEMS);
 		}
 		List<Map<String, Object>> items = (List<Map<String, Object>>) mapGSon.get(KEY_ITEMS);
-		System.out.println(items);
 		for(int i=0; i < items.size(); ++i) {
 			
 			String idItem = (String) items.get(i).get(ID_NATURAL);
@@ -133,11 +144,53 @@ public class BuilderGSon implements Builder {
 	public void onMonsters() {
 		// TODO Auto-generated method stub
 		
+		if(!mapGSon.containsKey(KEY_MONSTERS)) {
+			CoreUtils.fail("Error, not " + KEY_MONSTERS);
+		}
+		List<Map<String, Object>> monsters = (List<Map<String, Object>>) mapGSon.get(KEY_MONSTERS);
+		for(int i=0; i < monsters.size(); ++i) {
+			
+			String idMonster = (String) monsters.get(i).get(ID_NATURAL);
+			String typeMonster = (String) monsters.get(i).get(TYPE);
+			DynamicArgs<Object> argsMonster = new DynamicArgs<>();
+			argsMonster.add(monsters.get(i).get(ARGS_LVL));
+			this.monsters.put(idMonster, (Monster) createObjectDungeonByType(PRX_MONSTERS, typeMonster, argsMonster));
+		
+		}
 	}
 
+	private RoomExit createRoomExit(Map<String, Object> exit) {
+		String nextRoom = (String) exit.get(ARGS_NEXT_ROOM);
+		String type = (String) exit.get(TYPE);
+		DynamicArgs<Object> argsRoomExit = new DynamicArgs<>();
+		argsRoomExit.add(rooms.get(nextRoom));
+		if(exit.containsKey(ARGS_KEY)) {
+			argsRoomExit.add(items.get(exit.get(ARGS_KEY)));
+
+		}
+		return (RoomExit) createObjectDungeonByType(PRX_ROOMS_EXITS, type, argsRoomExit);
+	}
 	@Override
 	public void onRoomsExits() {
 		// TODO Auto-generated method stub
+		
+		if(!mapGSon.containsKey(KEY_EXITS_ROOMS)) {
+			CoreUtils.fail("Error, not " + KEY_EXITS_ROOMS);
+		}
+		List<Map<String, Object>> exitsRooms = (List<Map<String, Object>>) mapGSon.get(KEY_EXITS_ROOMS);
+		System.out.println(exitsRooms);
+		for(int i=0; i < exitsRooms.size(); ++i) {
+			String idRooms = (String) exitsRooms.get(i).get(ID_ROOM);
+			List<Map<String, Object>> rooms = (List<Map<String, Object>>) exitsRooms.get(i).get(ARGS_ROOMS);
+			for (int j = 0; j < rooms.size(); j++) {
+				String direction = (String) rooms.get(j).get(ARGS_DIRECTION);
+				Map<String, Object> exit = (Map<String, Object>) rooms.get(j).get(ARGS_EXIT);
+				boolean back = exit.containsKey(ARGS_BACK);
+				if (back) back = ((Boolean)exit.get(ARGS_BACK)).booleanValue();
+				
+				this.rooms.get(idRooms).addNewNextRoom(EnumUtil.searchEnum(ExitPosition.class, direction), createRoomExit(exit), back);
+			}		
+		}
 		
 	}
 

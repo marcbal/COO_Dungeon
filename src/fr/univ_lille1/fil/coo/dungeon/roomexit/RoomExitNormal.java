@@ -1,5 +1,6 @@
 package fr.univ_lille1.fil.coo.dungeon.roomexit;
 
+import fr.univ_lille1.fil.coo.dungeon.core.DynamicArgs;
 import fr.univ_lille1.fil.coo.dungeon.rooms.Room;
 
 /**
@@ -12,6 +13,10 @@ public class RoomExitNormal extends RoomExit {
 		super(next);
 	}
 
+	public RoomExitNormal(DynamicArgs<Object> args) {
+		// TODO Auto-generated constructor stub
+		super(args);
+	}
 	@Override
 	public boolean canPlayerPass() {
 		return true;

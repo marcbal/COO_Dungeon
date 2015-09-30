@@ -1,5 +1,7 @@
 package fr.univ_lille1.fil.coo.dungeon.roomexit;
 
+import fr.univ_lille1.fil.coo.dungeon.core.CoreUtils;
+import fr.univ_lille1.fil.coo.dungeon.core.DynamicArgs;
 import fr.univ_lille1.fil.coo.dungeon.rooms.Room;
 
 /**
@@ -22,7 +24,12 @@ public abstract class RoomExit {
 		room = next;
 	}
 	
-	
+	public RoomExit(DynamicArgs<Object> args) {
+		if(args == null || args.size() < 1 || !(args.get(0) instanceof Room)) {
+			CoreUtils.fail("Error : RoomExit(DynamicArgs<Object> args) ");
+		}
+		room = (Room) args.get(0);
+	}
 	
 	/**
 	 * Indicates wether the player can actually pass this exit or not.

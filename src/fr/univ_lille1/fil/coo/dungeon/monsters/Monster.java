@@ -22,6 +22,8 @@ public abstract class Monster {
 		this.level = level;
 	}
 	
+	public Monster() {}
+	
 	/**
 	 * The power of the attack depends of the level of the monster
 	 * @param p The player attacked

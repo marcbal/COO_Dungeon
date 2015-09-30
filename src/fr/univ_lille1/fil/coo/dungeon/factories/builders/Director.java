@@ -18,6 +18,8 @@ public class Director {
 		build.buildMapGSon(pathname);
 		build.onRooms();
 		build.onItems();
+		build.onMonsters();
+		build.onRoomsExits();
 	}
 	
 	public Dungeon getResult() {

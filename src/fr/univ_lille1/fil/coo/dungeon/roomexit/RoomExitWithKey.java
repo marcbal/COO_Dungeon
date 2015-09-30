@@ -1,5 +1,6 @@
 package fr.univ_lille1.fil.coo.dungeon.roomexit;
 
+import fr.univ_lille1.fil.coo.dungeon.core.DynamicArgs;
 import fr.univ_lille1.fil.coo.dungeon.items.ItemKey;
 import fr.univ_lille1.fil.coo.dungeon.player.Inventory;
 import fr.univ_lille1.fil.coo.dungeon.player.Player;
@@ -29,6 +30,12 @@ public class RoomExitWithKey extends RoomExit {
 		super(next);
 		if (key == null) throw new IllegalArgumentException("key can't be null");
 		keyToHave = key;
+	}
+	
+	public RoomExitWithKey(DynamicArgs<Object> args) {
+		super(args);
+		if (args.size() < 2 || !(args.get(1) instanceof ItemKey)) throw new IllegalArgumentException("key can't be null");
+		keyToHave = (ItemKey) args.get(1);
 	}
 	
 	
