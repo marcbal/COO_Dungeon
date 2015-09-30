@@ -20,6 +20,8 @@ public class Director {
 		build.onItems();
 		build.onMonsters();
 		build.onRoomsExits();
+		build.onRoomsMonsters();
+		build.onRoomsItems();
 	}
 	
 	public Dungeon getResult() {

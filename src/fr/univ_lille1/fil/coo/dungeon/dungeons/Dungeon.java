@@ -16,12 +16,19 @@ public class Dungeon {
 		spawningRoom = firstRoom;
 	}
 	
+	public Dungeon() {
+		
+	}
 	
 	/**
 	 * @return the first room of this dungeon
 	 */
 	public Room getSpawningRoom() {
 		return spawningRoom;
+	}
+	
+	public void setSpawningRoom(Room firstRoom) {
+		this.spawningRoom = firstRoom;
 	}
 	
 	
