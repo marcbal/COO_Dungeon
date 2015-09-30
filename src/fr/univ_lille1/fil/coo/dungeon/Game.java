@@ -5,6 +5,7 @@ import java.util.List;
 
 import fr.univ_lille1.fil.coo.dungeon.dungeons.Dungeon;
 import fr.univ_lille1.fil.coo.dungeon.factories.FactoryDungeonDemo;
+import fr.univ_lille1.fil.coo.dungeon.factories.FactoryDungeonGSon;
 import fr.univ_lille1.fil.coo.dungeon.player.Player;
 import fr.univ_lille1.fil.coo.dungeon.rooms.Room;
 import fr.univ_lille1.fil.coo.dungeon.rooms.RoomLoosing;
@@ -113,12 +114,7 @@ public class Game {
 		return null;
 	}
 	
-	
-	
-	
-	
-	
-	
+
 	
 	/**
 	 * <b>Méthode de construction des donjons</b><br/>
@@ -127,9 +123,9 @@ public class Game {
 	 */
 	private void constructDungeons() {
 		
+		dungeons.add(new FactoryDungeonGSon("ressource/bdd/Dungeons.json").createDungeon());
 		
-		
-		dungeons.add(new FactoryDungeonDemo().createDungeon());
+		//dungeons.add(new FactoryDungeonDemo().createDungeon());
 		
 		
 		
