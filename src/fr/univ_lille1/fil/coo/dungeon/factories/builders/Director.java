@@ -16,6 +16,7 @@ public class Director {
 	
 	public void build() {
 		build.buildMapGSon(pathname);
+		build.onRooms();
 	}
 	
 	public Dungeon getResult() {

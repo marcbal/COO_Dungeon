@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import fr.univ_lille1.fil.coo.dungeon.core.CoreUtils;
+import fr.univ_lille1.fil.coo.dungeon.core.DynamicArgs;
 import fr.univ_lille1.fil.coo.dungeon.monsters.Monster;
 import fr.univ_lille1.fil.coo.dungeon.player.Inventory;
 import fr.univ_lille1.fil.coo.dungeon.player.Player;
@@ -39,6 +41,15 @@ public class Room {
 		name = n;
 	}
 	
+	
+	public Room(DynamicArgs<Object> args) {
+		if(args == null || args.size() != 1 || !(args.get(0) instanceof String)) {
+			CoreUtils.fail("Error construct dynamic : Invalid Args");
+		}
+		String n = (String) args.get(0);
+		if (n == null) n = "";
+		name = n;
+	}
 	
 	/**
 	 * Add a {@link RoomExit} in this Room, toward the {@link ExitPosition} specified.<br/>

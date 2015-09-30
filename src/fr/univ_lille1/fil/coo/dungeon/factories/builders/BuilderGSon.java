@@ -3,7 +3,9 @@ package fr.univ_lille1.fil.coo.dungeon.factories.builders;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
@@ -27,7 +29,16 @@ public class BuilderGSon implements Builder {
 	private static final String PRX_ITEMS = "fr.univ_lille1.fil.coo.dungeon.items.";
 	private static final String PRX_MONSTERS = "fr.univ_lille1.fil.coo.dungeon.monsters.";
 	
-	private static final String KEY_ROOMS = "";
+	private static final String KEY_ROOMS = "rooms";
+	
+	private static final String ID_NATURAL = "id";
+	
+	private static final String TYPE = "type";
+	
+	private static final String ARGS = "args";
+
+	
+
 	
 	
 
@@ -49,7 +60,7 @@ public class BuilderGSon implements Builder {
 	}
 
 	
-	public Object createObjectDungeonByType(String prefixeImport, String type, DynamicArgs args) {
+	public Object createObjectDungeonByType(String prefixeImport, String type, DynamicArgs<?> args) {
 		Object result = null;
 		try {
 			if(args.size() == 0) {
@@ -71,7 +82,15 @@ public class BuilderGSon implements Builder {
 		if(!mapGSon.containsKey(KEY_ROOMS)) {
 			CoreUtils.fail("Error, not " + KEY_ROOMS);
 		}
-		
+		List<Map<String, Object>> rooms = (List<Map<String, Object>>) mapGSon.get(KEY_ROOMS);
+		for(int i=0; i < rooms.size(); ++i) {
+			String idRoom = (String) rooms.get(i).get(ID_NATURAL);
+			String typeRoom = (String) rooms.get(i).get(TYPE);
+			DynamicArgs<Object> argsRoom = new DynamicArgs<>((ArrayList<Object>) rooms.get(i).get(ARGS));
+			
+			this.rooms.put(idRoom, (Room) createObjectDungeonByType(PRX_ROOMS, typeRoom, argsRoom));
+		}
+		System.out.println(this.rooms);
 	}
 
 	@Override

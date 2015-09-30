@@ -1,6 +1,7 @@
 package fr.univ_lille1.fil.coo.dungeon.rooms;
 
 import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExit;
+import fr.univ_lille1.fil.coo.dungeon.core.DynamicArgs;
 import fr.univ_lille1.fil.coo.dungeon.roomexit.ExitPosition;
 
 /**
@@ -11,6 +12,10 @@ public class RoomLoosing extends Room {
 	
 	public RoomLoosing() {
 		super("");
+	}
+	
+	public RoomLoosing(DynamicArgs<Object> args) {
+		super(args);
 	}
 
 	/**
