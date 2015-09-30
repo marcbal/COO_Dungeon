@@ -74,8 +74,6 @@ public class BuilderGSon implements Builder {
 
 
 
-
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public void buildMapGSon(String pathname) {
@@ -108,6 +106,7 @@ public class BuilderGSon implements Builder {
 		return result;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onRooms() {
 		// TODO Auto-generated method stub
@@ -134,6 +133,7 @@ public class BuilderGSon implements Builder {
 		return PRX_ITEMS;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onItems() {
 		// TODO Auto-generated method stub
@@ -151,6 +151,7 @@ public class BuilderGSon implements Builder {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onMonsters() {
 		// TODO Auto-generated method stub
@@ -181,6 +182,8 @@ public class BuilderGSon implements Builder {
 		}
 		return (RoomExit) createObjectDungeonByType(PRX_ROOMS_EXITS, type, argsRoomExit);
 	}
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onRoomsExits() {
 		// TODO Auto-generated method stub
@@ -203,7 +206,8 @@ public class BuilderGSon implements Builder {
 		}
 		
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onRoomsMonsters() {
 		// TODO Auto-generated method stub
@@ -223,7 +227,8 @@ public class BuilderGSon implements Builder {
 		}
 		
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onRoomsItems() {
 		// TODO Auto-generated method stub
