@@ -9,12 +9,15 @@ import fr.univ_lille1.fil.coo.dungeon.ui.Display;
  * Represent the player with an {@link Inventory}, a {@link Health}
  */
 public class Player {
-	private Inventory inventory = new Inventory();
-	private int life = 1000;
-	private int level  = 1;
-	private int experience;
+	
 	private static int MIN_LIFE = 0;
 	private int MAX_LIFE = 1000;
+	
+	private Inventory inventory = new Inventory();
+	
+	private int life = MAX_LIFE;
+	private int level  = 1;
+	private int experience;
 	
 	/**
 	 * Construct a new Player
