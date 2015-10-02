@@ -13,10 +13,6 @@ import fr.univ_lille1.fil.coo.dungeon.factories.builders.DynamicArgs;
 import fr.univ_lille1.fil.coo.dungeon.monsters.Beast;
 import fr.univ_lille1.fil.coo.dungeon.player.Player;
 
-/**
- * @author Marc
- *
- */
 public class BeastTest {
 	
 	Beast monster;
