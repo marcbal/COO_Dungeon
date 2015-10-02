@@ -9,4 +9,6 @@ public class ItemPotionClassic extends ItemPotion {
 		super(0, "Potion classique", 50);
 	}
 	
+	
+	
 }

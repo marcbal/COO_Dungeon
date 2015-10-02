@@ -53,7 +53,9 @@ public class RoomTest extends TestCase {
 	public void testAddNewNextRoomExitPositionRoomExit() {
 	
 		room.addNewNextRoom(ExitPosition.NORTH, new RoomExitNormal(new Room("Test")));
+
 		assertEquals(1, room.listNextRooms().size());
+
 		
 	}
 
