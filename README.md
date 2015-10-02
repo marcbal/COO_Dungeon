@@ -35,16 +35,16 @@ Le chiffre entre parenthèse représente la note estimée actuellement.
 - *(2)* Il existe une classe Exit qui fait le lien entre 2 Rooms (RoomExit pour nous)
 - *(2)* La classe Exit est commentée
 - *(2)* Il existe une hiérarchie d'Exit (des sous-classes)
-- *(-)* Chaque type d'Exit est testée
+- *(1)* Chaque type d'Exit est testée
 - *(3 vu tout ce qu'on a fait, Factory, Interface console)* Il existe plusieurs type d'objet
 - *(2)* Il n'y a pas de if/switch injustifié
 - *(2)* Il n'y a pas d'instanceof injustifié
 - *(2)* Les noms de classes et de variables sont bien nommés et en anglais
 - *(-)* Couverture (de quoi ? ) : 60% sont atteints, 1 point pour 50%
-- *(-)* 100% de la logique globale du jeu est testée (interpréteur de commande, fin de partie, changement de donjon)
+- *(0)* 100% de la logique globale du jeu est testée (interpréteur de commande, fin de partie, changement de donjon)
 - *(2)* Commentaires abondants et en anglais
 
-Total temporaire estimée : **35 à 41**/46
+Total temporaire estimée : **36 à 42**/46 => **15.6 à 18.2**/20
 
 
 
