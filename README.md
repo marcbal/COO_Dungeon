@@ -23,15 +23,15 @@ Le chiffre entre parenthèse représente la note estimée actuellement.
 - *(2)* Le programme compile
 - *(2)* Le compilateur n'affiche pas de warning, et il n'y a pas de @SuppressWarning injustifié
 - *(2)* On peut terminer le premier niveau
-- *(-)* On peut aller au niveau suivant
-- *(2 à priori)* Quelques secondes de jeu ne soulève pas de bug majeur
+- *(2)* On peut aller au niveau suivant
+- *(2)* Quelques secondes de jeu ne soulève pas de bug majeur
 - *(2 à priori)* Il n'y a pas 2 classes presque identiques
 - *(2 à priori)* Il n'y a pas 2 méthodes presque identiques
 - *(2 à priori)* Il n'y a pas 2 bouts de codes presque identiques
 - *(2)* Il y a une classe Room
 - *(2)* La classe Room est commentée
 - *(2)* Il y a une hiérarchie de Room (des sous-classes)
-- *(-)* Chaque type de Room est testée
+- *(2)* Chaque type de Room est testée
 - *(2)* Il existe une classe Exit qui fait le lien entre 2 Rooms (RoomExit pour nous)
 - *(2)* La classe Exit est commentée
 - *(2)* Il existe une hiérarchie d'Exit (des sous-classes)
@@ -44,7 +44,7 @@ Le chiffre entre parenthèse représente la note estimée actuellement.
 - *(-)* 100% de la logique globale du jeu est testée (interpréteur de commande, fin de partie, changement de donjon)
 - *(2)* Commentaires abondants et en anglais
 
-Total temporaire estimée : **29 à 37**/46 => **12.6 à 16.1**/20
+Total temporaire estimée : **35 à 41**/46
 
 
 

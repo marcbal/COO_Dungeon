@@ -27,8 +27,8 @@
 												
 										      ]},
 										 
-			  {"id_room" : "intersection", "rooms" : [{"direction" : "NORTH", "exit" : {"type" : "RoomExitWithKey", "nextRoom" : "intersection", "key" : "ik1"}},
-												      {"direction" : "WEST",  "exit" : {"type" : "RoomExitNormal", "nextRoom" : "intersection"}}
+			  {"id_room" : "intersection", "rooms" : [{"direction" : "NORTH", "exit" : {"type" : "RoomExitWithKey", "nextRoom" : "exit", "key" : "ik1"}},
+												      {"direction" : "WEST",  "exit" : {"type" : "RoomExitNormal", "nextRoom" : "trap"}}
 												
 												     ]}
 							 											  
