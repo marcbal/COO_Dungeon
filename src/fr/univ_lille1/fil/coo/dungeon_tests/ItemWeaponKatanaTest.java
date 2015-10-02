@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import fr.univ_lille1.fil.coo.dungeon.items.ItemWeaponBaseballBat;
 import fr.univ_lille1.fil.coo.dungeon.items.ItemWeaponKatana;
-import fr.univ_lille1.fil.coo.dungeon.rooms.Room;
 
 public class ItemWeaponKatanaTest {
 	
