@@ -46,14 +46,12 @@ public class RoomTest extends TestCase {
 	}
 
 
-	public void testAddNewNextRoomExitPositionRoomExitBoolean() {
-		fail("Pas encore implémenté");
-	}
-
 	public void testAddNewNextRoomExitPositionRoomExit() {
 	
 		room.addNewNextRoom(ExitPosition.NORTH, new RoomExitNormal(new Room("Test")));
+
 		assertEquals(1, room.listNextRooms().size());
+
 		
 	}
 
@@ -88,20 +86,20 @@ public class RoomTest extends TestCase {
 		assertEquals(true, room.containsMonsters());
 	}
 
-	public void testRequestChangingRoom() {
-		fail("Pas encore implémenté");
-	}
 
-	public void testTryToOpenLockedExit() {
-		fail("Pas encore implémenté");
-	}
 
 	public void testListNextRooms() {
-		fail("Pas encore implémenté");
+		room.addNewNextRoom(ExitPosition.NORTH, new RoomExitNormal(new Room("Test")));
+		
+		assertEquals(1, room.listNextRooms().size());
 	}
 
-	public void testListMonsters() {
-		fail("Pas encore implémenté");
+	public void testListMonsters() {		
+		room.setMonsters(mst);
+		assertEquals(0, room.listMonsters().size());
+		mst.add(new Beast(1));
+		
+		assertEquals(1, room.listMonsters().size());
 	}
 
 }
