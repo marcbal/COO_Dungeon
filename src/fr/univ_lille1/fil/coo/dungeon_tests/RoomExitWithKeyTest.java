@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fr.univ_lille1.fil.coo.dungeon.roomexit;
+package fr.univ_lille1.fil.coo.dungeon_tests;
 
 import static org.junit.Assert.*;
 
@@ -12,6 +12,7 @@ import org.junit.Test;
 import fr.univ_lille1.fil.coo.dungeon.items.ItemKey;
 import fr.univ_lille1.fil.coo.dungeon.player.ItemStack;
 import fr.univ_lille1.fil.coo.dungeon.player.Player;
+import fr.univ_lille1.fil.coo.dungeon.roomexit.RoomExitWithKey;
 import fr.univ_lille1.fil.coo.dungeon.rooms.Room;
 
 /**

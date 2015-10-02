@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fr.univ_lille1.fil.coo.dungeon.items.ItemKey;
-import fr.univ_lille1.fil.coo.dungeon.monsters.Beast;
 
 public class ItemKeyTest {
 	ItemKey ik;
