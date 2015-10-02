@@ -15,4 +15,12 @@ public interface Builder {
 	
 	Dungeon getResult();
 	
+	
+	public static class BuildingException extends RuntimeException {
+		private static final long serialVersionUID = 1L;
+		public BuildingException(String message) {
+			super(message);
+		}
+	}
+	
 }

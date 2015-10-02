@@ -10,7 +10,6 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 
-import fr.univ_lille1.fil.coo.dungeon.core.CoreUtils;
 import fr.univ_lille1.fil.coo.dungeon.dungeons.Dungeon;
 import fr.univ_lille1.fil.coo.dungeon.items.Item;
 import fr.univ_lille1.fil.coo.dungeon.monsters.Monster;
@@ -74,13 +73,11 @@ public class BuilderGSon implements Builder {
 
 	@Override
 	public void buildMapGSon(String pathname) {
-		// TODO Auto-generated method stub
 		try {
 			BufferedReader buff = new BufferedReader(new FileReader(pathname));
 			mapGSon = new Gson().fromJson(buff, Map.class);
 			System.out.println(mapGSon);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -97,7 +94,6 @@ public class BuilderGSon implements Builder {
 				result = Class.forName(prefixeImport + type).getConstructor(new Class [] {DynamicArgs.class}).newInstance(args);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
@@ -105,9 +101,8 @@ public class BuilderGSon implements Builder {
 	
 	@Override
 	public void onRooms() {
-		// TODO Auto-generated method stub
 		if(!mapGSon.containsKey(KEY_ROOMS)) {
-			CoreUtils.fail("Error, not " + KEY_ROOMS);
+			throw new BuildingException("Error, not " + KEY_ROOMS);
 		}
 		List<Map<String, Object>> rooms = (List<Map<String, Object>>) mapGSon.get(KEY_ROOMS);
 		for(int i=0; i < rooms.size(); ++i) {
@@ -122,9 +117,8 @@ public class BuilderGSon implements Builder {
 
 	@Override
 	public void onItems() {
-		// TODO Auto-generated method stub
 		if(!mapGSon.containsKey(KEY_ITEMS)) {
-			CoreUtils.fail("Error, not " + KEY_ITEMS);
+			throw new BuildingException("Error, not " + KEY_ITEMS);
 		}
 		List<Map<String, Object>> items = (List<Map<String, Object>>) mapGSon.get(KEY_ITEMS);
 		for(int i=0; i < items.size(); ++i) {
@@ -139,10 +133,9 @@ public class BuilderGSon implements Builder {
 
 	@Override
 	public void onMonsters() {
-		// TODO Auto-generated method stub
 		
 		if(!mapGSon.containsKey(KEY_MONSTERS)) {
-			CoreUtils.fail("Error, not " + KEY_MONSTERS);
+			throw new BuildingException("Error, not " + KEY_MONSTERS);
 		}
 		List<Map<String, Object>> monsters = (List<Map<String, Object>>) mapGSon.get(KEY_MONSTERS);
 		for(int i=0; i < monsters.size(); ++i) {
@@ -170,10 +163,9 @@ public class BuilderGSon implements Builder {
 	
 	@Override
 	public void onRoomsExits() {
-		// TODO Auto-generated method stub
 		
 		if(!mapGSon.containsKey(KEY_EXITS_ROOMS)) {
-			CoreUtils.fail("Error, not " + KEY_EXITS_ROOMS);
+			throw new BuildingException("Error, not " + KEY_EXITS_ROOMS);
 		}
 		List<Map<String, Object>> exitsRooms = (List<Map<String, Object>>) mapGSon.get(KEY_EXITS_ROOMS);
 		for(int i=0; i < exitsRooms.size(); ++i) {
@@ -193,9 +185,8 @@ public class BuilderGSon implements Builder {
 	
 	@Override
 	public void onRoomsMonsters() {
-		// TODO Auto-generated method stub
 		if(!mapGSon.containsKey(KEY_MONSTERS_ROOMS)) {
-			CoreUtils.fail("Error, not " + KEY_MONSTERS_ROOMS);
+			throw new BuildingException("Error, not " + KEY_MONSTERS_ROOMS);
 		}
 		List<Map<String, Object>> monstersRooms = (List<Map<String, Object>>) mapGSon.get(KEY_MONSTERS_ROOMS);
 
@@ -213,9 +204,8 @@ public class BuilderGSon implements Builder {
 	
 	@Override
 	public void onRoomsItems() {
-		// TODO Auto-generated method stub
 		if(!mapGSon.containsKey(KEY_ITEMS_ROOMS)) {
-			CoreUtils.fail("Error, not " + KEY_ITEMS_ROOMS);
+			throw new BuildingException("Error, not " + KEY_ITEMS_ROOMS);
 		}
 		List<Map<String, Object>> itemsRooms = (List<Map<String, Object>>) mapGSon.get(KEY_ITEMS_ROOMS);
 		for (int i = 0; i < itemsRooms.size(); i++) {
@@ -233,7 +223,6 @@ public class BuilderGSon implements Builder {
 
 	@Override
 	public Dungeon getResult() {
-		// TODO Auto-generated method stub
 		result.setSpawningRoom(rooms.get(ID_ENTRY));
 		return result;
 	}

@@ -1,7 +1,7 @@
 package fr.univ_lille1.fil.coo.dungeon.monsters;
 
-import fr.univ_lille1.fil.coo.dungeon.core.CoreUtils;
 import fr.univ_lille1.fil.coo.dungeon.factories.builders.DynamicArgs;
+import fr.univ_lille1.fil.coo.dungeon.factories.builders.Builder.BuildingException;
 
 public class Beast extends Monster {
 
@@ -12,7 +12,7 @@ public class Beast extends Monster {
 	public Beast(DynamicArgs<Object> args) {
 		// TODO Auto-generated constructor stub
 		if(args == null || args.size() != 1 || !(args.get(0) instanceof Double)) {
-			CoreUtils.fail("Error call : Beast(DynamicArgs<Object> args)");
+			throw new BuildingException("Error call : Beast(DynamicArgs<Object> args)");
 		}
 		this.level = ((Double) args.get(0)).intValue();
 		this.name = "Beast";
