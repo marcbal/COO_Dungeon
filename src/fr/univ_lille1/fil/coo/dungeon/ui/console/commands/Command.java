@@ -45,7 +45,6 @@ public abstract class Command {
 	 * Exception thrown when the user is misusing a command (wrong arguments, for example).<br/>
 	 * It is generally used in implementation of {@link Command#execute(Game, String[])}, and is catched
 	 * by the {@link CommandsManager#dispatchCommand(Game, String)} method to display a message to the user.
-	 * @author Marc
 	 *
 	 */
 	public static class CommandBadUseException extends RuntimeException {
