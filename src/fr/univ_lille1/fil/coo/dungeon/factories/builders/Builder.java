@@ -4,7 +4,7 @@ import fr.univ_lille1.fil.coo.dungeon.dungeons.Dungeon;
 
 public interface Builder {
 
-	void buildMapGSon(String pathname);
+	void buildMapJson(String pathname);
 	
 	void onRooms();
 	void onItems();

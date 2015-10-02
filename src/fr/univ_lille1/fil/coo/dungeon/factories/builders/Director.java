@@ -15,7 +15,7 @@ public class Director {
 	
 	
 	public void build() {
-		build.buildMapGSon(pathname);
+		build.buildMapJson(pathname);
 		build.onRooms();
 		build.onItems();
 		build.onMonsters();

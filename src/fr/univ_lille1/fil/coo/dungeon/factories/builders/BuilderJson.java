@@ -21,11 +21,11 @@ import fr.univ_lille1.fil.coo.dungeon.rooms.Room;
 import fr.univ_lille1.fil.coo.dungeon.util.EnumUtil;
 
 @SuppressWarnings("unchecked")
-public class BuilderGSon implements Builder {
+public class BuilderJson implements Builder {
 	
 	private Dungeon result = new Dungeon();
 	
-	private Map<String, Object> mapGSon;
+	private Map<String, Object> mapJson;
 	
 	private Map<String, Room> rooms = new HashMap<>();
 	private Map<String, Item> items = new HashMap<>();
@@ -72,11 +72,11 @@ public class BuilderGSon implements Builder {
 
 
 	@Override
-	public void buildMapGSon(String pathname) {
+	public void buildMapJson(String pathname) {
 		try {
 			BufferedReader buff = new BufferedReader(new FileReader(pathname));
-			mapGSon = new Gson().fromJson(buff, Map.class);
-			System.out.println(mapGSon);
+			mapJson = new Gson().fromJson(buff, Map.class);
+			System.out.println(mapJson);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -101,10 +101,10 @@ public class BuilderGSon implements Builder {
 	
 	@Override
 	public void onRooms() {
-		if(!mapGSon.containsKey(KEY_ROOMS)) {
+		if(!mapJson.containsKey(KEY_ROOMS)) {
 			throw new BuildingException("Error, not " + KEY_ROOMS);
 		}
-		List<Map<String, Object>> rooms = (List<Map<String, Object>>) mapGSon.get(KEY_ROOMS);
+		List<Map<String, Object>> rooms = (List<Map<String, Object>>) mapJson.get(KEY_ROOMS);
 		for(int i=0; i < rooms.size(); ++i) {
 			String idRoom = (String) rooms.get(i).get(ID_NATURAL);
 			String typeRoom = (String) rooms.get(i).get(TYPE);
@@ -117,10 +117,10 @@ public class BuilderGSon implements Builder {
 
 	@Override
 	public void onItems() {
-		if(!mapGSon.containsKey(KEY_ITEMS)) {
+		if(!mapJson.containsKey(KEY_ITEMS)) {
 			throw new BuildingException("Error, not " + KEY_ITEMS);
 		}
-		List<Map<String, Object>> items = (List<Map<String, Object>>) mapGSon.get(KEY_ITEMS);
+		List<Map<String, Object>> items = (List<Map<String, Object>>) mapJson.get(KEY_ITEMS);
 		for(int i=0; i < items.size(); ++i) {
 			
 			String idItem = (String) items.get(i).get(ID_NATURAL);
@@ -134,10 +134,10 @@ public class BuilderGSon implements Builder {
 	@Override
 	public void onMonsters() {
 		
-		if(!mapGSon.containsKey(KEY_MONSTERS)) {
+		if(!mapJson.containsKey(KEY_MONSTERS)) {
 			throw new BuildingException("Error, not " + KEY_MONSTERS);
 		}
-		List<Map<String, Object>> monsters = (List<Map<String, Object>>) mapGSon.get(KEY_MONSTERS);
+		List<Map<String, Object>> monsters = (List<Map<String, Object>>) mapJson.get(KEY_MONSTERS);
 		for(int i=0; i < monsters.size(); ++i) {
 			
 			String idMonster = (String) monsters.get(i).get(ID_NATURAL);
@@ -164,10 +164,10 @@ public class BuilderGSon implements Builder {
 	@Override
 	public void onRoomsExits() {
 		
-		if(!mapGSon.containsKey(KEY_EXITS_ROOMS)) {
+		if(!mapJson.containsKey(KEY_EXITS_ROOMS)) {
 			throw new BuildingException("Error, not " + KEY_EXITS_ROOMS);
 		}
-		List<Map<String, Object>> exitsRooms = (List<Map<String, Object>>) mapGSon.get(KEY_EXITS_ROOMS);
+		List<Map<String, Object>> exitsRooms = (List<Map<String, Object>>) mapJson.get(KEY_EXITS_ROOMS);
 		for(int i=0; i < exitsRooms.size(); ++i) {
 			String idRooms = (String) exitsRooms.get(i).get(ID_ROOM);
 			List<Map<String, Object>> rooms = (List<Map<String, Object>>) exitsRooms.get(i).get(ARGS_ROOMS);
@@ -185,10 +185,10 @@ public class BuilderGSon implements Builder {
 	
 	@Override
 	public void onRoomsMonsters() {
-		if(!mapGSon.containsKey(KEY_MONSTERS_ROOMS)) {
+		if(!mapJson.containsKey(KEY_MONSTERS_ROOMS)) {
 			throw new BuildingException("Error, not " + KEY_MONSTERS_ROOMS);
 		}
-		List<Map<String, Object>> monstersRooms = (List<Map<String, Object>>) mapGSon.get(KEY_MONSTERS_ROOMS);
+		List<Map<String, Object>> monstersRooms = (List<Map<String, Object>>) mapJson.get(KEY_MONSTERS_ROOMS);
 
 		for (int i = 0; i < monstersRooms.size(); i++) {
 			String idRoom = (String) monstersRooms.get(i).get(ID_ROOM);
@@ -204,10 +204,10 @@ public class BuilderGSon implements Builder {
 	
 	@Override
 	public void onRoomsItems() {
-		if(!mapGSon.containsKey(KEY_ITEMS_ROOMS)) {
+		if(!mapJson.containsKey(KEY_ITEMS_ROOMS)) {
 			throw new BuildingException("Error, not " + KEY_ITEMS_ROOMS);
 		}
-		List<Map<String, Object>> itemsRooms = (List<Map<String, Object>>) mapGSon.get(KEY_ITEMS_ROOMS);
+		List<Map<String, Object>> itemsRooms = (List<Map<String, Object>>) mapJson.get(KEY_ITEMS_ROOMS);
 		for (int i = 0; i < itemsRooms.size(); i++) {
 			String idRoom = (String) itemsRooms.get(i).get(ID_ROOM);
 			List<Map<String, Object>> inventory = (List<Map<String, Object>>) itemsRooms.get(i).get(ARGS_INVENTORY);
