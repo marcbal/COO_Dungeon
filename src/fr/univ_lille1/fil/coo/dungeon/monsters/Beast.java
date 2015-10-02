@@ -10,7 +10,6 @@ public class Beast extends Monster {
 	}
 	
 	public Beast(DynamicArgs<Object> args) {
-		// TODO Auto-generated constructor stub
 		if(args == null || args.size() != 1 || !(args.get(0) instanceof Double)) {
 			throw new BuildingException("Error call : Beast(DynamicArgs<Object> args)");
 		}

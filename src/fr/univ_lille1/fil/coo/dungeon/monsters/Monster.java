@@ -34,6 +34,8 @@ public abstract class Monster {
 	
 	public void takeDamage(int d) {
 		life -= d;
+		if (life < 0)
+			life = 0;
 	}
 	
 	/**
